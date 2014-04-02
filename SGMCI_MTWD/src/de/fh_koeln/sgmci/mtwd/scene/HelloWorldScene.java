@@ -3,6 +3,7 @@ package de.fh_koeln.sgmci.mtwd.scene;
 import org.mt4j.MTApplication;
 import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.components.visibleComponents.widgets.keyboard.MTTextKeyboard;
 import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
@@ -29,8 +30,11 @@ public class HelloWorldScene extends AbstractScene {
 		textField.setNoFill(true);
 		textField.setNoStroke(true);
 		textField.setText("Hello World!");
+                
+                MTTextKeyboard keyboard = new MTTextKeyboard(mtApplication);
 		//Add the textfield to our canvas
 		this.getCanvas().addChild(textField);
+		this.getCanvas().addChild(keyboard);
  
 		//Center the textfield on the screen
 		textField.setPositionGlobal(new Vector3D(mtApplication.width/2f, mtApplication.height/2f));
