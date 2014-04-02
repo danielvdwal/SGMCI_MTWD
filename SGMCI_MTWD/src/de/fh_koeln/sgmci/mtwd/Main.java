@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fh_koeln;
+package de.fh_koeln.sgmci.mtwd;
 
 /**
  *
