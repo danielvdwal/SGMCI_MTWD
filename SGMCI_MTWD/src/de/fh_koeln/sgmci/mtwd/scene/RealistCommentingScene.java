@@ -5,11 +5,11 @@ import org.mt4j.sceneManagement.AbstractScene;
 
 /**
  *
- * @author Robert Scherbarth
+ * @author danielvanderwal
  */
-public class StartScene extends AbstractScene implements IScene {
+public class RealistCommentingScene extends AbstractScene implements IScene {
 
-    public StartScene(MTApplication mtApp, String name) {
+    public RealistCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
     }
 
