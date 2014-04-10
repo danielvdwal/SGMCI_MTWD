@@ -10,7 +10,7 @@ import org.mt4j.MTApplication;
 public class Main extends MTApplication {
 
     public static void main(String[] args) {
-        initialize();
+        initialize(true);
     }
 
     @Override
