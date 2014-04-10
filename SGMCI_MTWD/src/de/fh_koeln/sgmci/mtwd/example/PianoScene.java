@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fh_koeln.sgmci.mtwd.scene;
+package de.fh_koeln.sgmci.mtwd.example;
 
 import de.fh_koeln.sgmci.customelements.MTPiano;
 import org.mt4j.MTApplication;
