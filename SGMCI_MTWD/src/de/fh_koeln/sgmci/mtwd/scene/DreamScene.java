@@ -44,7 +44,7 @@ public class DreamScene extends AbstractScene {
 					50, new MTColor(255, 255, 255, 255), new MTColor(255, 255, 255, 255))); 
 			textField.setNoFill(true);
 			textField.setNoStroke(true);
-			textField.setText("Raum des Träumers");
+			textField.setText("Raum des Tr\u00e4umers");
 			this.getCanvas().addChild(textField);
 			textField.setPositionGlobal(new Vector3D(mtApplication.width/2f, mtApplication.height/2f));
 			

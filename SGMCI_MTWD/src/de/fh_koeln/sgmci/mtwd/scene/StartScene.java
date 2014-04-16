@@ -5,10 +5,16 @@ import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.font.FontManager;
+import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.components.visibleComponents.widgets.MTTextField;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
 import org.mt4j.components.visibleComponents.widgets.keyboard.MTKeyboard;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
@@ -17,7 +23,6 @@ import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.sceneManagement.Iscene;
 import org.mt4j.sceneManagement.transition.BlendTransition;
 import org.mt4j.sceneManagement.transition.FadeTransition;
-import org.mt4j.sceneManagement.transition.SlideTransition;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
@@ -40,7 +45,7 @@ public class StartScene extends AbstractScene implements IScene{
 	public StartScene(final MTApplication mtApplication, String name) {
 		super(mtApplication, name);
 		this.mtApp = mtApplication;
-
+		
 		//Zeigt die Touch-Stellen auf dem Bildschirm an.
 		this.registerGlobalInputProcessor(new CursorTracer(mtApplication, this));
 
@@ -98,7 +103,7 @@ public class StartScene extends AbstractScene implements IScene{
 			System.out.println("Error: Bilder konnte nicht geladen werden!");;
 		}
 		
-		MTImageButton helpButton = new MTImageButton(helpImage, mtApplication);
+		final MTImageButton helpButton = new MTImageButton(helpImage, mtApplication);
 		helpButton.setNoStroke(true);
 		helpButton.setDrawSmooth(true);
 
@@ -116,7 +121,17 @@ public class StartScene extends AbstractScene implements IScene{
 					textarea.setNoStroke(true);
 					textarea.setNoFill(true);
 					textarea.setPositionGlobal(new Vector3D(mtApp.width/2f, mtApp.height/2f));
-
+					
+					MTTextArea helpPop = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 25, MTColor.BLUE, MTColor.BLUE));
+					helpPop.setText("Such bei Google nach Hilfe -.-");
+					helpPop.setPositionRelativeToOther(helpButton, new Vector3D(helpPop.getWidthXY(TransformSpace.RELATIVE_TO_PARENT)/2, -300));
+					helpPop.setPickable(false);
+					getCanvas().addChild(helpPop);
+					
+					MTSvg svgTest = new MTSvg(mtApp, "D:\\Program Files\\eclipse\\git\\SGMCI_MTWD\\SGMCI_MTWD\\data\\Zeichnung.svg");
+					getCanvas().addChild(svgTest);
+					
+					
 					mtApp.getCurrentScene().getCanvas().addChild(textarea);
 					break;
 				default:
@@ -212,5 +227,7 @@ public class StartScene extends AbstractScene implements IScene{
 	public void init() { }
 
 	@Override
-	public void shutDown() {}
+	public void shutDown() {
+		//destroy();
+	}
 }
