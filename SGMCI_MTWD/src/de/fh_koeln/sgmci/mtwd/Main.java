@@ -1,6 +1,8 @@
 package de.fh_koeln.sgmci.mtwd;
 
 import de.fh_koeln.sgmci.mtwd.scene.DreamerScene;
+import de.fh_koeln.sgmci.mtwd.scene.StartScene;
+
 import org.mt4j.MTApplication;
 
 /**
@@ -19,6 +21,6 @@ public class Main extends MTApplication {
         //addScene(new PianoScene(this, "Piano Scene"));
         //addScene(new MT4JBasicsScene(this, "MT4J Basics"));
         //addScene(new MT4JGestruresScene(this, "MT4J Gestures"));
-        addScene(new DreamerScene(this, "Dreamer's Room"));
+        addScene(new StartScene(this, "Start Scene"));
     }
 }
