@@ -12,7 +12,9 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.sceneManagement.Iscene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
 import org.mt4j.sceneManagement.transition.FadeTransition;
+import org.mt4j.sceneManagement.transition.FlipTransition;
 import org.mt4j.sceneManagement.transition.SlideTransition;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
@@ -69,12 +71,14 @@ public class DreamScene extends AbstractScene {
 			
 			
 
-			//Set a scene transition - Flip transition only available using opengl supporting the FBO extenstion
+			//Set a scene transition - Blend transition only available using opengl supporting the FBO extenstion
 			if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp))
-				this.setTransition(new SlideTransition(mtApp, 700)); 
+				this.setTransition(new BlendTransition(mtApp, 1200)); 
 			else{
 				this.setTransition(new FadeTransition(mtApp));
 			}
+			
+			
 		}
 
 		@Override

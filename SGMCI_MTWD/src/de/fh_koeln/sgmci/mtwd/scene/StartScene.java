@@ -18,9 +18,13 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.sceneManagement.Iscene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
+import org.mt4j.sceneManagement.transition.FadeTransition;
+import org.mt4j.sceneManagement.transition.SlideTransition;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
+import org.mt4j.util.opengl.GLFBO;
 
 
 import processing.core.PImage;
@@ -202,6 +206,14 @@ public class StartScene extends AbstractScene implements IScene{
 		startButton.setSizeXYGlobal(mtApplication.getWidth()/16, mtApplication.getHeight()/9);
 		
 		this.getCanvas().addChild(startButton);
+		
+		//Set a scene transition for our StartScene- Blend transition only available using opengl supporting the FBO extenstion
+		//BlendTransition, da es im gegensatz zu slide aus allen Blickwinkeln gut aussieht ;-)
+		if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp))
+			this.setTransition(new BlendTransition(mtApp, 1200)); 
+		else{
+			this.setTransition(new FadeTransition(mtApp));
+		}
 
 	}
 
