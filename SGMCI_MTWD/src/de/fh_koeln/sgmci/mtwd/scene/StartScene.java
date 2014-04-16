@@ -14,7 +14,6 @@ import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
 import org.mt4j.components.visibleComponents.widgets.keyboard.MTKeyboard;
 import org.mt4j.components.visibleComponents.widgets.keyboard.MTTextKeyboard;
 import org.mt4j.input.IMTInputEventListener;
-import org.mt4j.input.inputData.MTInputEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.sceneManagement.AbstractScene;
