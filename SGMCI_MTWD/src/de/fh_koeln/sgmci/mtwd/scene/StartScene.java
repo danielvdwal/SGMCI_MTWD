@@ -96,9 +96,9 @@ public class StartScene extends AbstractScene implements IScene{
 		PImage startImage = null;
 		PImage settingsImage = null;
 		try {
-			helpImage = mtApplication.loadImage("/data/helpButton.png");
-			startImage = mtApplication.loadImage("/data/startButton.png");
-			settingsImage = mtApplication.loadImage("/data/settingsButton.png");
+			helpImage = mtApplication.loadImage("data/helpButton.png");
+			startImage = mtApplication.loadImage("data/startButton.png");
+			settingsImage = mtApplication.loadImage("data/settingsButton.png");
 		} catch (Exception e) {
 			System.out.println("Error: Bilder konnte nicht geladen werden!");;
 		}
@@ -128,7 +128,7 @@ public class StartScene extends AbstractScene implements IScene{
 					helpPop.setPickable(false);
 					getCanvas().addChild(helpPop);
 					
-					MTSvg svgTest = new MTSvg(mtApp, "D:\\Program Files\\eclipse\\git\\SGMCI_MTWD\\SGMCI_MTWD\\data\\Zeichnung.svg");
+					MTSvg svgTest = new MTSvg(mtApp, "data/Zeichnung.svg");
 					getCanvas().addChild(svgTest);
 					
 					
