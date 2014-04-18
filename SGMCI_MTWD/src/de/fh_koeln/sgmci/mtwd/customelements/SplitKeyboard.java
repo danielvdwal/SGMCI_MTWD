@@ -27,7 +27,7 @@ import processing.core.PApplet;
  *
  * @author danielvanderwal
  */
-public final class MTSplitKeyboard extends MTRoundRectangle {
+public final class SplitKeyboard extends MTRoundRectangle {
 
     private static final int MARGIN_KEYBOARD_INSIDE = 10;
     private static final int MARGIN_KEYBOARD_OUTSIDE = 20;
@@ -63,7 +63,7 @@ public final class MTSplitKeyboard extends MTRoundRectangle {
     private boolean shiftPressed;
     private KeyboardVisiblity keyboardVisiblity;
 
-    public MTSplitKeyboard(PApplet pApplet) {
+    public SplitKeyboard(PApplet pApplet) {
         super(0, 0, 0, TOTAL_KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
         
         this.leftKeyboard  = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);

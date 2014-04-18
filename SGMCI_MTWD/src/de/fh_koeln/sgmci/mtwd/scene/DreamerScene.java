@@ -1,6 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
-import de.fh_koeln.sgmci.mtwd.customelements.MTSplitKeyboard;
+import de.fh_koeln.sgmci.mtwd.customelements.SplitKeyboard;
 import java.awt.event.KeyEvent;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
@@ -55,7 +55,7 @@ public class DreamerScene extends AbstractScene implements IScene {
                 "arial.ttf", 50);
         for (int i = 0; i < 4; i++) {
             //final MTKeyboard keyboard = new MTKeyboard(mtApp);
-            final MTSplitKeyboard keyboard = new MTSplitKeyboard(mtApp);
+            final SplitKeyboard keyboard = new SplitKeyboard(mtApp);
             //keyboard.setFillColor(new MTColor(30, 30, 30, 255));
             //keyboard.setStrokeColor(new MTColor(0, 0, 0, 255));
             float width = keyboard.getWidthXY(TransformSpace.LOCAL);
