@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.customelements.MTSplitKeyboard;
 import java.awt.event.KeyEvent;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
@@ -53,13 +54,14 @@ public class DreamerScene extends AbstractScene implements IScene {
         final IFont font = FontManager.getInstance().createFont(mtApp,
                 "arial.ttf", 50);
         for (int i = 0; i < 4; i++) {
-            final MTKeyboard keyboard = new MTKeyboard(mtApp);
-            keyboard.setFillColor(new MTColor(30, 30, 30, 255));
-            keyboard.setStrokeColor(new MTColor(0, 0, 0, 255));
+            //final MTKeyboard keyboard = new MTKeyboard(mtApp);
+            final MTSplitKeyboard keyboard = new MTSplitKeyboard(mtApp);
+            //keyboard.setFillColor(new MTColor(30, 30, 30, 255));
+            //keyboard.setStrokeColor(new MTColor(0, 0, 0, 255));
             float width = keyboard.getWidthXY(TransformSpace.LOCAL);
             float height = keyboard.getHeightXY(TransformSpace.LOCAL);
             float ratio = (mtApp.getWidth() * 0.33f) / width;
-            keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
+            //keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
             
             width = width * ratio;
             height = height * ratio;
@@ -69,7 +71,9 @@ public class DreamerScene extends AbstractScene implements IScene {
             currentTextArea.setStrokeColor(new MTColor(0, 0, 0, 255));
             currentTextArea.setFillColor(new MTColor(205, 200, 177, 255));
             currentTextArea.setEnableCaret(true);
-            currentTextArea.snapToKeyboard(keyboard);
+            //currentTextArea.snapToKeyboard(keyboard);
+            keyboard.addChild(currentTextArea);
+            currentTextArea.setPositionRelativeToParent(new Vector3D(40, -currentTextArea.getHeightXY(TransformSpace.LOCAL)*0.5f));
             keyboard.addTextInputListener(currentTextArea);
 
             final MTRectangle rectangle = new MTRectangle(0, 0, 30, 30, mtApp);
