@@ -10,6 +10,7 @@ import java.util.Map;
 import org.mt4j.components.MTComponent;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.AbstractShape;
+import static org.mt4j.components.visibleComponents.shapes.AbstractShape.BOUNDS_ONLY_CHECK;
 import org.mt4j.components.visibleComponents.shapes.MTRoundRectangle;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.components.visibleComponents.widgets.keyboard.ITextInputListener;
@@ -43,7 +44,6 @@ public final class SplitKeyboard extends MTRoundRectangle {
     private static final int CORNER_RADIUS = 30;
     private static final int KEYBOARD_WIDTH = 317 + MARGIN_KEYBOARD_INSIDE + MARGIN_KEYBOARD_OUTSIDE;
     private static final int KEYBOARD_HEIGHT = 200 + MARGIN_TOP + MARGIN_BOTTOM;
-    private static final int TOTAL_KEYBOARD_WIDTH = (int) (KEYBOARD_WIDTH * 2.5);
     private static final String SHIFT_ID = "shift";
     private static final String SHIFT_PRESSED_ID = "shift_pressed";
     private static final String LETTERS_ID = "letters";
@@ -62,13 +62,14 @@ public final class SplitKeyboard extends MTRoundRectangle {
     private final Collection<ITextInputListener> textInputAcceptors;
     private boolean shiftPressed;
     private KeyboardVisiblity keyboardVisiblity;
+    private float spaceBetweenKeyboards = 200;
 
     public SplitKeyboard(PApplet pApplet) {
-        super(0, 0, 0, TOTAL_KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
-        
-        this.leftKeyboard  = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
+        super(0, 0, 0, KEYBOARD_WIDTH* 2, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
+
+        this.leftKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
         this.rightKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
-         
+
         this.pApplet = pApplet;
 
         this.shiftPressed = false;
@@ -89,12 +90,14 @@ public final class SplitKeyboard extends MTRoundRectangle {
         }
 
         this.setFillColor(new MTColor(0, 0, 0, 0));
-        this.setStrokeWeight(0);
+        this.setNoStroke(true);
         this.removeAllGestureEventListeners();
 
         this.createKeyboard();
 
         this.setDepthBufferDisabled(true);
+
+        this.setBoundsBehaviour(BOUNDS_ONLY_CHECK);
     }
 
     public MTComponent getLeftKeyboard() {
@@ -104,7 +107,44 @@ public final class SplitKeyboard extends MTRoundRectangle {
     public MTComponent getRightKeyboard() {
         return rightKeyboard;
     }
+
+    public float getWidth() {
+        return spaceBetweenKeyboards + 2 * KEYBOARD_WIDTH;
+    }
+
+    public float getHeight() {
+        return KEYBOARD_HEIGHT;
+    }
     
+    public void setSpaceBetweenKeyboards(float space) {
+        leftKeyboard.translate(new Vector3D(spaceBetweenKeyboards / 2, 0));
+        rightKeyboard.translate(new Vector3D(-spaceBetweenKeyboards / 2, 0));
+        leftKeyboard.translate(new Vector3D(-space/2, 0));
+        rightKeyboard.translate(new Vector3D(space/2, 0));
+        spaceBetweenKeyboards = space;
+    } 
+
+    @Override
+    public void setPickable(boolean pickable) {
+        super.setPickable(pickable);
+        leftKeyboard.setPickable(pickable);
+        rightKeyboard.setPickable(pickable);
+    }
+
+    @Override
+    public void unregisterAllInputProcessors() {
+        super.unregisterAllInputProcessors();
+        leftKeyboard.unregisterAllInputProcessors();
+        rightKeyboard.unregisterAllInputProcessors();
+    }
+
+    @Override
+    public void removeAllGestureEventListeners() {
+        super.removeAllGestureEventListeners();
+        leftKeyboard.removeAllGestureEventListeners();
+        rightKeyboard.removeAllGestureEventListeners();
+    }
+
     private void createKeyboard() {
         leftKeyboard.setFillColor(MTColor.BLACK);
         rightKeyboard.setFillColor(MTColor.BLACK);
@@ -143,12 +183,16 @@ public final class SplitKeyboard extends MTRoundRectangle {
         });
         rightKeyboard.addChild(keybCloseSvg);
 
-        rightKeyboard.translate(new Vector3D(TOTAL_KEYBOARD_WIDTH - KEYBOARD_WIDTH, 0));
+        // set start position of right keyboard
+        rightKeyboard.translate(new Vector3D(KEYBOARD_WIDTH, 0));
+        
+        leftKeyboard.translate(new Vector3D(-spaceBetweenKeyboards/2, 0));
+        rightKeyboard.translate(new Vector3D(spaceBetweenKeyboards/2, 0));
 
         this.addChild(leftKeyboard);
         this.addChild(rightKeyboard);
 
-        changeVisibility();
+        this.changeVisibility();
     }
 
     private Collection<KeyInfo> createLeftKeyboardLetterKeyInfos() {
@@ -618,6 +662,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
     private void createKeyButtonsOutOfKeyInfos(Collection<KeyInfo> rightKeyInfos, MTRoundRectangle rightKeyboard) {
         for (KeyInfo keyInfo : rightKeyInfos) {
             MTSvgButton key = new MTSvgButton(keyInfo.fileName, pApplet);
+
             //Transform
             key.scale(SCALE_FACTOR, SCALE_FACTOR, 1, new Vector3D(0, 0, 0));
             key.translate(keyInfo.position);

@@ -87,6 +87,8 @@ public final class Keyboard extends MTRoundRectangle {
         this.createKeyboard();
 
         this.setDepthBufferDisabled(true);
+        
+        this.setBoundsBehaviour(BOUNDS_ONLY_CHECK);
     }
 
     private void createKeyboard() {

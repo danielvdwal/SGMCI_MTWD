@@ -8,8 +8,6 @@ import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
-import org.mt4j.components.visibleComponents.widgets.MTTextField;
-import org.mt4j.components.visibleComponents.widgets.keyboard.MTKeyboard;
 import org.mt4j.input.gestureAction.DefaultPanAction;
 import org.mt4j.input.gestureAction.DefaultZoomAction;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
@@ -40,29 +38,26 @@ public class DreamerScene extends AbstractScene implements IScene {
     }
 
     private void addEventListeners() {
-        this.getCanvas().registerInputProcessor(new PanProcessorTwoFingers(
-                mtApp));
+        this.getCanvas().registerInputProcessor(new PanProcessorTwoFingers(mtApp));
         this.getCanvas().registerInputProcessor(new ZoomProcessor(mtApp));
 
-        this.getCanvas().addGestureListener(ZoomProcessor.class,
-                new DefaultZoomAction());
-        this.getCanvas().addGestureListener(PanProcessorTwoFingers.class,
-                new DefaultPanAction());
+        this.getCanvas().addGestureListener(ZoomProcessor.class, new DefaultZoomAction());
+        this.getCanvas().addGestureListener(PanProcessorTwoFingers.class, new DefaultPanAction());
     }
 
     private void createComponents() {
-        final IFont font = FontManager.getInstance().createFont(mtApp,
-                "arial.ttf", 50);
+        final IFont font = FontManager.getInstance().createFont(mtApp, "arial.ttf", 50);
+
         for (int i = 0; i < 4; i++) {
-            //final MTKeyboard keyboard = new MTKeyboard(mtApp);
             final SplitKeyboard keyboard = new SplitKeyboard(mtApp);
             //keyboard.setFillColor(new MTColor(30, 30, 30, 255));
             //keyboard.setStrokeColor(new MTColor(0, 0, 0, 255));
-            float width = keyboard.getWidthXY(TransformSpace.LOCAL);
-            float height = keyboard.getHeightXY(TransformSpace.LOCAL);
-            float ratio = (mtApp.getWidth() * 0.33f) / width;
-            //keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
-            
+            float width = keyboard.getWidth();
+            float height = keyboard.getHeight();
+            float ratio = (mtApp.getWidth() * 0.5f) / width;
+            keyboard.setSpaceBetweenKeyboards(400);
+            keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
+
             width = width * ratio;
             height = height * ratio;
 
@@ -71,9 +66,8 @@ public class DreamerScene extends AbstractScene implements IScene {
             currentTextArea.setStrokeColor(new MTColor(0, 0, 0, 255));
             currentTextArea.setFillColor(new MTColor(205, 200, 177, 255));
             currentTextArea.setEnableCaret(true);
-            //currentTextArea.snapToKeyboard(keyboard);
-            keyboard.addChild(currentTextArea);
-            currentTextArea.setPositionRelativeToParent(new Vector3D(40, -currentTextArea.getHeightXY(TransformSpace.LOCAL)*0.5f));
+            keyboard.getLeftKeyboard().addChild(currentTextArea);
+            currentTextArea.setPositionRelativeToParent(new Vector3D(40, -currentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
             keyboard.addTextInputListener(currentTextArea);
 
             final MTRectangle rectangle = new MTRectangle(0, 0, 30, 30, mtApp);
@@ -98,24 +92,25 @@ public class DreamerScene extends AbstractScene implements IScene {
 
             switch (i) {
                 case 0:
-                    keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2,
-                            mtApp.height - height / 2, 0));
+                    keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - height / 2, 0));
                     break;
                 case 1:
                     keyboard.rotateZ(new Vector3D(width / 2, height / 2), 90);
-                    keyboard.setPositionGlobal(new Vector3D(height/2, mtApp.height/2, 0));
+                    keyboard.setPositionGlobal(new Vector3D(height / 2, mtApp.height / 2, 0));
                     break;
                 case 2:
                     keyboard.rotateZ(new Vector3D(width / 2, height / 2), 180);
-                    keyboard.setPositionGlobal(new Vector3D(
-                            mtApp.width / 2, height / 2, 0));
+                    keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2, height / 2, 0));
                     break;
                 case 3:
                     keyboard.rotateZ(new Vector3D(width / 2, height / 2), -90);
-                    keyboard.setPositionGlobal(new Vector3D(mtApp.width - height / 2, mtApp.height/2, 0));
+                    keyboard.setPositionGlobal(new Vector3D(mtApp.width - height / 2, mtApp.height / 2, 0));
                     break;
             }
 
+            keyboard.setPickable(false);
+            keyboard.removeAllGestureEventListeners();
+            keyboard.unregisterAllInputProcessors();
             this.getCanvas().addChild(keyboard);
         }
     }
