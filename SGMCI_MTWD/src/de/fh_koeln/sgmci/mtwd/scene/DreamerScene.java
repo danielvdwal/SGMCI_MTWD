@@ -7,6 +7,8 @@ import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
+import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
+import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.input.gestureAction.DefaultPanAction;
 import org.mt4j.input.gestureAction.DefaultZoomAction;
@@ -17,8 +19,10 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.zoomProcessor.ZoomProcessor;
 import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
+import processing.core.PImage;
 
 /**
  *
@@ -31,6 +35,11 @@ public class DreamerScene extends AbstractScene implements IScene {
     public DreamerScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         this.mtApp = mtApp;
+        
+        // 4800 x 3200
+        PImage backgroundImage = mtApp.loadImage("data/background_sky.jpg");
+        backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
+        this.getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
 
         addEventListeners();
 
