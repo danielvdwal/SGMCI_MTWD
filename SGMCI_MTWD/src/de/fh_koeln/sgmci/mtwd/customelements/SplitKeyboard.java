@@ -157,7 +157,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         float startY = MARGIN_TOP;
         float startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo("q_key", "q", "data/key_q.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("q_key", "q", "data/key_q.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("w_key", "w", "data/key_w.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("e_key", "e", "data/key_e.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("r_key", "r", "data/key_r.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
@@ -167,7 +167,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE + BUTTON_SIZE / 3;
 
-        leftKeyInfos.add(new KeyInfo("a_key", "a", "data/key_a.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("a_key", "a", "data/key_a.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("s_key", "s", "data/key_s.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("d_key", "d", "data/key_d.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("f_key", "f", "data/key_f.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
@@ -177,7 +177,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(SHIFT_ID, "", "data/key_shift.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo(SHIFT_ID, "", "data/key_shift.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("y_key", "y", "data/key_y.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("x_key", "x", "data/key_x.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("c_key", "c", "data/key_c.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
@@ -187,7 +187,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED));
 
         return leftKeyInfos;
     }
@@ -198,7 +198,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         float startY = MARGIN_TOP;
         float startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo("q_capital_key", "Q", "data/key_capital_q.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
+        leftKeyInfos.add(new KeyInfo("q_capital_key", "Q", "data/key_capital_q.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("w_capital_key", "W", "data/key_capital_w.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("e_capital_key", "E", "data/key_capital_e.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("r_capital_key", "R", "data/key_capital_r.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
@@ -208,7 +208,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE + BUTTON_SIZE / 3;
 
-        leftKeyInfos.add(new KeyInfo("a_capital_key", "A", "data/key_capital_a.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
+        leftKeyInfos.add(new KeyInfo("a_capital_key", "A", "data/key_capital_a.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("s_capital_key", "S", "data/key_capital_s.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("d_capital_key", "D", "data/key_capital_d.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("f_capital_key", "F", "data/key_capital_f.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
@@ -218,7 +218,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(SHIFT_PRESSED_ID, "", "data/key_shift_pressed.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
+        leftKeyInfos.add(new KeyInfo(SHIFT_PRESSED_ID, "", "data/key_shift_pressed.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("y_capital_key", "Y", "data/key_capital_y.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("x_capital_key", "X", "data/key_capital_x.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         leftKeyInfos.add(new KeyInfo("c_capital_key", "C", "data/key_capital_c.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
@@ -228,7 +228,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
+        leftKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
 
         return leftKeyInfos;
     }
@@ -239,7 +239,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         float startY = MARGIN_TOP;
         float startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo("1_key", "1", "data/key_1.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("1_key", "1", "data/key_1.svg", new Vector3D(startX, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("2_key", "2", "data/key_2.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("3_key", "3", "data/key_3.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("4_key", "4", "data/key_4.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
@@ -248,7 +248,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE + BUTTON_SIZE / 3;
 
-        leftKeyInfos.add(new KeyInfo("minus", "-", "data/key_minus.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("minus", "-", "data/key_minus.svg", new Vector3D(startX, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("slash", "/", "data/key_slash.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("colon", ":", "data/key_colon.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("semicolon", ";", "data/key_semicolon.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
@@ -257,18 +257,18 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(SIGNS_ID, "", "data/key_switch_to_signs.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo(SIGNS_ID, "", "data/key_switch_to_signs.svg", new Vector3D(startX, startY), KeyVisibility.NUMBERS_IS_SELECTED));
 
         startX += WIDE_BUTTON_WIDTH;
 
-        leftKeyInfos.add(new KeyInfo("dot", ".", "data/key_dot.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("dot", ".", "data/key_dot.svg", new Vector3D(startX, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("comma", ",", "data/key_comma.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("question_mark", "?", "data/key_question_mark.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
 
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX, startY), KeyVisibility.NUMBERS_IS_SELECTED));
 
         return leftKeyInfos;
     }
@@ -279,7 +279,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         float startY = MARGIN_TOP;
         float startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo("square_bracket_open", "[", "data/key_square_bracket_open.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("square_bracket_open", "[", "data/key_square_bracket_open.svg", new Vector3D(startX, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("square_bracket_close", "]", "data/key_square_bracket_close.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("curly_bracket_open", "{", "data/key_curly_bracket_open.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("curly_bracket_close", "}", "data/key_curly_bracket_close.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
@@ -288,7 +288,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE + BUTTON_SIZE / 3;
 
-        leftKeyInfos.add(new KeyInfo("underscore", "_", "data/key_underscore.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("underscore", "_", "data/key_underscore.svg", new Vector3D(startX, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("backslash", "\\", "data/key_backslash.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("pipe", "|", "data/key_pipe.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("tilde", "~", "data/key_tilde.svg", new Vector3D(startX + 3 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
@@ -297,18 +297,18 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers.svg", new Vector3D(startX, startY), KeyVisibility.SIGNS_IS_SELECTED));
 
         startX += WIDE_BUTTON_WIDTH;
 
-        leftKeyInfos.add(new KeyInfo("dot", ".", "data/key_dot.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo("dot", ".", "data/key_dot.svg", new Vector3D(startX, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("comma", ",", "data/key_comma.svg", new Vector3D(startX + 1 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
         leftKeyInfos.add(new KeyInfo("question_mark", "?", "data/key_question_mark.svg", new Vector3D(startX + 2 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
 
         startY += BUTTON_SIZE;
         startX = MARGIN_KEYBOARD_OUTSIDE;
 
-        leftKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
+        leftKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX, startY), KeyVisibility.SIGNS_IS_SELECTED));
 
         return leftKeyInfos;
     }
@@ -316,7 +316,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
     private Collection<KeyInfo> createLeftKeyboardNormalKeyInfos() {
         Collection<KeyInfo> leftKeyInfos = new ArrayList<KeyInfo>();
 
-        leftKeyInfos.add(new KeyInfo("space_key", " ", "data/key_space.svg", new Vector3D(MARGIN_KEYBOARD_OUTSIDE + WIDE_BUTTON_WIDTH, MARGIN_TOP + 3 * BUTTON_SIZE), KeyVisibility.NORMAL_KEY));
+        leftKeyInfos.add(new KeyInfo("space", " ", "data/key_space.svg", new Vector3D(MARGIN_KEYBOARD_OUTSIDE + WIDE_BUTTON_WIDTH, MARGIN_TOP + 3 * BUTTON_SIZE), KeyVisibility.NORMAL_KEY));
 
         return leftKeyInfos;
     }
@@ -355,7 +355,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = KEYBOARD_WIDTH - MARGIN_KEYBOARD_OUTSIDE - WIDE_BUTTON_WIDTH;
 
-        rightKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED));
 
         return rightKeyInfos;
     }
@@ -394,7 +394,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = KEYBOARD_WIDTH - MARGIN_KEYBOARD_OUTSIDE - WIDE_BUTTON_WIDTH;
 
-        rightKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
+        rightKeyInfos.add(new KeyInfo(NUMBERS_ID, "", "data/key_switch_to_numbers_and_signs.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
 
         return rightKeyInfos;
     }
@@ -405,11 +405,11 @@ public final class SplitKeyboard extends MTRoundRectangle {
         float startY = MARGIN_TOP;
         float startX = KEYBOARD_WIDTH - MARGIN_KEYBOARD_OUTSIDE;
 
-        rightKeyInfos.add(new KeyInfo("0_capital_key", "0", "data/key_0.svg", new Vector3D(startX - 2 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
-        rightKeyInfos.add(new KeyInfo("9_capital_key", "9", "data/key_9.svg", new Vector3D(startX - 3 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
-        rightKeyInfos.add(new KeyInfo("8_capital_key", "8", "data/key_8.svg", new Vector3D(startX - 4 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
-        rightKeyInfos.add(new KeyInfo("7_capital_key", "7", "data/key_7.svg", new Vector3D(startX - 5 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
-        rightKeyInfos.add(new KeyInfo("6_capital_key", "6", "data/key_6.svg", new Vector3D(startX - 6 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo("0_key", "0", "data/key_0.svg", new Vector3D(startX - 2 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo("9_key", "9", "data/key_9.svg", new Vector3D(startX - 3 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo("8_key", "8", "data/key_8.svg", new Vector3D(startX - 4 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo("7_key", "7", "data/key_7.svg", new Vector3D(startX - 5 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo("6_key", "6", "data/key_6.svg", new Vector3D(startX - 6 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
 
         startY += BUTTON_SIZE;
         startX = KEYBOARD_WIDTH - MARGIN_KEYBOARD_OUTSIDE - RETURN_WIDTH;
@@ -430,7 +430,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = KEYBOARD_WIDTH - MARGIN_KEYBOARD_OUTSIDE - WIDE_BUTTON_WIDTH;
 
-        rightKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.NUMBERS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX, startY), KeyVisibility.NUMBERS_IS_SELECTED));
 
         return rightKeyInfos;
     }
@@ -466,7 +466,7 @@ public final class SplitKeyboard extends MTRoundRectangle {
         startY += BUTTON_SIZE;
         startX = KEYBOARD_WIDTH - MARGIN_KEYBOARD_OUTSIDE - WIDE_BUTTON_WIDTH;
 
-        rightKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX + 0 * BUTTON_SIZE, startY), KeyVisibility.SIGNS_IS_SELECTED));
+        rightKeyInfos.add(new KeyInfo(LETTERS_ID, "", "data/key_switch_to_letters.svg", new Vector3D(startX, startY), KeyVisibility.SIGNS_IS_SELECTED));
 
         return rightKeyInfos;
     }
