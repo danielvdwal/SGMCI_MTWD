@@ -11,6 +11,7 @@ import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.sceneManagement.AbstractScene;
@@ -77,6 +78,10 @@ public class StartScene extends AbstractScene implements IScene {
         keyboard.addTextInputListener(textInput);
         keyboard.removeAllGestureEventListeners();
         keyboard.unregisterAllInputProcessors();
+        
+        float ratio = (mtApp.getWidth() * 0.5f) / keyboard.getWidthXY(TransformSpace.LOCAL);
+        keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
+
 
         //Fuegt die Komponenten dem Canvas hinzu.
         this.getCanvas().addChild(textField);
@@ -89,24 +94,9 @@ public class StartScene extends AbstractScene implements IScene {
         textField.setPickable(false);
         keyboard.setPositionRelativeToParent(new Vector3D(mtApp.width / 2, mtApp.height - keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
 
-        PImage helpImage = null;
-        PImage startImage = null;
-        PImage settingsImage = null;
-        try {
-            helpImage = mtApp.loadImage("data/helpButton.png");
-            startImage = mtApp.loadImage("data/startButton.png");
-            settingsImage = mtApp.loadImage("data/settingsButton.png");
-        } catch (Exception e) {
-            System.out.println("Error: Bilder konnte nicht geladen werden!");;
-        }
-
-        final MTImageButton helpButton = new MTImageButton(helpImage, mtApp);
-        helpButton.setNoStroke(true);
-        helpButton.setDrawSmooth(true);
-
-        if (MT4jSettings.getInstance().isOpenGlMode()) {
-            helpButton.setUseDirectGL(true);
-        }
+        final MTSvgButton helpButton = new MTSvgButton("data/button_help.svg", mtApp);
+        final MTSvgButton startButton = new MTSvgButton("data/button_start.svg", mtApp);
+        final MTSvgButton settingsButton = new MTSvgButton("data/button_settings.svg", mtApp);
 
         helpButton.addActionListener(new ActionListener() {
             @Override
@@ -138,20 +128,6 @@ public class StartScene extends AbstractScene implements IScene {
             }
         });
 
-        helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 6, mtApp.getHeight() - mtApp.getHeight() / 14));
-        helpButton.setSizeXYGlobal(mtApp.getWidth() / 16, mtApp.getHeight() / 9);
-
-        this.getCanvas().addChild(helpButton);
-
-
-        MTImageButton settingsButton = new MTImageButton(settingsImage, mtApp);
-        settingsButton.setNoStroke(true);
-        settingsButton.setDrawSmooth(true);
-
-        if (MT4jSettings.getInstance().isOpenGlMode()) {
-            settingsButton.setUseDirectGL(true);
-        }
-
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -171,20 +147,6 @@ public class StartScene extends AbstractScene implements IScene {
                 }
             }
         });
-
-        settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 12, mtApp.getHeight() - mtApp.getHeight() / 14));
-        settingsButton.setSizeXYGlobal(mtApp.getWidth() / 16, mtApp.getHeight() / 9);
-
-        this.getCanvas().addChild(settingsButton);
-
-
-        MTImageButton startButton = new MTImageButton(startImage, mtApp);
-        startButton.setNoStroke(true);
-        startButton.setDrawSmooth(true);
-
-        if (MT4jSettings.getInstance().isOpenGlMode()) {
-            startButton.setUseDirectGL(true);
-        }
 
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -208,10 +170,18 @@ public class StartScene extends AbstractScene implements IScene {
             }
         });
 
-        startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 1.2f, mtApp.getHeight() - mtApp.getHeight() / 14));
-        startButton.setSizeXYGlobal(mtApp.getWidth() / 16, mtApp.getHeight() / 9);
+        helpButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        settingsButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        
+        helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
+        settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));        
+        startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
+        
 
+        this.getCanvas().addChild(helpButton);
         this.getCanvas().addChild(startButton);
+        this.getCanvas().addChild(settingsButton);
 
         //Set a scene transition for our StartScene- Blend transition only available using opengl supporting the FBO extenstion
         //BlendTransition, da es im gegensatz zu slide aus allen Blickwinkeln gut aussieht ;-)

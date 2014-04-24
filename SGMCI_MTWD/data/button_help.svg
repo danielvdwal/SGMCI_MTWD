@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="420" height="420" viewBox="0 0 420.00 420.00" enable-background="new 0 0 420.00 420.00" xml:space="preserve">
+	<linearGradient id="SVGID_Stroke1_" gradientUnits="objectBoundingBox" x1="0.5" y1="0.5" x2="1.00125" y2="0.5">
+		<stop offset="0" stop-color="#000000" stop-opacity="1"/>
+		<stop offset="1" stop-color="#FFFFFF" stop-opacity="1"/>
+	</linearGradient>
+	<radialGradient id="SVGID_Fill1_" cx="210" cy="210" r="200.5" gradientUnits="userSpaceOnUse">
+		<stop offset="0.87069" stop-color="#FFFFFF" stop-opacity="1"/>
+		<stop offset="1" stop-color="#000000" stop-opacity="1"/>
+	</radialGradient>
+	<ellipse fill="url(#SVGID_Fill1_)" stroke-width="0.2" stroke-linejoin="round" stroke="url(#SVGID_Stroke1_)" cx="210" cy="210" rx="200" ry="200"/>
+	<linearGradient id="SVGID_Stroke2_" gradientUnits="objectBoundingBox" x1="0.5" y1="0.5" x2="1.00125" y2="0.5">
+		<stop offset="0" stop-color="#000000" stop-opacity="1"/>
+		<stop offset="1" stop-color="#FFFFFF" stop-opacity="1"/>
+	</linearGradient>
+	<radialGradient id="SVGID_Fill2_" cx="210" cy="210" r="185.463" gradientUnits="userSpaceOnUse">
+		<stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>
+		<stop offset="1" stop-color="#0080FF" stop-opacity="1"/>
+	</radialGradient>
+	<ellipse fill="url(#SVGID_Fill2_)" stroke-width="0.2" stroke-linejoin="round" stroke="url(#SVGID_Stroke2_)" cx="210" cy="210" rx="185" ry="185"/>
+	<g>
+		<path fill="#000000" fill-opacity="1" stroke-linejoin="round" d="M 185.911,262.083C 184.971,259.226 184.121,255.501 183.362,250.907C 182.602,246.314 182.222,241.738 182.222,237.181C 182.222,230.128 183.678,223.753 186.59,218.057C 189.501,212.36 193.136,207.025 197.495,202.052C 201.853,197.079 206.6,192.295 211.736,187.702C 216.872,183.108 221.619,178.461 225.978,173.759C 230.336,169.057 233.971,164.138 236.883,159.002C 239.794,153.866 241.25,148.187 241.25,141.966C 241.25,136.686 240.192,131.993 238.076,127.887C 235.96,123.782 233.067,120.346 229.396,117.579C 225.724,114.812 221.484,112.742 216.673,111.367C 211.863,109.993 206.763,109.306 201.374,109.306C 181.987,109.306 165.187,117.407 150.972,133.611L 150.972,102.144C 168.514,90.7148 186.707,85 205.551,85C 214.268,85 222.469,86.1123 230.155,88.3366C 237.841,90.561 244.578,93.8705 250.365,98.265C 256.152,102.66 260.709,108.148 264.036,114.731C 267.364,121.314 269.028,128.945 269.028,137.626C 269.028,145.872 267.5,153.224 264.443,159.68C 261.387,166.136 257.535,172.068 252.887,177.475C 248.24,182.882 243.203,187.919 237.778,192.585C 232.352,197.25 227.316,201.898 222.668,206.528C 218.02,211.157 214.169,215.977 211.112,220.986C 208.056,225.996 206.528,231.503 206.528,237.507C 206.528,242.643 207.152,247.299 208.4,251.477C 209.647,255.654 210.886,259.19 212.116,262.083L 185.911,262.083 Z M 201.319,335C 196.256,335 191.789,333.155 187.919,329.466C 184.121,325.777 182.222,321.292 182.222,316.011C 182.222,310.586 184.121,306.083 187.919,302.502C 191.68,298.704 196.147,296.806 201.319,296.806C 206.492,296.806 210.958,298.704 214.72,302.502C 218.518,306.083 220.417,310.586 220.417,316.011C 220.417,321.292 218.518,325.777 214.72,329.466C 210.85,333.155 206.383,335 201.319,335 Z "/>
+	</g>
+</svg>

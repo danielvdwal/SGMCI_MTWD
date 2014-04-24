@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="420" height="420" viewBox="0 0 420.00 420.00" enable-background="new 0 0 420.00 420.00" xml:space="preserve">
+	<linearGradient id="SVGID_Stroke1_" gradientUnits="objectBoundingBox" x1="0.5" y1="0.5" x2="1.00125" y2="0.5">
+		<stop offset="0" stop-color="#000000" stop-opacity="1"/>
+		<stop offset="1" stop-color="#FFFFFF" stop-opacity="1"/>
+	</linearGradient>
+	<radialGradient id="SVGID_Fill1_" cx="210" cy="210" r="200.5" gradientUnits="userSpaceOnUse">
+		<stop offset="0.87069" stop-color="#FFFFFF" stop-opacity="1"/>
+		<stop offset="1" stop-color="#000000" stop-opacity="1"/>
+	</radialGradient>
+	<ellipse fill="url(#SVGID_Fill1_)" stroke-width="0.2" stroke-linejoin="round" stroke="url(#SVGID_Stroke1_)" cx="210" cy="210" rx="200" ry="200"/>
+	<linearGradient id="SVGID_Stroke2_" gradientUnits="objectBoundingBox" x1="0.5" y1="0.5" x2="1.00125" y2="0.5">
+		<stop offset="0" stop-color="#000000" stop-opacity="1"/>
+		<stop offset="1" stop-color="#FFFFFF" stop-opacity="1"/>
+	</linearGradient>
+	<radialGradient id="SVGID_Fill2_" cx="210" cy="210" r="185.463" gradientUnits="userSpaceOnUse">
+		<stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>
+		<stop offset="1" stop-color="#00FF00" stop-opacity="1"/>
+	</radialGradient>
+	<ellipse fill="url(#SVGID_Fill2_)" stroke-width="0.2" stroke-linejoin="round" stroke="url(#SVGID_Stroke2_)" cx="210" cy="210" rx="185" ry="185"/>
+	<linearGradient id="SVGID_Stroke3_" gradientUnits="objectBoundingBox" x1="-0.450301" y1="-0.0882104" x2="0.474548" y2="-0.0882104" gradientTransform="rotate(40.030952 -0.450301 -0.088210)">
+		<stop offset="0" stop-color="#000000" stop-opacity="1"/>
+		<stop offset="1" stop-color="#FFFFFF" stop-opacity="1"/>
+	</linearGradient>
+	<radialGradient id="SVGID_Fill3_" cx="28.2537" cy="62.9475" r="219.2" gradientUnits="userSpaceOnUse" gradientTransform="rotate(40.030952 28.253721 62.947510)">
+		<stop offset="0" stop-color="#FFFFFF" stop-opacity="1"/>
+		<stop offset="1" stop-color="#000000" stop-opacity="1"/>
+	</radialGradient>
+	<path fill="url(#SVGID_Fill3_)" stroke-width="0.2" stroke-linejoin="round" stroke="url(#SVGID_Stroke3_)" d="M 342.253,210L 125.747,85.0001L 125.747,335L 342.253,210 Z "/>
+</svg>
