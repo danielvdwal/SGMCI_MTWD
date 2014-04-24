@@ -4,64 +4,31 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import org.mt4j.components.MTComponent;
-import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.AbstractShape;
-import static org.mt4j.components.visibleComponents.shapes.AbstractShape.BOUNDS_ONLY_CHECK;
 import org.mt4j.components.visibleComponents.shapes.MTRoundRectangle;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.components.visibleComponents.widgets.keyboard.ITextInputListener;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
-import org.mt4j.util.animation.Animation;
-import org.mt4j.util.animation.AnimationEvent;
-import org.mt4j.util.animation.IAnimationListener;
-import org.mt4j.util.animation.MultiPurposeInterpolator;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
 /**
  *
- * @author danielvanderwal
+ * @author Daniel van der Wal
+ * @version 0.1.0
  */
-public final class SplitKeyboard extends MTRoundRectangle {
+public final class SplitKeyboard extends AbstractKeyboard {
 
-    private static final int MARGIN_KEYBOARD_INSIDE = 10;
+    private static final int MARGIN_KEYBOARD_INSIDE = 20;
     private static final int MARGIN_KEYBOARD_OUTSIDE = 20;
-    private static final int MARGIN_TOP = 20;
-    private static final int MARGIN_BOTTOM = 10;
-    private static final float INNER_BUTTON_WIDTH = 42;
-    private static final float BUTTON_MARGIN = 4;
-    private static final float BUTTON_SIZE = INNER_BUTTON_WIDTH + 2 * BUTTON_MARGIN;
-    private static final float WIDE_BUTTON_WIDTH = 102 + 2 * BUTTON_MARGIN;
-    private static final float RETURN_WIDTH = 58 + 2 * BUTTON_MARGIN;
     private static final float SPACE_WIDTH = 199 + 2 * BUTTON_MARGIN;
-    private static final float SCALE_FACTOR = 0.1f;
     private static final int CORNER_RADIUS = 30;
     private static final int KEYBOARD_WIDTH = 317 + MARGIN_KEYBOARD_INSIDE + MARGIN_KEYBOARD_OUTSIDE;
-    private static final int KEYBOARD_HEIGHT = 200 + MARGIN_TOP + MARGIN_BOTTOM;
-    private static final String SHIFT_ID = "shift";
-    private static final String SHIFT_PRESSED_ID = "shift_pressed";
-    private static final String LETTERS_ID = "letters";
-    private static final String NUMBERS_ID = "numbers";
-    private static final String SIGNS_ID = "signs";
-    private static final String BACKSPACE_ID = "backspace";
     private final MTRoundRectangle leftKeyboard;
     private final MTRoundRectangle rightKeyboard;
-    private final PApplet pApplet;
-    private final Map<MTSvgButton, KeyInfo> allKeys;
-    private final Map<MTSvgButton, KeyInfo> normalKeys;
-    private final Map<MTSvgButton, KeyInfo> letterKeys;
-    private final Map<MTSvgButton, KeyInfo> capitalLetterKeys;
-    private final Map<MTSvgButton, KeyInfo> numberKeys;
-    private final Map<MTSvgButton, KeyInfo> signKeys;
-    private final Collection<ITextInputListener> textInputAcceptors;
-    private boolean shiftPressed;
-    private KeyboardVisiblity keyboardVisiblity;
     private float spaceBetweenKeyboards = 200;
 
     public SplitKeyboard(PApplet pApplet) {
@@ -69,35 +36,12 @@ public final class SplitKeyboard extends MTRoundRectangle {
 
         this.leftKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
         this.rightKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
-
-        this.pApplet = pApplet;
-
-        this.shiftPressed = false;
-        this.keyboardVisiblity = KeyboardVisiblity.LETTERS;
-
-        this.allKeys = new HashMap<MTSvgButton, KeyInfo>();
-        this.normalKeys = new HashMap<MTSvgButton, KeyInfo>();
-        this.letterKeys = new HashMap<MTSvgButton, KeyInfo>();
-        this.capitalLetterKeys = new HashMap<MTSvgButton, KeyInfo>();
-        this.numberKeys = new HashMap<MTSvgButton, KeyInfo>();
-        this.signKeys = new HashMap<MTSvgButton, KeyInfo>();
-
-        this.textInputAcceptors = new LinkedList<ITextInputListener>();
-
-        this.setDrawSmooth(true);
-        if (MT4jSettings.getInstance().isOpenGlMode()) {
-            this.setUseDirectGL(true);
-        }
-
-        this.setFillColor(new MTColor(0, 0, 0, 0));
+        this.setFillColor(MTColor.BLACK);
+        this.setNoFill(true);
         this.setNoStroke(true);
         this.removeAllGestureEventListeners();
-
+        
         this.createKeyboard();
-
-        this.setDepthBufferDisabled(true);
-
-        this.setBoundsBehaviour(BOUNDS_ONLY_CHECK);
     }
 
     public MTComponent getLeftKeyboard() {
@@ -125,6 +69,12 @@ public final class SplitKeyboard extends MTRoundRectangle {
     } 
 
     @Override
+    public void setFillColor(MTColor fillColor) {
+        leftKeyboard.setFillColor(fillColor);
+        rightKeyboard.setFillColor(fillColor);
+    }
+    
+    @Override
     public void setPickable(boolean pickable) {
         super.setPickable(pickable);
         leftKeyboard.setPickable(pickable);
@@ -146,9 +96,6 @@ public final class SplitKeyboard extends MTRoundRectangle {
     }
 
     private void createKeyboard() {
-        leftKeyboard.setFillColor(MTColor.BLACK);
-        rightKeyboard.setFillColor(MTColor.BLACK);
-
         Collection<KeyInfo> leftKeyInfos = new LinkedList<KeyInfo>();
         Collection<KeyInfo> rightKeyInfos = new LinkedList<KeyInfo>();
 
@@ -526,308 +473,5 @@ public final class SplitKeyboard extends MTRoundRectangle {
         rightKeyInfos.add(new KeyInfo("space", " ", "data/key_space.svg", new Vector3D(startX - WIDE_BUTTON_WIDTH - SPACE_WIDTH, startY + 3 * BUTTON_SIZE), KeyVisibility.NORMAL_KEY));
 
         return rightKeyInfos;
-    }
-
-    private void changeVisibility() {
-        switch (keyboardVisiblity) {
-            case LETTERS:
-                for (MTSvgButton key : letterKeys.keySet()) {
-                    key.setVisible(true);
-                }
-                for (MTSvgButton key : capitalLetterKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : numberKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : signKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                break;
-            case LETTERS_WITH_SHIFT_PRESSED:
-                for (MTSvgButton key : letterKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : capitalLetterKeys.keySet()) {
-                    key.setVisible(true);
-                }
-                for (MTSvgButton key : numberKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : signKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                break;
-            case NUMBERS:
-                for (MTSvgButton key : letterKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : capitalLetterKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : numberKeys.keySet()) {
-                    key.setVisible(true);
-                }
-                for (MTSvgButton key : signKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                break;
-            case SIGNS:
-                for (MTSvgButton key : letterKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : capitalLetterKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : numberKeys.keySet()) {
-                    key.setVisible(false);
-                }
-                for (MTSvgButton key : signKeys.keySet()) {
-                    key.setVisible(true);
-                }
-                break;
-        }
-    }
-
-    private boolean setWidthRelativeToParent(float width) {
-        if (width > 0) {
-            Vector3D centerPoint;
-            if (this.hasBounds()) {
-                centerPoint = this.getBounds().getCenterPointLocal();
-                centerPoint.transform(this.getLocalMatrix());
-            } else {
-                centerPoint = this.getCenterPointGlobal();
-                centerPoint.transform(this.getGlobalInverseMatrix());
-            }
-            this.scale(1 / this.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 1 / this.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 1, centerPoint);
-            this.scale(width, width, 1, centerPoint);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public synchronized void addTextInputListener(ITextInputListener textListener) {
-        if (!this.textInputAcceptors.contains(textListener)) {
-            this.textInputAcceptors.add(textListener);
-        }
-    }
-
-    public synchronized ITextInputListener[] getTextInputListeners() {
-        return this.textInputAcceptors.toArray(new ITextInputListener[this.textInputAcceptors.size()]);
-    }
-
-    public synchronized void removeTextInputListener(ITextInputListener textListener) {
-        if (this.textInputAcceptors.contains(textListener)) {
-            this.textInputAcceptors.remove(textListener);
-        }
-    }
-
-    private void closeKeyboard() {
-        float width = this.getWidthXY(TransformSpace.RELATIVE_TO_PARENT);
-        Animation keybCloseAnim = new Animation("Keyboard Fade", new MultiPurposeInterpolator(width, 1, 300, 0.2f, 0.5f, 1), this);
-        keybCloseAnim.addAnimationListener(new IAnimationListener() {
-            @Override
-            public void processAnimationEvent(AnimationEvent ae) {
-                switch (ae.getId()) {
-                    case AnimationEvent.ANIMATION_STARTED:
-                    case AnimationEvent.ANIMATION_UPDATED:
-                        float currentVal = ae.getAnimation().getInterpolator().getCurrentValue();
-                        setWidthRelativeToParent(currentVal);
-                        break;
-                    case AnimationEvent.ANIMATION_ENDED:
-                        setVisible(false);
-                        destroy();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        keybCloseAnim.start();
-    }
-
-    @Override
-    protected void destroyComponent() {
-        super.destroyComponent();
-        allKeys.clear();
-        normalKeys.clear();
-        letterKeys.clear();
-        capitalLetterKeys.clear();
-        numberKeys.clear();
-        signKeys.clear();
-        textInputAcceptors.clear();
-    }
-
-    private void createKeyButtonsOutOfKeyInfos(Collection<KeyInfo> rightKeyInfos, MTRoundRectangle rightKeyboard) {
-        for (KeyInfo keyInfo : rightKeyInfos) {
-            MTSvgButton key = new MTSvgButton(keyInfo.fileName, pApplet);
-
-            //Transform
-            key.scale(SCALE_FACTOR, SCALE_FACTOR, 1, new Vector3D(0, 0, 0));
-            key.translate(keyInfo.position);
-            key.translate(new Vector3D(BUTTON_MARGIN, BUTTON_MARGIN));
-
-            switch (keyInfo.visibilityInfo) {
-                case NORMAL_KEY:
-                    normalKeys.put(key, keyInfo);
-                    break;
-                case LETTERS_IS_SELECTED:
-                    letterKeys.put(key, keyInfo);
-                    break;
-                case LETTERS_IS_SELECTED_AND_SHIFT_PRESSED:
-                    capitalLetterKeys.put(key, keyInfo);
-                    break;
-                case NUMBERS_IS_SELECTED:
-                    numberKeys.put(key, keyInfo);
-                    break;
-                case SIGNS_IS_SELECTED:
-                    signKeys.put(key, keyInfo);
-                    break;
-            }
-            allKeys.put(key, keyInfo);
-
-            if (keyInfo.id.equals(SHIFT_ID)) {
-                key.addActionListener(new ShiftButtonPressedListener());
-            } else if (keyInfo.id.equals(SHIFT_PRESSED_ID)) {
-                key.addActionListener(new ShiftPressedButtonPressedListener());
-            } else if (keyInfo.id.equals(LETTERS_ID)) {
-                key.addActionListener(new LettersButtonPressedListener());
-            } else if (keyInfo.id.equals(NUMBERS_ID)) {
-                key.addActionListener(new NumbersButtonPressedListener());
-            } else if (keyInfo.id.equals(SIGNS_ID)) {
-                key.addActionListener(new SignsButtonPressedListener());
-            } else {
-                key.addActionListener(new KeyButtonPressedListener());
-            }
-
-            rightKeyboard.addChild(key);
-        }
-    }
-
-    private enum KeyboardVisiblity {
-
-        LETTERS,
-        LETTERS_WITH_SHIFT_PRESSED,
-        NUMBERS,
-        SIGNS;
-    }
-
-    private enum KeyVisibility {
-
-        NORMAL_KEY,
-        LETTERS_IS_SELECTED,
-        LETTERS_IS_SELECTED_AND_SHIFT_PRESSED,
-        NUMBERS_IS_SELECTED,
-        SIGNS_IS_SELECTED;
-    }
-
-    private class KeyInfo {
-
-        String id;
-        String charUnicodeToWrite;
-        String fileName;
-        Vector3D position;
-        KeyVisibility visibilityInfo;
-
-        public KeyInfo(String id, String charUnicodeToWrite, String fileName,
-                Vector3D position, KeyVisibility visibilityInfo) {
-            this.id = id;
-            this.charUnicodeToWrite = charUnicodeToWrite;
-            this.fileName = fileName;
-            this.position = position;
-            this.visibilityInfo = visibilityInfo;
-        }
-    }
-
-    private class ShiftButtonPressedListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
-                shiftPressed = true;
-                keyboardVisiblity = KeyboardVisiblity.LETTERS_WITH_SHIFT_PRESSED;
-                changeVisibility();
-            }
-        }
-    }
-
-    private class KeyButtonPressedListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
-                if (e.getSource() instanceof MTSvgButton) {
-                    MTSvgButton key = (MTSvgButton) e.getSource();
-                    KeyInfo value = allKeys.get(key);
-                    if (value == null) {
-                        return;
-                    } else if (value.id.equals(BACKSPACE_ID)) {
-                        ITextInputListener[] listeners = getTextInputListeners();
-                        for (ITextInputListener listener : listeners) {
-                            listener.removeLastCharacter();
-                        }
-                    } else {
-                        ITextInputListener[] listeners = getTextInputListeners();
-                        for (ITextInputListener listener : listeners) {
-                            listener.appendCharByUnicode(value.charUnicodeToWrite);
-                        }
-                    }
-                    if (keyboardVisiblity == KeyboardVisiblity.LETTERS_WITH_SHIFT_PRESSED) {
-                        keyboardVisiblity = KeyboardVisiblity.LETTERS;
-                        changeVisibility();
-                    }
-                }
-            }
-        }
-    }
-
-    private class ShiftPressedButtonPressedListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
-                shiftPressed = false;
-                keyboardVisiblity = KeyboardVisiblity.LETTERS;
-                changeVisibility();
-            }
-        }
-    }
-
-    private class LettersButtonPressedListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
-                if (shiftPressed) {
-                    keyboardVisiblity = KeyboardVisiblity.LETTERS_WITH_SHIFT_PRESSED;
-                } else {
-                    keyboardVisiblity = KeyboardVisiblity.LETTERS;
-                }
-                changeVisibility();
-            }
-        }
-    }
-
-    private class NumbersButtonPressedListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
-                keyboardVisiblity = KeyboardVisiblity.NUMBERS;
-                changeVisibility();
-            }
-        }
-    }
-
-    private class SignsButtonPressedListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
-                keyboardVisiblity = KeyboardVisiblity.SIGNS;
-                changeVisibility();
-            }
-        }
     }
 }
