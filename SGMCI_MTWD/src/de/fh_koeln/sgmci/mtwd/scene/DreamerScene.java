@@ -8,7 +8,6 @@ import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
-import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.input.gestureAction.DefaultPanAction;
 import org.mt4j.input.gestureAction.DefaultZoomAction;
@@ -64,7 +63,7 @@ public class DreamerScene extends AbstractScene implements IScene {
             float width = keyboard.getWidth();
             float height = keyboard.getHeight();
             float ratio = (mtApp.getWidth() * 0.5f) / width;
-            keyboard.setSpaceBetweenKeyboards(400);
+            keyboard.setSpaceBetweenKeyboards(200);
             keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
 
             width = width * ratio;

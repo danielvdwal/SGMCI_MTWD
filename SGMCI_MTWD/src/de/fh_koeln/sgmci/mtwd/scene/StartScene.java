@@ -157,7 +157,7 @@ public class StartScene extends AbstractScene implements IScene {
                         //Save the current scene on the scene stack before changing
                         mtApp.pushScene();
                         if (dreamScene == null) {
-                            dreamScene = new DreamScene(mtApp, "Scene 2");
+                            dreamScene = new DreamerScene(mtApp, "Scene 2");
                             //Add the scene to the mt application
                             mtApp.addScene(dreamScene);
                         }
