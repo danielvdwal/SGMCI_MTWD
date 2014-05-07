@@ -15,10 +15,6 @@ public class Problem {
     
     private String description;
 
-    Problem(String id) {
-        this(id, null);
-    }
-
     public Problem(String id, String description) {
         this.id = id;
         this.ideas = new HashMap<String, Idea>();

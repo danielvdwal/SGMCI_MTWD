@@ -1,8 +1,9 @@
 package de.fh_koeln.sgmci.mtwd;
 
-import de.fh_koeln.sgmci.mtwd.scene.DreamerScene;
-import de.fh_koeln.sgmci.mtwd.scene.StartScene;
-
+import de.fh_koeln.sgmci.mtwd.scene.IScene;
+import de.fh_koeln.sgmci.mtwd.scene.factory.AbstractMTWDSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.DreamerSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
 import org.mt4j.MTApplication;
 
 /**
@@ -17,10 +18,15 @@ public class Main extends MTApplication {
 
     @Override
     public void startUp() {
-        //addScene(new HelloWorldScene(this, "Hello World Scene"));
-        //addScene(new PianoScene(this, "Piano Scene"));
-        //addScene(new MT4JBasicsScene(this, "MT4J Basics"));
-        //addScene(new MT4JGestruresScene(this, "MT4J Gestures"));
-        addScene(new StartScene(this, "Start Scene"));
+        AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
+        AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
+        
+        IScene startScene = startSceneFactory.createMTWDScene(this, "Start Scene");
+        IScene dreamerScene = dreamerSceneFactory.createMTWDScene(this, "Dreamer Scene");
+        
+        startScene.setNextScene(dreamerScene);
+        
+        addScene(startScene);
+        addScene(dreamerScene);
     }
 }
