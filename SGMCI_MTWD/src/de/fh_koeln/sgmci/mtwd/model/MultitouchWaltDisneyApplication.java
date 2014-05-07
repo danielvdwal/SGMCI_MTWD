@@ -36,8 +36,8 @@ public final class MultitouchWaltDisneyApplication {
     }
 
     // problem
-    public void addProblem(String id) {
-        this.problems.put(id, new Problem(id));
+    public void addProblem(String id, String description) {
+        this.problems.put(id, new Problem(id, description));
     }
 
     public void removeProblem(String id) {

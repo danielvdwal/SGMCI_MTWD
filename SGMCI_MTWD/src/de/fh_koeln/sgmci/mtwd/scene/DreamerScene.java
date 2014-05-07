@@ -1,5 +1,7 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
+import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.SplitKeyboard;
 import java.awt.event.KeyEvent;
 import org.mt4j.MTApplication;
@@ -17,7 +19,6 @@ import org.mt4j.input.inputProcessors.componentProcessors.panProcessor.PanProces
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.zoomProcessor.ZoomProcessor;
-import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
@@ -27,34 +28,48 @@ import processing.core.PImage;
  *
  * @author danielvanderwal
  */
-public class DreamerScene extends AbstractScene implements IScene {
+public class DreamerScene extends AbstractMTWDScene {
 
-    private final MTApplication mtApp;
+    private final DreamerSceneController controller;
+    private MTTextArea problemTextArea;
+    private MTTextArea problemTextAreaInverted;
 
     public DreamerScene(MTApplication mtApp, String name) {
         super(mtApp, name);
-        this.mtApp = mtApp;
-        
+        controller = new DreamerSceneController(this);
+    }
+
+    @Override
+    public void createBackground() {
         // 4800 x 3200
         PImage backgroundImage = mtApp.loadImage("data/background_sky_bk.jpg");
         backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
         this.getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
+    }
 
+    @Override
+    public void createEventListeners() {
         addEventListeners();
-
-        createComponents();
     }
 
-    private void addEventListeners() {
-        this.getCanvas().registerInputProcessor(new PanProcessorTwoFingers(mtApp));
-        this.getCanvas().registerInputProcessor(new ZoomProcessor(mtApp));
+    @Override
+    public void createComponents() {
+        final IFont problemFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 30);
+        final IFont ideaFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18);
 
-        this.getCanvas().addGestureListener(ZoomProcessor.class, new DefaultZoomAction());
-        this.getCanvas().addGestureListener(PanProcessorTwoFingers.class, new DefaultPanAction());
-    }
+        problemTextArea = new MTTextArea(mtApp, problemFont);
+        problemTextArea.setNoFill(true);
+        problemTextArea.setNoStroke(true);
+        problemTextArea.setPickable(false);
+        
+        problemTextAreaInverted = new MTTextArea(mtApp, problemFont);
+        problemTextAreaInverted.setNoFill(true);
+        problemTextAreaInverted.setNoStroke(true);
+        problemTextAreaInverted.setPickable(false);
+        problemTextAreaInverted.rotateZ(Vector3D.ZERO_VECTOR, 180);
 
-    private void createComponents() {
-        final IFont font = FontManager.getInstance().createFont(mtApp, "arial.ttf", 50);
+        getCanvas().addChild(problemTextArea);
+        getCanvas().addChild(problemTextAreaInverted);
 
         for (int i = 0; i < 4; i++) {
             final SplitKeyboard keyboard = new SplitKeyboard(mtApp);
@@ -69,7 +84,7 @@ public class DreamerScene extends AbstractScene implements IScene {
             width = width * ratio;
             height = height * ratio;
 
-            final MTTextArea currentTextArea = new MTTextArea(mtApp, font);
+            final MTTextArea currentTextArea = new MTTextArea(mtApp, ideaFont);
             currentTextArea.setExpandDirection(MTTextArea.ExpandDirection.UP);
             currentTextArea.setStrokeColor(new MTColor(0, 0, 0, 255));
             currentTextArea.setFillColor(new MTColor(205, 200, 177, 255));
@@ -83,19 +98,19 @@ public class DreamerScene extends AbstractScene implements IScene {
             rectangle.registerInputProcessor(new TapProcessor(mtApp));
             rectangle.addGestureListener(TapProcessor.class,
                     new IGestureEventListener() {
-                @Override
-                public boolean processGestureEvent(MTGestureEvent ge) {
-                    TapEvent te = (TapEvent) ge;
-                    if (te.getId() == TapEvent.GESTURE_DETECTED) {
-                        final MTTextArea newTextArea = new MTTextArea(mtApp, font);
-                        newTextArea.setText(currentTextArea.getText());
-                        getCanvas().addChild(newTextArea);
+                        @Override
+                        public boolean processGestureEvent(MTGestureEvent ge) {
+                            TapEvent te = (TapEvent) ge;
+                            if (te.getId() == TapEvent.GESTURE_DETECTED) {
+                                final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
+                                newTextArea.setText(currentTextArea.getText());
+                                getCanvas().addChild(newTextArea);
 
-                        currentTextArea.setText("");
-                    }
-                    return false;
-                }
-            });
+                                currentTextArea.setText("");
+                            }
+                            return false;
+                        }
+                    });
             keyboard.addChild(rectangle);
 
             switch (i) {
@@ -121,6 +136,25 @@ public class DreamerScene extends AbstractScene implements IScene {
             keyboard.unregisterAllInputProcessors();
             this.getCanvas().addChild(keyboard);
         }
+    }
+
+    private void addEventListeners() {
+        this.getCanvas().registerInputProcessor(new PanProcessorTwoFingers(mtApp));
+        this.getCanvas().registerInputProcessor(new ZoomProcessor(mtApp));
+
+        this.getCanvas().addGestureListener(ZoomProcessor.class, new DefaultZoomAction());
+        this.getCanvas().addGestureListener(PanProcessorTwoFingers.class, new DefaultPanAction());
+    }
+
+    @Override
+    public void startScene() {
+        problemTextArea.setText(controller.getCurrentProblemDescription());
+        problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+        problemTextArea.translate(new Vector3D(0, problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+    
+        problemTextAreaInverted.setText(controller.getCurrentProblemDescription());
+        problemTextAreaInverted.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+        problemTextAreaInverted.translate(new Vector3D(0, -problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
 
     @Override

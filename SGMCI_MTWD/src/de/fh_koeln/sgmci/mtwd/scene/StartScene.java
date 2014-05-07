@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,19 +12,15 @@ import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
-import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
-import org.mt4j.sceneManagement.AbstractScene;
-import org.mt4j.sceneManagement.Iscene;
 import org.mt4j.sceneManagement.transition.BlendTransition;
 import org.mt4j.sceneManagement.transition.FadeTransition;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
 import org.mt4j.util.opengl.GLFBO;
-
 import processing.core.PImage;
 
 /**
@@ -34,19 +31,14 @@ import processing.core.PImage;
  * Diese Klasse repraesentiert den Startbildschirm.
  *
  */
-public class StartScene extends AbstractScene implements IScene {
+public class StartScene extends AbstractMTWDScene {
 
-    private MTApplication mtApp;
-    private Iscene dreamScene;
+    private final StartSceneController controller;
     
-    public void setDreamScene(Iscene scene){
-    	dreamScene = scene;
-    }
-
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
-        this.mtApp = mtApp;
-
+        this.controller = new StartSceneController(this);
+        
         //Zeigt die Touch-Stellen auf dem Bildschirm an.
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
@@ -162,11 +154,7 @@ public class StartScene extends AbstractScene implements IScene {
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {
                     case TapEvent.BUTTON_CLICKED:
-                        //wenn Button geklickt wurde
-                        //Save the current scene on the scene stack before changing
-                        mtApp.pushScene();
-                        //Do the scene change
-                        mtApp.changeScene(dreamScene);
+                        controller.proceed(textInput.getText());
                         break;
                     default:
                         break;
@@ -194,14 +182,5 @@ public class StartScene extends AbstractScene implements IScene {
         } else {
             this.setTransition(new FadeTransition(mtApp));
         }
-
-    }
-
-    @Override
-    public void init() {
-    }
-
-    @Override
-    public void shutDown() {
     }
 }
