@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.font.FontManager;
+import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTImageButton;
@@ -37,6 +38,10 @@ public class StartScene extends AbstractScene implements IScene {
 
     private MTApplication mtApp;
     private Iscene dreamScene;
+    
+    public void setDreamScene(Iscene scene){
+    	dreamScene = scene;
+    }
 
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -45,12 +50,16 @@ public class StartScene extends AbstractScene implements IScene {
         //Zeigt die Touch-Stellen auf dem Bildschirm an.
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        this.getCanvas().setFrustumCulling(false);
-        this.setClearColor(new MTColor(146, 150, 188, 255));
+//        this.getCanvas().setFrustumCulling(false);
+//        this.setClearColor(new MTColor(146, 150, 188, 255));
+        
+        PImage backgroundImage = mtApp.loadImage("data/startBackground.png");
+        backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
+        this.getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
 
         //Erstellt das Texfeld sowie das zugehoerige Inputfeld.
         final MTTextArea textField = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50,
-                new MTColor(255, 255, 255, 255),
+                new MTColor(0, 0, 0, 255),
                 new MTColor(255, 255, 255, 255)));
         textField.setNoFill(true);
         textField.setNoStroke(true);
@@ -156,11 +165,6 @@ public class StartScene extends AbstractScene implements IScene {
                         //wenn Button geklickt wurde
                         //Save the current scene on the scene stack before changing
                         mtApp.pushScene();
-                        if (dreamScene == null) {
-                            dreamScene = new DreamScene(mtApp, "Scene 2");
-                            //Add the scene to the mt application
-                            mtApp.addScene(dreamScene);
-                        }
                         //Do the scene change
                         mtApp.changeScene(dreamScene);
                         break;

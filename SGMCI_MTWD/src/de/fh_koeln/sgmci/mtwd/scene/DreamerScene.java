@@ -37,7 +37,7 @@ public class DreamerScene extends AbstractScene implements IScene {
         this.mtApp = mtApp;
         
         // 4800 x 3200
-        PImage backgroundImage = mtApp.loadImage("data/background_sky.jpg");
+        PImage backgroundImage = mtApp.loadImage("data/background_sky_bk.jpg");
         backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
         this.getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
 
@@ -64,7 +64,7 @@ public class DreamerScene extends AbstractScene implements IScene {
             float width = keyboard.getWidth();
             float height = keyboard.getHeight();
             float ratio = (mtApp.getWidth() * 0.5f) / width;
-            keyboard.setSpaceBetweenKeyboards(400);
+            keyboard.setSpaceBetweenKeyboards(200);
             keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
 
             width = width * ratio;
@@ -79,7 +79,7 @@ public class DreamerScene extends AbstractScene implements IScene {
             currentTextArea.setPositionRelativeToParent(new Vector3D(40, -currentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
             keyboard.addTextInputListener(currentTextArea);
 
-            final MTRectangle rectangle = new MTRectangle(0, 0, 30, 30, mtApp);
+            final MTRectangle rectangle = new MTRectangle(-100, 0, 30, 30, mtApp);
             rectangle.translate(new Vector3D(0, 15, 0));
             rectangle.registerInputProcessor(new TapProcessor(mtApp));
             rectangle.addGestureListener(TapProcessor.class,
