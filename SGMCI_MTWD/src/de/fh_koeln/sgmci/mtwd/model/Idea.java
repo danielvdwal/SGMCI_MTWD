@@ -24,7 +24,7 @@ public class Idea extends AbstractModel {
      */
     Idea(String id, String description) {
         super(id);
-        this.description = id;
+        this.description = description;
         this.commentedIdea = new CommentedIdea(this.id, this);
         this.critizedIdea = new CritiziedIdea(this.id, this);
     }
