@@ -54,7 +54,6 @@ public class Main extends MTApplication {
         startScene.setNextScene(dreamerScene);
         dreamerScene.setNextScene(realistVotingScene);
         realistVotingScene.setNextScene(realistCommentingScene);
-        dreamerScene.setNextScene(realistCommentingScene);
         realistCommentingScene.setNextScene(criticerCommentingScene);
         criticerCommentingScene.setNextScene(evaluationScene);
         evaluationScene.setNextScene(startScene);
