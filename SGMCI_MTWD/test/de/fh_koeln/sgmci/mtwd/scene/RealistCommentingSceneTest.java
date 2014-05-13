@@ -21,6 +21,6 @@ public class RealistCommentingSceneTest extends MTApplication {
         IScene scene = factory.createMTWDScene(this, "Realist Commenting Scene");
         
         this.addScene(scene);
-        scene.startScene();
+        scene.updateScene();
     }
 }

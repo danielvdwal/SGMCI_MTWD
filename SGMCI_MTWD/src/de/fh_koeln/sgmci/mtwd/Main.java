@@ -40,6 +40,6 @@ public class Main extends MTApplication {
         //addScene(startScene);
         //addScene(dreamerScene);
         addScene(realistCommentingScene);
-        realistCommentingScene.startScene();
+        realistCommentingScene.updateScene();
     }
 }

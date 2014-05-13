@@ -22,6 +22,6 @@ public class SplashSceneTest extends MTApplication {
         IScene scene = factory.createMTWDScene(this, "Splash Scene");
         
         this.addScene(scene);
-        scene.startScene();
+        scene.updateScene();
     }
 }
