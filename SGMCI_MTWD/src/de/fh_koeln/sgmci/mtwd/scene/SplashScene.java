@@ -1,5 +1,7 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.font.FontManager;
@@ -7,6 +9,7 @@ import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
@@ -121,8 +124,28 @@ public class SplashScene extends AbstractMTWDScene {
     }
 
     @Override
+    public void createEventListeners() {
+        
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch (ae.getID()) {
+                    case TapEvent.BUTTON_CLICKED:
+                        //controller.proceed(problemInputField.getText());
+                        gotoNextScene();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+    
+    @Override
     public void updateScene() {
         loadingTextArea.setVisible(false);
         startButton.setVisible(true);
+        getCanvas().removeChild(loadingTextArea);
+        getCanvas().addChild(startButton);  
     }
 }
