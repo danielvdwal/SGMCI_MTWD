@@ -2,6 +2,7 @@ package de.fh_koeln.sgmci.mtwd;
 
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
 import de.fh_koeln.sgmci.mtwd.scene.factory.AbstractMTWDSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerVotingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.DreamerSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.RealistVotingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.RealistCommentingSceneFactory;
@@ -9,6 +10,7 @@ import de.fh_koeln.sgmci.mtwd.scene.factory.SplashSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.EvaluationSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerCommentingSceneFactory;
+
 import org.mt4j.MTApplication;
 
 /**
@@ -38,6 +40,7 @@ public class Main extends MTApplication {
         AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
         AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
         AbstractMTWDSceneFactory criticerCommentingSceneFactory = new CriticerCommentingSceneFactory();
+        AbstractMTWDSceneFactory criticerVotingSceneFactory = new CriticerVotingSceneFactory();
         AbstractMTWDSceneFactory evaluationSceneFactory = new EvaluationSceneFactory();
         
         IScene startScene = startSceneFactory.createMTWDScene(this, "Start Scene");
@@ -45,7 +48,7 @@ public class Main extends MTApplication {
         IScene realistVotingScene = realistVotingSceneFactory.createMTWDScene(this, "Realist Voting Scene");
         IScene realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(this, "Realist Commenting Scene");
         IScene criticerCommentingScene = criticerCommentingSceneFactory.createMTWDScene(this, "Criticer Commenting Scene");
-        
+        IScene criticerVotingScene = criticerVotingSceneFactory.createMTWDScene(this, "Criticer Voting Scene");
         IScene evaluationScene = evaluationSceneFactory.createMTWDScene(this, "Evaluation Scene");
         
         
@@ -55,7 +58,8 @@ public class Main extends MTApplication {
         dreamerScene.setNextScene(realistVotingScene);
         realistVotingScene.setNextScene(realistCommentingScene);
         realistCommentingScene.setNextScene(criticerCommentingScene);
-        criticerCommentingScene.setNextScene(evaluationScene);
+        criticerCommentingScene.setNextScene(criticerVotingScene);
+        criticerVotingScene.setNextScene(evaluationScene);
         evaluationScene.setNextScene(startScene);
         
         
@@ -64,6 +68,7 @@ public class Main extends MTApplication {
         addScene(realistVotingScene);
         addScene(realistCommentingScene);
         addScene(criticerCommentingScene);
+        addScene(criticerVotingScene);
         addScene(evaluationScene);
         splashScene.updateScene();
     }
