@@ -96,6 +96,10 @@ public class SplashScene extends AbstractMTWDScene {
         profTextArea.setNoStroke(true);
         profTextArea.setPickable(false);
         profTextArea.setText("Prof. Dr. Heiner Klocke");
+        
+        startButton = new MTSvgButton("data/button_start.svg", mtApp);
+        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        startButton.setVisible(false);
 
         getCanvas().addChild(headlineTextArea);
         getCanvas().addChild(subheadlineTextArea);
@@ -104,6 +108,7 @@ public class SplashScene extends AbstractMTWDScene {
         getCanvas().addChild(personsTextArea);
         getCanvas().addChild(moduleTextArea);
         getCanvas().addChild(profTextArea);
+        getCanvas().addChild(startButton);
 
         headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 250, 0));
         subheadlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 280, 0));
@@ -112,18 +117,12 @@ public class SplashScene extends AbstractMTWDScene {
         personsTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2 + personsTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 50, 400, 0));
         moduleTextArea.setPositionGlobal(new Vector3D(moduleTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height - 20, 0));
         profTextArea.setPositionGlobal(new Vector3D(mtApp.width - profTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height - 20, 0));
-
-        startButton = new MTSvgButton("data/button_start.svg", mtApp);
-        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         startButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150, 0));
     }
 
     @Override
     public void updateScene() {
-
-        getCanvas().removeChild(loadingTextArea);
-        getCanvas().addChild(startButton);
-
+        loadingTextArea.setVisible(false);
+        startButton.setVisible(true);
     }
-
 }
