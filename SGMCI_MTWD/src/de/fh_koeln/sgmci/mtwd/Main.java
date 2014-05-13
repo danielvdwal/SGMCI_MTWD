@@ -3,6 +3,7 @@ package de.fh_koeln.sgmci.mtwd;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
 import de.fh_koeln.sgmci.mtwd.scene.factory.AbstractMTWDSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.DreamerSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.RealistCommentingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
 import org.mt4j.MTApplication;
 
@@ -26,12 +27,19 @@ public class Main extends MTApplication {
         AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
         AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
         
+        AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
+        
         IScene startScene = startSceneFactory.createMTWDScene(this, "Start Scene");
         IScene dreamerScene = dreamerSceneFactory.createMTWDScene(this, "Dreamer Scene");
         
-        startScene.setNextScene(dreamerScene);
+        IScene realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(this, "Realist Commenting Scene");
         
-        addScene(startScene);
-        addScene(dreamerScene);
+        startScene.setNextScene(dreamerScene);
+        realistCommentingScene.setNextScene(startScene);
+        
+        //addScene(startScene);
+        //addScene(dreamerScene);
+        addScene(realistCommentingScene);
+        realistCommentingScene.startScene();
     }
 }
