@@ -4,7 +4,9 @@ import de.fh_koeln.sgmci.mtwd.scene.IScene;
 import de.fh_koeln.sgmci.mtwd.scene.factory.AbstractMTWDSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.DreamerSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.RealistCommentingSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.RealistVotingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
+
 import org.mt4j.MTApplication;
 
 /**
@@ -26,20 +28,25 @@ public class Main extends MTApplication {
     public void startUp() {
         AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
         AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
-        
+        AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
         AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
         
         IScene startScene = startSceneFactory.createMTWDScene(this, "Start Scene");
         IScene dreamerScene = dreamerSceneFactory.createMTWDScene(this, "Dreamer Scene");
-        
+        IScene realistVotingScene = realistVotingSceneFactory.createMTWDScene(this, "Realist Voting Scene");
         IScene realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(this, "Realist Commenting Scene");
         
         startScene.setNextScene(dreamerScene);
+        dreamerScene.setNextScene(realistVotingScene);
+        realistVotingScene.setNextScene(realistCommentingScene);
         realistCommentingScene.setNextScene(startScene);
         
         //addScene(startScene);
         //addScene(dreamerScene);
+        addScene(realistVotingScene);
         addScene(realistCommentingScene);
-        realistCommentingScene.startScene();
+        
+        realistVotingScene.startScene();
+        //realistCommentingScene.startScene();
     }
 }
