@@ -5,6 +5,7 @@ import org.mt4j.sceneManagement.Iscene;
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
+ * @version 0.1.0
  */
 public interface IScene extends Iscene {
     

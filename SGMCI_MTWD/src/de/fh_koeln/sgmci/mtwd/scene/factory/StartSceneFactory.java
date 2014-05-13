@@ -6,14 +6,15 @@ import org.mt4j.MTApplication;
 
 /**
  *
- * @author danielvanderwal
+ * @author Daniel van der Wal
+ * @version 0.1.0
  */
 public class StartSceneFactory extends AbstractMTWDSceneFactory {
 
     @Override
     public IScene createMTWDScene(MTApplication mtApp, String name) {
         IScene scene = new StartScene(mtApp, name);
-        super.createMTWDSceneContent(scene);
+        createMTWDSceneContent(scene);
         return scene;
     }
 }

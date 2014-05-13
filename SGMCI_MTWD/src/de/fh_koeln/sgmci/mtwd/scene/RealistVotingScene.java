@@ -4,7 +4,8 @@ import org.mt4j.MTApplication;
 
 /**
  *
- * @author danielvanderwal
+ * @author Robert Scherbarth, Daniel van der Wal
+ * @version 0.1.0
  */
 public class RealistVotingScene extends AbstractMTWDScene {
 

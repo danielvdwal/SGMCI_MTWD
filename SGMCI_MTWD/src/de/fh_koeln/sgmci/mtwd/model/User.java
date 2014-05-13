@@ -1,18 +1,14 @@
 package de.fh_koeln.sgmci.mtwd.model;
 
 /**
- *
- * @author danielvanderwal
+ * This class represents a user.
+ * 
+ * @author Daniel van der Wal
+ * @version 0.1.0
  */
-public class User {
-
-    private final String id;
+public class User extends AbstractModel {
 
     User(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
+        super(id);
     }
 }

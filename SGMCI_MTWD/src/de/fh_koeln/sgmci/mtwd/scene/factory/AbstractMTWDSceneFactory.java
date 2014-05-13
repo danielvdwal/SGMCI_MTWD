@@ -5,7 +5,8 @@ import org.mt4j.MTApplication;
 
 /**
  *
- * @author danielvanderwal
+ * @author Daniel van der Wal
+ * @version 0.1.0
  */
 public abstract class AbstractMTWDSceneFactory {
     
@@ -13,7 +14,7 @@ public abstract class AbstractMTWDSceneFactory {
     
     void createMTWDSceneContent(IScene scene) {
         scene.createBackground();
-        scene.createEventListeners();
         scene.createComponents();
+        scene.createEventListeners();
     }
 }

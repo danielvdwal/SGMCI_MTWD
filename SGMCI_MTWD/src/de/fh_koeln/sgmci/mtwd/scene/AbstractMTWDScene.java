@@ -5,7 +5,8 @@ import org.mt4j.sceneManagement.AbstractScene;
 
 /**
  *
- * @author danielvanderwal
+ * @author Daniel van der Wal
+ * @version 0.1.0
  */
 public abstract class AbstractMTWDScene extends AbstractScene implements IScene {
 

@@ -14,7 +14,9 @@ import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
 /**
- *
+ * This class is used for a new, custom keyboard layout.<br >
+ * It represents a complete keyboard.
+ * 
  * @author Daniel van der Wal
  * @version 0.1.0
  */

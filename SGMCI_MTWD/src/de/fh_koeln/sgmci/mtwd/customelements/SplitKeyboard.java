@@ -16,7 +16,9 @@ import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
 /**
- *
+ * This class is used for a new, custom keyboard layout.<br >
+ * It represents a split keyboard.
+ * 
  * @author Daniel van der Wal
  * @version 0.1.0
  */
@@ -44,22 +46,47 @@ public final class SplitKeyboard extends AbstractKeyboard {
         this.createKeyboard();
     }
 
+    /**
+     * Get the left part of the keyboard.
+     * 
+     * @return the left part of the keyboard
+     */
     public MTComponent getLeftKeyboard() {
         return leftKeyboard;
     }
 
+    /**
+     * Get the right part of the keyboard.
+     * 
+     * @return the right part of the keyboard
+     */
     public MTComponent getRightKeyboard() {
         return rightKeyboard;
     }
 
+    /**
+     * Get the complete width of the keyboard, including the space between.
+     * 
+     * @return the complete width of the keyboard, including the space between
+     */
     public float getWidth() {
         return spaceBetweenKeyboards + 2 * KEYBOARD_WIDTH;
     }
 
+    /**
+     * Get the height of the keyboard.
+     * 
+     * @return the height of the keyboard
+     */
     public float getHeight() {
         return KEYBOARD_HEIGHT;
     }
     
+    /**
+     * Changes the space between the keyboards by moving the left side and right side further apart.
+     * 
+     * @param space the space that the keyboard parts should have between them
+     */
     public void setSpaceBetweenKeyboards(float space) {
         leftKeyboard.translate(new Vector3D(spaceBetweenKeyboards / 2, 0));
         rightKeyboard.translate(new Vector3D(-spaceBetweenKeyboards / 2, 0));

@@ -5,44 +5,74 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
- * @author danielvanderwal
+ * This class is used as a container for the idea class 
+ * to hold all critics of the associated idea object.
+ * 
+ * @author Daniel van der Wal
+ * @version 0.1.0
  */
-class CritiziedIdea {
-    
-    private final String id;
+class CritiziedIdea extends AbstractModel {
+
     private final Idea idea;
     private final Map<String, Critic> critics;
-    
+
+    /**
+     * Creates a new CritiziedIdea object with the given id and idea.
+     *
+     * @param id the id of this object
+     * @param idea the idea that is associated with this object
+     */
     CritiziedIdea(String id, Idea idea) {
-        this.id = id;
+        super(id);
         this.idea = idea;
         this.critics = new HashMap<String, Critic>();
     }
 
-    // id
-    String getId() {
-        return id;
-    }
-
     // description
+    /**
+     * Get the idea of this object.
+     *
+     * @return the idea of this object
+     */
     Idea getIdea() {
         return idea;
     }
 
     // critics
+    /**
+     * Add a critic to this object.
+     *
+     * @param id the id of the new critic to be created
+     * @param description the description text of that critic
+     */
     void addCritic(String id, String description) {
         this.critics.put(id, new Critic(id, description));
     }
-    
+
+    /**
+     * Remove the critic with the given id.
+     *
+     * @param id the id of the critic to be removed
+     */
     void removeCritic(String id) {
         this.critics.remove(id);
     }
 
+    /**
+     * Get the critic with the given id.
+     *
+     * @param id the id of the critic to be retrieved
+     * @return the critic with the given id
+     */
     Critic getCritic(String id) {
         return this.critics.get(id);
     }
 
+    /**
+     * Retrieve all critics as a collection.
+     *
+     * @return all critics of this object
+     */
     Collection<Critic> getAllCritics() {
         return this.critics.values();
     }
