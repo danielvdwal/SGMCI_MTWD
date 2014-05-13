@@ -64,8 +64,6 @@ public class DreamerScene extends AbstractMTWDScene {
 
         for (int i = 0; i < 4; i++) {
             final SplitKeyboard keyboard = new SplitKeyboard(mtApp);
-            //keyboard.setFillColor(new MTColor(30, 30, 30, 255));
-            //keyboard.setStrokeColor(new MTColor(0, 0, 0, 255));
             float width = keyboard.getWidth();
             float height = keyboard.getHeight();
             float ratio = (mtApp.getWidth() * 0.5f) / width;
@@ -130,7 +128,7 @@ public class DreamerScene extends AbstractMTWDScene {
     }
 
     @Override
-    public void startScene() {
+    public void updateScene() {
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextArea.translate(new Vector3D(0, problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));

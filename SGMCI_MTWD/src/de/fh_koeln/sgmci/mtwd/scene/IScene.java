@@ -15,5 +15,5 @@ public interface IScene extends Iscene {
     void createBackground();
     void createEventListeners();
     void createComponents();
-    void startScene();
+    void updateScene();
 }

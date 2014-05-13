@@ -39,7 +39,7 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
     @Override
     public void gotoNextScene() {
         mtApp.pushScene();
-        nextScene.startScene();
+        nextScene.updateScene();
         mtApp.changeScene(nextScene);
     }
     
@@ -56,6 +56,6 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
     }
     
     @Override
-    public void startScene() {
+    public void updateScene() {
     }
 }

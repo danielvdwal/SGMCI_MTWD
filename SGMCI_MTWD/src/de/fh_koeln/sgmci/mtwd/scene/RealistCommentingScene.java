@@ -265,7 +265,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
     }
 
     @Override
-    public void startScene() {
+    public void updateScene() {
         //problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextArea.translate(new Vector3D(0, -100));
