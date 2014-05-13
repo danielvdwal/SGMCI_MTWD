@@ -3,6 +3,7 @@ package de.fh_koeln.sgmci.mtwd;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
 import de.fh_koeln.sgmci.mtwd.scene.factory.AbstractMTWDSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.DreamerSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.RealistVotingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.RealistCommentingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.SplashSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
@@ -34,13 +35,14 @@ public class Main extends MTApplication {
 
         AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
         AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
+        AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
         AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
         AbstractMTWDSceneFactory criticerCommentingSceneFactory = new CriticerCommentingSceneFactory();
         AbstractMTWDSceneFactory evaluationSceneFactory = new EvaluationSceneFactory();
         
         IScene startScene = startSceneFactory.createMTWDScene(this, "Start Scene");
         IScene dreamerScene = dreamerSceneFactory.createMTWDScene(this, "Dreamer Scene");
-        
+        IScene realistVotingScene = realistVotingSceneFactory.createMTWDScene(this, "Realist Voting Scene");
         IScene realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(this, "Realist Commenting Scene");
         IScene criticerCommentingScene = criticerCommentingSceneFactory.createMTWDScene(this, "Criticer Commenting Scene");
         
@@ -50,6 +52,8 @@ public class Main extends MTApplication {
         
         splashScene.setNextScene(startScene);
         startScene.setNextScene(dreamerScene);
+        dreamerScene.setNextScene(realistVotingScene);
+        realistVotingScene.setNextScene(realistCommentingScene);
         dreamerScene.setNextScene(realistCommentingScene);
         realistCommentingScene.setNextScene(criticerCommentingScene);
         criticerCommentingScene.setNextScene(evaluationScene);
@@ -58,6 +62,7 @@ public class Main extends MTApplication {
         
         addScene(startScene);
         addScene(dreamerScene);
+        addScene(realistVotingScene);
         addScene(realistCommentingScene);
         addScene(criticerCommentingScene);
         addScene(evaluationScene);
