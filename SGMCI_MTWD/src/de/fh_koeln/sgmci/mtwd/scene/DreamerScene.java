@@ -2,6 +2,8 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.SplitKeyboard;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
@@ -10,6 +12,7 @@ import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
@@ -29,6 +32,8 @@ public class DreamerScene extends AbstractMTWDScene {
     private final DreamerSceneController controller;
     private MTTextArea problemTextArea;
     private MTTextArea problemTextAreaInverted;
+    
+    private MTSvgButton startButton;
 
     public DreamerScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -125,6 +130,11 @@ public class DreamerScene extends AbstractMTWDScene {
             keyboard.unregisterAllInputProcessors();
             this.getCanvas().addChild(keyboard);
         }
+        
+        startButton = new MTSvgButton("data/button_start.svg", mtApp);
+        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        getCanvas().addChild(startButton);
+        startButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
     }
 
     @Override
@@ -160,5 +170,23 @@ public class DreamerScene extends AbstractMTWDScene {
             default:
                 break;
         }
+    }
+    
+    @Override
+    public void createEventListeners() {
+
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch (ae.getID()) {
+                    case TapEvent.BUTTON_CLICKED:
+                        //controller.proceed(problemInputField.getText());
+                        gotoNextScene();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 }

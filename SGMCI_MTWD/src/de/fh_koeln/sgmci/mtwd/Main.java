@@ -6,6 +6,8 @@ import de.fh_koeln.sgmci.mtwd.scene.factory.DreamerSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.RealistCommentingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.SplashSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.EvaluationSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerCommentingSceneFactory;
 import org.mt4j.MTApplication;
 
 /**
@@ -32,21 +34,33 @@ public class Main extends MTApplication {
 
         AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
         AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
-        
         AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
+        AbstractMTWDSceneFactory criticerCommentingSceneFactory = new CriticerCommentingSceneFactory();
+        AbstractMTWDSceneFactory evaluationSceneFactory = new EvaluationSceneFactory();
         
         IScene startScene = startSceneFactory.createMTWDScene(this, "Start Scene");
         IScene dreamerScene = dreamerSceneFactory.createMTWDScene(this, "Dreamer Scene");
         
         IScene realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(this, "Realist Commenting Scene");
+        IScene criticerCommentingScene = criticerCommentingSceneFactory.createMTWDScene(this, "Criticer Commenting Scene");
+        
+        IScene evaluationScene = evaluationSceneFactory.createMTWDScene(this, "Evaluation Scene");
+        
+        
         
         splashScene.setNextScene(startScene);
         startScene.setNextScene(dreamerScene);
-        realistCommentingScene.setNextScene(startScene);
+        dreamerScene.setNextScene(realistCommentingScene);
+        realistCommentingScene.setNextScene(criticerCommentingScene);
+        criticerCommentingScene.setNextScene(evaluationScene);
+        evaluationScene.setNextScene(startScene);
+        
         
         addScene(startScene);
         addScene(dreamerScene);
         addScene(realistCommentingScene);
+        addScene(criticerCommentingScene);
+        addScene(evaluationScene);
         splashScene.updateScene();
     }
 }
