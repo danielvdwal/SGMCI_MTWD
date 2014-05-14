@@ -10,6 +10,7 @@ import de.fh_koeln.sgmci.mtwd.scene.factory.SplashSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.EvaluationSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerCommentingSceneFactory;
+import static javax.media.opengl.Threading.disableSingleThreading;
 
 import org.mt4j.MTApplication;
 
@@ -38,6 +39,7 @@ public class Main extends MTApplication {
 
     @Override
     public void startUp() {
+    	disableSingleThreading();
         AbstractMTWDSceneFactory splashSceneFactory = new SplashSceneFactory();
         splashScene = splashSceneFactory.createMTWDScene(this, "Splash Scene");
         addScene(splashScene);
