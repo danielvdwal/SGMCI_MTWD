@@ -10,6 +10,7 @@ import de.fh_koeln.sgmci.mtwd.scene.factory.SplashSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.EvaluationSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerCommentingSceneFactory;
+import javax.media.opengl.GLContext;
 import static javax.media.opengl.Threading.disableSingleThreading;
 
 import org.mt4j.MTApplication;
@@ -24,6 +25,7 @@ import org.mt4j.MTApplication;
  */
 public class Main extends MTApplication {
 
+    private MTApplication main;
     private IScene splashScene;
     private IScene startScene;
     private IScene dreamerScene;
@@ -39,44 +41,60 @@ public class Main extends MTApplication {
 
     @Override
     public void startUp() {
-    	disableSingleThreading();
+        disableSingleThreading();
+
+        main = this;
+
         AbstractMTWDSceneFactory splashSceneFactory = new SplashSceneFactory();
-        splashScene = splashSceneFactory.createMTWDScene(this, "Splash Scene");
+        splashScene = splashSceneFactory.createMTWDScene(main, "Splash Scene");
         addScene(splashScene);
 
-        AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
-        AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
-        AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
-        AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
-        AbstractMTWDSceneFactory criticerCommentingSceneFactory = new CriticerCommentingSceneFactory();
-        AbstractMTWDSceneFactory criticerVotingSceneFactory = new CriticerVotingSceneFactory();
-        AbstractMTWDSceneFactory evaluationSceneFactory = new EvaluationSceneFactory();
+        GLContext.getCurrent().release();
 
-        startScene = startSceneFactory.createMTWDScene(this, "Start Scene");
-        dreamerScene = dreamerSceneFactory.createMTWDScene(this, "Dreamer Scene");
-        realistVotingScene = realistVotingSceneFactory.createMTWDScene(this, "Realist Voting Scene");
-        realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(this, "Realist Commenting Scene");
-        criticerCommentingScene = criticerCommentingSceneFactory.createMTWDScene(this, "Criticer Commenting Scene");
-        criticerVotingScene = criticerVotingSceneFactory.createMTWDScene(this, "Criticer Voting Scene");
-        evaluationScene = evaluationSceneFactory.createMTWDScene(this, "Evaluation Scene");
+        new Thread(new Runnable() {
 
-        splashScene.setNextScene(startScene);
-        startScene.setNextScene(dreamerScene);
-        dreamerScene.setNextScene(realistVotingScene);
-        realistVotingScene.setNextScene(realistCommentingScene);
-        realistCommentingScene.setNextScene(criticerCommentingScene);
-        criticerCommentingScene.setNextScene(criticerVotingScene);
-        criticerVotingScene.setNextScene(evaluationScene);
-        evaluationScene.setNextScene(startScene);
+            @Override
+            public void run() {
 
-        splashScene.updateScene();
+                GLContext.getCurrent().makeCurrent();
 
-        addScene(startScene);
-        addScene(dreamerScene);
-        addScene(realistVotingScene);
-        addScene(realistCommentingScene);
-        addScene(criticerCommentingScene);
-        addScene(criticerVotingScene);
-        addScene(evaluationScene);
+                AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
+                AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
+                AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
+                AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
+                AbstractMTWDSceneFactory criticerCommentingSceneFactory = new CriticerCommentingSceneFactory();
+                AbstractMTWDSceneFactory criticerVotingSceneFactory = new CriticerVotingSceneFactory();
+                AbstractMTWDSceneFactory evaluationSceneFactory = new EvaluationSceneFactory();
+
+                startScene = startSceneFactory.createMTWDScene(main, "Start Scene");
+                dreamerScene = dreamerSceneFactory.createMTWDScene(main, "Dreamer Scene");
+                realistVotingScene = realistVotingSceneFactory.createMTWDScene(main, "Realist Voting Scene");
+                realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(main, "Realist Commenting Scene");
+                criticerCommentingScene = criticerCommentingSceneFactory.createMTWDScene(main, "Criticer Commenting Scene");
+                criticerVotingScene = criticerVotingSceneFactory.createMTWDScene(main, "Criticer Voting Scene");
+                evaluationScene = evaluationSceneFactory.createMTWDScene(main, "Evaluation Scene");
+
+                splashScene.setNextScene(startScene);
+                startScene.setNextScene(dreamerScene);
+                dreamerScene.setNextScene(realistVotingScene);
+                realistVotingScene.setNextScene(realistCommentingScene);
+                realistCommentingScene.setNextScene(criticerCommentingScene);
+                criticerCommentingScene.setNextScene(criticerVotingScene);
+                criticerVotingScene.setNextScene(evaluationScene);
+                evaluationScene.setNextScene(startScene);
+
+                splashScene.updateScene();
+
+                addScene(startScene);
+                addScene(dreamerScene);
+                addScene(realistVotingScene);
+                addScene(realistCommentingScene);
+                addScene(criticerCommentingScene);
+                addScene(criticerVotingScene);
+                addScene(evaluationScene);
+
+                GLContext.getCurrent().release();
+            }
+        }).start();
     }
 }
