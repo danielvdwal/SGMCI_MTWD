@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.controller.SplashSceneController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
@@ -21,6 +22,7 @@ import processing.core.PImage;
  */
 public class SplashScene extends AbstractMTWDScene {
 
+    private final SplashSceneController controller;
     private MTTextArea headlineTextArea;
     private MTTextArea subheadlineTextArea;
     private MTTextArea loadingTextArea;
@@ -33,6 +35,7 @@ public class SplashScene extends AbstractMTWDScene {
 
     public SplashScene(MTApplication mtApp, String name) {
         super(mtApp, name);
+        this.controller = new SplashSceneController(this);
     }
 
     @Override
@@ -54,51 +57,47 @@ public class SplashScene extends AbstractMTWDScene {
         headlineTextArea.setNoFill(true);
         headlineTextArea.setNoStroke(true);
         headlineTextArea.setPickable(false);
-        headlineTextArea.setText("MTWD");
+        headlineTextArea.setText(SplashSceneController.APPLICATION_ABBREVIATION);
 
         subheadlineTextArea = new MTTextArea(mtApp, subheadlineFont);
         subheadlineTextArea.setNoFill(true);
         subheadlineTextArea.setNoStroke(true);
         subheadlineTextArea.setPickable(false);
-        subheadlineTextArea.setText("Multi-Touch-Walt-Disney Methode");
+        subheadlineTextArea.setText(SplashSceneController.APPLICATION_NAME);
 
         loadingTextArea = new MTTextArea(mtApp, subheadlineFont);
         loadingTextArea.setNoFill(true);
         loadingTextArea.setNoStroke(true);
         loadingTextArea.setPickable(false);
-        loadingTextArea.setText("wird geladen . . .");
+        loadingTextArea.setText(SplashSceneController.LOADING_TEXT);
 
         //The description of the technique
         descriptionTextArea = new MTTextArea(mtApp, descriptionFont);
         descriptionTextArea.setNoFill(true);
         descriptionTextArea.setNoStroke(true);
         descriptionTextArea.setPickable(false);
-        descriptionTextArea.setText("Beschreibung \n kurze Beschreibung der Technik");
+        descriptionTextArea.setText(SplashSceneController.TECHINQUE_DESCRIPTION);
 
         //Description of the Team-Members
         personsTextArea = new MTTextArea(mtApp, personsFont);
         personsTextArea.setNoFill(true);
         personsTextArea.setNoStroke(true);
         personsTextArea.setPickable(false);
-        personsTextArea.setText("Entwickler: \n"
-                + "Daniel van der Wal \n"
-                + "Robert Scherbarth \n"
-                + "Nadim Khan \n"
-                + "Ramon Victor");
+        personsTextArea.setText(SplashSceneController.DEVELOPERS);
 
         //Prof Area
         moduleTextArea = new MTTextArea(mtApp, personsFont);
         moduleTextArea.setNoFill(true);
         moduleTextArea.setNoStroke(true);
         moduleTextArea.setPickable(false);
-        moduleTextArea.setText("spezielle Gebiete der MCI / SS14");
+        moduleTextArea.setText(SplashSceneController.MODULE);
 
         //Prof Area
         profTextArea = new MTTextArea(mtApp, personsFont);
         profTextArea.setNoFill(true);
         profTextArea.setNoStroke(true);
         profTextArea.setPickable(false);
-        profTextArea.setText("Prof. Dr. Heiner Klocke");
+        profTextArea.setText(SplashSceneController.PROF);
         
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
@@ -131,8 +130,7 @@ public class SplashScene extends AbstractMTWDScene {
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {
                     case TapEvent.BUTTON_CLICKED:
-                        //controller.proceed(problemInputField.getText());
-                        gotoNextScene();
+                        controller.proceed();
                         break;
                     default:
                         break;
