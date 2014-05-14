@@ -21,7 +21,7 @@ import org.mt4j.MTApplication;
  * @author Daniel van der Wal
  * @version 0.1.0
  */
-public class Main extends MTApplication {
+public class Main extends MTApplication implements IMain {
 
     private IScene splashScene;
     private IScene startScene;
@@ -44,6 +44,11 @@ public class Main extends MTApplication {
         splashScene = splashSceneFactory.createMTWDScene(this, "Splash Scene");
         addScene(splashScene);
 
+        splashScene.setMain(this);
+    }
+
+    @Override
+    public void loadResources() {
         final AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
         final AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
         final AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
@@ -68,8 +73,6 @@ public class Main extends MTApplication {
         criticerCommentingScene.setNextScene(criticerVotingScene);
         criticerVotingScene.setNextScene(evaluationScene);
         evaluationScene.setNextScene(startScene);
-
-        splashScene.updateScene();
 
         addScene(startScene);
         addScene(dreamerScene);

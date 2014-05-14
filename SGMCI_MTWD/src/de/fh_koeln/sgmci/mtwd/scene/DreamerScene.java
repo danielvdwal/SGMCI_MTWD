@@ -69,42 +69,6 @@ public class DreamerScene extends AbstractMTWDScene {
         getCanvas().addChild(problemTextArea);
         getCanvas().addChild(problemTextAreaInverted);
         
-        MTPolygon polygon = new MTPolygon(mtApp, new Vertex[]{
-            new Vertex(0, mtApp.getHeight(), 0, 1),
-            new Vertex(250, mtApp.getHeight() - 200, 0, 1),
-            new Vertex(mtApp.getWidth() - 250, mtApp.getHeight() - 200, 0, 1),
-            new Vertex(mtApp.getWidth(), mtApp.getHeight(), 0, 1)});
-        polygon.setFillColor(new MTColor(255, 255, 255, 64));
-        polygon.setStrokeColor(MTColor.BLACK);
-        getCanvas().addChild(polygon);
-        
-        MTPolygon polygon2 = new MTPolygon(mtApp, new Vertex[]{
-            new Vertex(0, 0, 0, 1),
-            new Vertex(250, 200, 0, 1),
-            new Vertex(mtApp.getWidth() - 250, 200, 0, 1),
-            new Vertex(mtApp.getWidth(), 0, 0, 1)});
-        polygon2.setFillColor(new MTColor(0, 0, 0, 64));
-        polygon2.setStrokeColor(MTColor.BLACK);
-        getCanvas().addChild(polygon2);
-        
-        MTPolygon polygon3 = new MTPolygon(mtApp, new Vertex[]{
-            new Vertex(0, 0, 0, 1),
-            new Vertex(250, 200, 0, 1),
-            new Vertex(250, mtApp.getHeight() - 200, 0, 1),
-            new Vertex(0, mtApp.getHeight(), 0, 1)});
-        polygon3.setFillColor(new MTColor(0, 0, 0, 64));
-        polygon3.setStrokeColor(MTColor.BLACK);
-        getCanvas().addChild(polygon3);
-        
-        MTPolygon polygon4 = new MTPolygon(mtApp, new Vertex[]{
-            new Vertex(mtApp.getWidth(), 0, 0, 1),
-            new Vertex(mtApp.getWidth() - 250, 200, 0, 1),
-            new Vertex(mtApp.getWidth() - 250, mtApp.getHeight() - 200, 0, 1),
-            new Vertex(mtApp.getWidth(), mtApp.getHeight(), 0, 1)});
-        polygon4.setFillColor(new MTColor(255, 255, 255, 64));
-        polygon4.setStrokeColor(MTColor.BLACK);
-        getCanvas().addChild(polygon4);
-        
         for (int i = 0; i < 4; i++) {
             final SplitKeyboard keyboard = new SplitKeyboard(mtApp);
             float width = keyboard.getWidth();

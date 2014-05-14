@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.IMain;
 import org.mt4j.sceneManagement.Iscene;
 
 /**
@@ -16,4 +17,11 @@ public interface IScene extends Iscene {
     void createEventListeners();
     void createComponents();
     void updateScene();
+    
+    /**
+     * Sets the main object which is used to start the application.
+     *
+     * @param main the object which is used to start the application
+     */
+    void setMain(IMain main);
 }

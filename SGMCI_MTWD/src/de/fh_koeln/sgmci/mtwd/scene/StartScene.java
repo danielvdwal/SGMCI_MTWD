@@ -2,6 +2,7 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
+import de.fh_koeln.sgmci.mtwd.exception.NoProblemTextException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -26,8 +27,8 @@ import processing.core.PImage;
 
 /**
  *
- * @author Nadim Khan, Ramon Victor, Daniel van der Wal - Fachhochschule Koeln Campus Gummersbach
- * 2014
+ * @author Nadim Khan, Ramon Victor, Daniel van der Wal - Fachhochschule Koeln
+ * Campus Gummersbach 2014
  * @version 0.1.0
  */
 public class StartScene extends AbstractMTWDScene {
@@ -39,6 +40,7 @@ public class StartScene extends AbstractMTWDScene {
     private MTSvgButton helpButton;
     private MTSvgButton settingsButton;
     private MTSvgButton startButton;
+    private MTTextArea errorMessageTextArea;
 
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -68,21 +70,21 @@ public class StartScene extends AbstractMTWDScene {
         problemLabel.setText("Bitte geben Sie Ihr Problem ein:");
         problemLabel.setPickable(false);
         problemLabel.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2 - 150));
-        
+
         problemInputField = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50));
         problemInputField.setNoFill(true);
         problemInputField.setEnableCaret(true);
         problemInputField.setPickable(false);
-        
+
         keyboard = new Keyboard(mtApp);
         float ratio = (mtApp.getWidth() * 0.5f) / keyboard.getWidthXY(TransformSpace.LOCAL);
         keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
         keyboard.setPositionRelativeToParent(new Vector3D(mtApp.width / 2, mtApp.height - keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
-        
+
         helpButton = new MTSvgButton("data/button_help.svg", mtApp);
         helpButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
-        
+
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
@@ -90,13 +92,19 @@ public class StartScene extends AbstractMTWDScene {
         settingsButton = new MTSvgButton("data/button_settings.svg", mtApp);
         settingsButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
-        
+
+        errorMessageTextArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLACK, MTColor.WHITE));
+        errorMessageTextArea.setFillColor(MTColor.WHITE);
+        errorMessageTextArea.setStrokeColor(MTColor.BLACK);
+        errorMessageTextArea.setVisible(false);
+
         this.getCanvas().addChild(problemLabel);
         this.getCanvas().addChild(problemInputField);
         this.getCanvas().addChild(keyboard);
         this.getCanvas().addChild(helpButton);
         this.getCanvas().addChild(startButton);
         this.getCanvas().addChild(settingsButton);
+        this.getCanvas().addChild(errorMessageTextArea);
 
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
         problemTextAreaUpdateThread.start();
@@ -110,7 +118,7 @@ public class StartScene extends AbstractMTWDScene {
         keyboard.addTextInputListener(problemInputField);
         keyboard.removeAllGestureEventListeners();
         keyboard.unregisterAllInputProcessors();
-        
+
         helpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -144,27 +152,33 @@ public class StartScene extends AbstractMTWDScene {
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {
                     case TapEvent.BUTTON_CLICKED:
-                        controller.proceed(problemInputField.getText());
+                        try {
+                            controller.proceed(problemInputField.getText());
+                        } catch (NoProblemTextException ex) {
+                            errorMessageTextArea.setText(ex.getMessage());
+                            errorMessageTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                            errorMessageTextArea.setVisible(true);
+                        }
                         break;
                     default:
                         break;
                 }
             }
         });
-        
+
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {
                     case TapEvent.BUTTON_CLICKED:
                         //wenn Button geklickt wurde
-                        MTTextArea textarea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
-                        textarea.setText("Loesung!!!");
-                        textarea.setNoStroke(true);
-                        textarea.setNoFill(true);
-                        textarea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                        MTTextArea textArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
+                        textArea.setText("Loesung!!!");
+                        textArea.setNoStroke(true);
+                        textArea.setNoFill(true);
+                        textArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
 
-                        mtApp.getCurrentScene().getCanvas().addChild(textarea);
+                        mtApp.getCurrentScene().getCanvas().addChild(textArea);
                         break;
                     default:
                         break;
