@@ -1,6 +1,5 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
-import de.fh_koeln.sgmci.mtwd.IMain;
 import de.fh_koeln.sgmci.mtwd.controller.SplashSceneController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +18,7 @@ import processing.core.PImage;
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class SplashScene extends AbstractMTWDScene {
 
@@ -92,10 +91,10 @@ public class SplashScene extends AbstractMTWDScene {
         profTextArea.setNoStroke(true);
         profTextArea.setPickable(false);
         profTextArea.setText(SplashSceneController.PROF);
-        
+
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
-        
+
         loadingTextArea = new MTTextArea(mtApp, subheadlineFont);
         loadingTextArea.setNoFill(true);
         loadingTextArea.setNoStroke(true);
@@ -124,7 +123,7 @@ public class SplashScene extends AbstractMTWDScene {
 
     @Override
     public void createEventListeners() {
-        
+
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

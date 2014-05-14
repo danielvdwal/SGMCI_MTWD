@@ -18,9 +18,9 @@ import processing.core.PApplet;
 /**
  * This class is used for a new, custom keyboard layout.<br >
  * It represents a split keyboard.
- * 
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public final class SplitKeyboard extends AbstractKeyboard {
 
@@ -34,7 +34,7 @@ public final class SplitKeyboard extends AbstractKeyboard {
     private float spaceBetweenKeyboards = 200;
 
     public SplitKeyboard(PApplet pApplet) {
-        super(0, 0, 0, KEYBOARD_WIDTH* 2, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
+        super(0, 0, 0, KEYBOARD_WIDTH * 2, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
 
         this.leftKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
         this.rightKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
@@ -42,13 +42,13 @@ public final class SplitKeyboard extends AbstractKeyboard {
         this.setNoFill(true);
         this.setNoStroke(true);
         this.removeAllGestureEventListeners();
-        
+
         this.createKeyboard();
     }
 
     /**
      * Get the left part of the keyboard.
-     * 
+     *
      * @return the left part of the keyboard
      */
     public MTComponent getLeftKeyboard() {
@@ -57,7 +57,7 @@ public final class SplitKeyboard extends AbstractKeyboard {
 
     /**
      * Get the right part of the keyboard.
-     * 
+     *
      * @return the right part of the keyboard
      */
     public MTComponent getRightKeyboard() {
@@ -66,7 +66,7 @@ public final class SplitKeyboard extends AbstractKeyboard {
 
     /**
      * Get the complete width of the keyboard, including the space between.
-     * 
+     *
      * @return the complete width of the keyboard, including the space between
      */
     public float getWidth() {
@@ -75,32 +75,33 @@ public final class SplitKeyboard extends AbstractKeyboard {
 
     /**
      * Get the height of the keyboard.
-     * 
+     *
      * @return the height of the keyboard
      */
     public float getHeight() {
         return KEYBOARD_HEIGHT;
     }
-    
+
     /**
-     * Changes the space between the keyboards by moving the left side and right side further apart.
-     * 
+     * Changes the space between the keyboards by moving the left side and right
+     * side further apart.
+     *
      * @param space the space that the keyboard parts should have between them
      */
     public void setSpaceBetweenKeyboards(float space) {
         leftKeyboard.translate(new Vector3D(spaceBetweenKeyboards / 2, 0));
         rightKeyboard.translate(new Vector3D(-spaceBetweenKeyboards / 2, 0));
-        leftKeyboard.translate(new Vector3D(-space/2, 0));
-        rightKeyboard.translate(new Vector3D(space/2, 0));
+        leftKeyboard.translate(new Vector3D(-space / 2, 0));
+        rightKeyboard.translate(new Vector3D(space / 2, 0));
         spaceBetweenKeyboards = space;
-    } 
+    }
 
     @Override
     public void setFillColor(MTColor fillColor) {
         leftKeyboard.setFillColor(fillColor);
         rightKeyboard.setFillColor(fillColor);
     }
-    
+
     @Override
     public void setPickable(boolean pickable) {
         super.setPickable(pickable);
@@ -159,9 +160,9 @@ public final class SplitKeyboard extends AbstractKeyboard {
 
         // set start position of right keyboard
         rightKeyboard.translate(new Vector3D(KEYBOARD_WIDTH, 0));
-        
-        leftKeyboard.translate(new Vector3D(-spaceBetweenKeyboards/2, 0));
-        rightKeyboard.translate(new Vector3D(spaceBetweenKeyboards/2, 0));
+
+        leftKeyboard.translate(new Vector3D(-spaceBetweenKeyboards / 2, 0));
+        rightKeyboard.translate(new Vector3D(spaceBetweenKeyboards / 2, 0));
 
         this.addChild(leftKeyboard);
         this.addChild(rightKeyboard);

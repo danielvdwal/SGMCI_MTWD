@@ -4,21 +4,21 @@ import java.util.Collection;
 
 /**
  * This class represents an idea.
- * 
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class Idea extends AbstractModel {
-    
+
     private final String description;
     private final CommentedIdea commentedIdea;
     private final CritiziedIdea critizedIdea;
-    
+
     private boolean stillDisplayed;
-    
+
     /**
      * Creates a new idea object with the given id and description.
-     * 
+     *
      * @param id the id of this object
      * @param description the description to be displayed
      */
@@ -32,7 +32,7 @@ public class Idea extends AbstractModel {
     // description
     /**
      * Get the description of this object.
-     * 
+     *
      * @return the description of this object
      */
     public String getDescription() {
@@ -42,7 +42,7 @@ public class Idea extends AbstractModel {
     // comments
     /**
      * Add a comment to this object.
-     * 
+     *
      * @param id the id of the new comment to be created
      * @param description the description text of that comment
      */
@@ -52,16 +52,16 @@ public class Idea extends AbstractModel {
 
     /**
      * Remove the comment with the given id.
-     * 
+     *
      * @param id the id of the comment to be removed
      */
     public void removeComment(String id) {
         this.commentedIdea.removeComment(id);
     }
-    
+
     /**
      * Get the comment with the given id.
-     * 
+     *
      * @param id the id of the comment to be retrieved
      * @return the comment with the given id
      */
@@ -71,7 +71,7 @@ public class Idea extends AbstractModel {
 
     /**
      * Retrieve all comments as a collection.
-     * 
+     *
      * @return all comments of this object
      */
     public Collection<Comment> getAllComments() {
@@ -81,7 +81,7 @@ public class Idea extends AbstractModel {
     // critics
     /**
      * Add a critic to this object.
-     * 
+     *
      * @param id the id of the new critic to be created
      * @param description the description text of that critic
      */
@@ -91,26 +91,26 @@ public class Idea extends AbstractModel {
 
     /**
      * Remove the critic with the given id.
-     * 
+     *
      * @param id the id of the critic to be removed
      */
     public void removeCritic(String id) {
         this.critizedIdea.removeCritic(id);
     }
-    
+
     /**
      * Get the critic with the given id.
-     * 
+     *
      * @param id the id of the critic to be retrieved
      * @return the critic with the given id
      */
     public Critic getCritic(String id) {
         return critizedIdea.getCritic(id);
     }
-    
+
     /**
      * Retrieve all critics as a collection.
-     * 
+     *
      * @return all critics of this object
      */
     public Collection<Critic> getAllCritics() {
@@ -120,7 +120,7 @@ public class Idea extends AbstractModel {
     // stillDisplayed
     /**
      * Is this idea still being displayed?
-     * 
+     *
      * @return true if this idea should be displayed or false if not
      */
     public boolean isStillDisplayed() {
@@ -129,7 +129,7 @@ public class Idea extends AbstractModel {
 
     /**
      * Change the value of the idea being displayed.
-     * 
+     *
      * @param stillDisplayed the new value of the idea being displayed
      */
     public void setStillDisplayed(boolean stillDisplayed) {

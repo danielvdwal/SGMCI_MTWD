@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.clipping.Clip;
 import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
@@ -32,7 +31,7 @@ import processing.core.PImage;
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class RealistCommentingScene extends AbstractMTWDScene {
 
@@ -54,7 +53,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
     public RealistCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         //controller = new RealistCommentingSceneController(this);
-        
+
         // Set a scene transition for our StartScene.
         // Blend transition only available using opengl supporting the FBO extenstion.
         if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {
@@ -176,13 +175,13 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         commentList.addListElement(commentListCell);
         commentList.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         commentList.translate(new Vector3D(0, 50));
-        
+
         getCanvas().addChild(commentList);
-        
+
         helpButton = new MTSvgButton("data/button_help.svg", mtApp);
         helpButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
-        
+
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
@@ -190,12 +189,12 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         settingsButton = new MTSvgButton("data/button_settings.svg", mtApp);
         settingsButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
-        
+
         getCanvas().addChild(helpButton);
         getCanvas().addChild(startButton);
         getCanvas().addChild(settingsButton);
     }
-    
+
     @Override
     public void createEventListeners() {
         // displays where the screen is touched
@@ -242,7 +241,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
                 }
             }
         });
-        
+
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

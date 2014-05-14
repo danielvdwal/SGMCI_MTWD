@@ -6,18 +6,24 @@ import org.mt4j.sceneManagement.Iscene;
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public interface IScene extends Iscene {
-    
+
     void setNextScene(IScene nextScene);
+
     IScene getNextScene();
+
     void gotoNextScene();
+
     void createBackground();
+
     void createEventListeners();
+
     void createComponents();
+
     void updateScene();
-    
+
     /**
      * Sets the main object which is used to start the application.
      *

@@ -11,7 +11,7 @@ import de.fh_koeln.sgmci.mtwd.scene.IScene;
  * the scenes about changes.
  *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public abstract class AbstractMTWDSceneController {
 

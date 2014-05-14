@@ -18,7 +18,7 @@ import processing.core.PImage;
 /**
  *
  * @author Robert Scherbarth
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class EvaluationScene extends AbstractMTWDScene {
 
@@ -43,7 +43,7 @@ public class EvaluationScene extends AbstractMTWDScene {
     @Override
     public void createComponents() {
 
-        final IFont headlineFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 24, MTColor.WHITE, MTColor.WHITE);        
+        final IFont headlineFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 24, MTColor.WHITE, MTColor.WHITE);
         final IFont generalFond = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18, MTColor.WHITE, MTColor.WHITE);
 
         headlineTextArea = new MTTextArea(mtApp, headlineFont);

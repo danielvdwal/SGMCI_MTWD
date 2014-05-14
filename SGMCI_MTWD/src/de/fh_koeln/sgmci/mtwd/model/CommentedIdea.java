@@ -5,20 +5,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is used as a container for the idea class 
- * to hold all comments of the associated idea object.
- * 
+ * This class is used as a container for the idea class to hold all comments of
+ * the associated idea object.
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 class CommentedIdea extends AbstractModel {
-    
+
     private final Idea idea;
     private final Map<String, Comment> comments;
-    
+
     /**
      * Creates a new CommentedIdea object with the given id and idea.
-     * 
+     *
      * @param id the id of this object
      * @param idea the idea that is associated with this object
      */
@@ -31,17 +31,17 @@ class CommentedIdea extends AbstractModel {
     // description
     /**
      * Get the idea of this object.
-     * 
+     *
      * @return the idea of this object
      */
     Idea getIdea() {
         return idea;
     }
-    
+
     // comments
     /**
      * Add a comment to this object.
-     * 
+     *
      * @param id the id of the new comment to be created
      * @param description the description text of that comment
      */
@@ -51,7 +51,7 @@ class CommentedIdea extends AbstractModel {
 
     /**
      * Remove the comment with the given id.
-     * 
+     *
      * @param id the id of the comment to be removed
      */
     void removeComment(String id) {
@@ -60,7 +60,7 @@ class CommentedIdea extends AbstractModel {
 
     /**
      * Get the comment with the given id.
-     * 
+     *
      * @param id the id of the comment to be retrieved
      * @return the comment with the given id
      */
@@ -70,7 +70,7 @@ class CommentedIdea extends AbstractModel {
 
     /**
      * Retrieve all comments as a collection.
-     * 
+     *
      * @return all comments of this object
      */
     Collection<Comment> getAllComments() {

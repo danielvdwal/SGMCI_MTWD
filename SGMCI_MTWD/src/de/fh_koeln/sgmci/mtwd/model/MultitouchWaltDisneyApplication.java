@@ -7,9 +7,9 @@ import java.util.Map;
 /**
  * The model class of the whole application.<br >
  * It is used to manage all problems and users in the application.
- * 
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public final class MultitouchWaltDisneyApplication {
 
@@ -24,7 +24,7 @@ public final class MultitouchWaltDisneyApplication {
     // users
     /**
      * Adds a user with the given id to the application.
-     * 
+     *
      * @param id the id of the new user
      */
     public void addUser(String id) {
@@ -33,7 +33,7 @@ public final class MultitouchWaltDisneyApplication {
 
     /**
      * Remove the user the given id from the application.
-     * 
+     *
      * @param id the id of the user to be removed
      */
     public void removeUser(String id) {
@@ -42,7 +42,7 @@ public final class MultitouchWaltDisneyApplication {
 
     /**
      * Get the user with the given id.
-     * 
+     *
      * @param id the id of the user to be retrieved
      * @return the user with the given id
      */
@@ -52,7 +52,7 @@ public final class MultitouchWaltDisneyApplication {
 
     /**
      * Get all users as a collection that are registered in the application.
-     * 
+     *
      * @return all users registered in the application
      */
     public Collection<User> getAllUsers() {
@@ -62,7 +62,7 @@ public final class MultitouchWaltDisneyApplication {
     // problem
     /**
      * Adds a problem with the given id and description to the application.
-     * 
+     *
      * @param id the id of the new problem
      * @param description the description of that problem
      */
@@ -72,7 +72,7 @@ public final class MultitouchWaltDisneyApplication {
 
     /**
      * Remove the problem the given id from the application.
-     * 
+     *
      * @param id the id of the problem to be removed
      */
     public void removeProblem(String id) {
@@ -81,7 +81,7 @@ public final class MultitouchWaltDisneyApplication {
 
     /**
      * Get the problem with the given id.
-     * 
+     *
      * @param id the id of the problem to be retrieved
      * @return the problem with the given id
      */
@@ -91,7 +91,7 @@ public final class MultitouchWaltDisneyApplication {
 
     /**
      * Get all problems as a collection that are registered in the application.
-     * 
+     *
      * @return all problems registered in the application
      */
     public Collection<Problem> getAllProblems() {

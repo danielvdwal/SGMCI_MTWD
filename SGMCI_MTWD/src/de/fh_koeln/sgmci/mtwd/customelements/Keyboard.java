@@ -16,9 +16,9 @@ import processing.core.PApplet;
 /**
  * This class is used for a new, custom keyboard layout.<br >
  * It represents a complete keyboard.
- * 
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public final class Keyboard extends AbstractKeyboard {
 
@@ -28,11 +28,11 @@ public final class Keyboard extends AbstractKeyboard {
     private static final float BACKSPACE_AND_RIGHT_SHIFT_WIDTH = 74 + 2 * BUTTON_MARGIN;
     private static final int CORNER_RADIUS = 30;
     private static final int KEYBOARD_WIDTH = (int) (34.0 / 3 * BUTTON_SIZE + RETURN_WIDTH) + MARGIN_LEFT + MARGIN_RIGHT;
-    
+
     public Keyboard(PApplet pApplet) {
         super(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
         this.setFillColor(MTColor.BLACK);
-        
+
         this.createKeyboard();
     }
 
@@ -177,7 +177,7 @@ public final class Keyboard extends AbstractKeyboard {
         keyInfos.add(new KeyInfo("exclamation_mark", "!", "data/key_exclamation_mark.svg", new Vector3D(startX + 8 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         keyInfos.add(new KeyInfo("question_mark", "?", "data/key_question_mark.svg", new Vector3D(startX + 9 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
         keyInfos.add(new KeyInfo("sz_key", "\u00df", "data/key_sz.svg", new Vector3D(startX + 10 * BUTTON_SIZE, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));
-        
+
         startX = KEYBOARD_WIDTH - MARGIN_RIGHT - BACKSPACE_AND_RIGHT_SHIFT_WIDTH;
 
         keyInfos.add(new KeyInfo(SHIFT_PRESSED_ID, "", "data/key_shift_pressed_large.svg", new Vector3D(startX, startY), KeyVisibility.LETTERS_IS_SELECTED_AND_SHIFT_PRESSED));

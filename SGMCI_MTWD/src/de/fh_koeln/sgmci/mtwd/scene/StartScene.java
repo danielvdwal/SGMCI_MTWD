@@ -29,7 +29,7 @@ import processing.core.PImage;
  *
  * @author Nadim Khan, Ramon Victor, Daniel van der Wal - Fachhochschule Koeln
  * Campus Gummersbach 2014
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class StartScene extends AbstractMTWDScene {
 

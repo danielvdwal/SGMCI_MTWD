@@ -6,19 +6,19 @@ import java.util.Map;
 
 /**
  * This class represents a problem.
- * 
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class Problem extends AbstractModel {
 
     private final Map<String, Idea> ideas;
-    
+
     private String description;
 
     /**
      * Creates a new problem with the given id and description.
-     * 
+     *
      * @param id the id for this object
      * @param description the description for this object
      */
@@ -31,7 +31,7 @@ public class Problem extends AbstractModel {
     // ideas
     /**
      * Add an idea with the given id and description to this problem.
-     * 
+     *
      * @param id the id of the new idea
      * @param description the description for that idea
      */
@@ -41,7 +41,7 @@ public class Problem extends AbstractModel {
 
     /**
      * Remove the idea the given id from the problem.
-     * 
+     *
      * @param id the id of the idea to be removed
      */
     public void removeIdea(String id) {
@@ -50,7 +50,7 @@ public class Problem extends AbstractModel {
 
     /**
      * Get the idea with the given id.
-     * 
+     *
      * @param id the id of the idea to be retrieved
      * @return the idea with the given id
      */
@@ -60,17 +60,17 @@ public class Problem extends AbstractModel {
 
     /**
      * Get all ideas as a collection that are used for this problem.
-     * 
+     *
      * @return all ideas used for this problem
      */
     public Collection<Idea> getAllIdeas() {
         return ideas.values();
     }
-    
+
     // description
     /**
      * Get the description of this object.
-     * 
+     *
      * @return the description of this object
      */
     public String getDescription() {
@@ -79,7 +79,7 @@ public class Problem extends AbstractModel {
 
     /**
      * Set the description of this object.
-     * 
+     *
      * @param description the description text for this problem
      */
     public void setDescription(String description) {

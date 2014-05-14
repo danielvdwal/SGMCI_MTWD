@@ -6,12 +6,12 @@ import org.mt4j.MTApplication;
 /**
  *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public abstract class AbstractMTWDSceneFactory {
-    
+
     public abstract IScene createMTWDScene(MTApplication mtApp, String name);
-    
+
     void createMTWDSceneContent(IScene scene) {
         scene.createBackground();
         scene.createComponents();

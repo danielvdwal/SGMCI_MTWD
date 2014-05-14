@@ -3,13 +3,14 @@ package de.fh_koeln.sgmci.mtwd.controller.strategy;
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 
 /**
- * This class is used to check if two users are ready to continue to the next scene.
- * 
+ * This class is used to check if two users are ready to continue to the next
+ * scene.
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class TwoUsersContinueStrategy extends AbstractUserContinueStrategy {
-    
+
     public TwoUsersContinueStrategy(AbstractMTWDSceneController controller) {
         super(controller);
     }

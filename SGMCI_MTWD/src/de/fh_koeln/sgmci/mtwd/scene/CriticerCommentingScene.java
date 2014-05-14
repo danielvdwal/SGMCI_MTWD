@@ -31,7 +31,7 @@ import processing.core.PImage;
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public class CriticerCommentingScene extends AbstractMTWDScene {
 
@@ -53,7 +53,7 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
     public CriticerCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         //controller = new RealistCommentingSceneController(this);
-        
+
         // Set a scene transition for our StartScene.
         // Blend transition only available using opengl supporting the FBO extenstion.
         if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {
@@ -81,7 +81,7 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
         problemTextArea.setNoStroke(true);
         problemTextArea.setPickable(false);
         problemTextArea.setText("Problem");
-        
+
         problemNorthTextArea = new MTTextArea(mtApp, problemFont);
         problemNorthTextArea.setNoFill(true);
         problemNorthTextArea.setNoStroke(true);
@@ -176,13 +176,13 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
         commentList.addListElement(commentListCell);
         commentList.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         commentList.translate(new Vector3D(0, 50));
-        
+
         getCanvas().addChild(commentList);
-        
+
         helpButton = new MTSvgButton("data/button_help.svg", mtApp);
         helpButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
-        
+
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
@@ -190,12 +190,12 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
         settingsButton = new MTSvgButton("data/button_settings.svg", mtApp);
         settingsButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
-        
+
         getCanvas().addChild(helpButton);
         getCanvas().addChild(startButton);
         getCanvas().addChild(settingsButton);
     }
-    
+
     @Override
     public void createEventListeners() {
         // displays where the screen is touched
@@ -242,7 +242,7 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
                 }
             }
         });
-        
+
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -293,4 +293,3 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
         //ideaEastTextArea.translate(new Vector3D(0, -ideaEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
 }
-

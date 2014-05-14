@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class is used as a container for the idea class 
- * to hold all critics of the associated idea object.
- * 
+ * This class is used as a container for the idea class to hold all critics of
+ * the associated idea object.
+ *
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 class CritiziedIdea extends AbstractModel {
 

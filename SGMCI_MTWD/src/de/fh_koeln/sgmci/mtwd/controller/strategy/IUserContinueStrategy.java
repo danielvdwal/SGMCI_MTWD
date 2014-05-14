@@ -7,7 +7,7 @@ package de.fh_koeln.sgmci.mtwd.controller.strategy;
  * the application, the strategy pattern is used.
  * 
  * @author Daniel van der Wal
- * @version 0.1.0
+ * @version 0.2.0
  */
 public interface IUserContinueStrategy {
     
