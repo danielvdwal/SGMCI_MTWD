@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/core.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/mri.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/muito_blobtracking.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-anim.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-awt-util.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-bridge.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-css.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-dom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-ext.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-extension.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-gvt.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-parser.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-script.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-svg-dom.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-svggen.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-transcoder.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-util.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/batik-xml.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/js.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/pdf-transcoder.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/xml-apis.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/batik/xml-apis-ext.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/whirlylib/commons-collections-3.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/whirlylib/commons-logging.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/whirlylib/concurrent-1.3.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/whirlylib/junit-3.8.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/whirlylib/log4j-1.2.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/whirlylib/whirlycache-1.0.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/jogl/jogl.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/tuio/libTUIO.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/examples/advanced/flickrMT/lib/flickrj.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/examples/advanced/fluidSimulator/lib/MSAFluid.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/examples/advanced/modestMapsMT/lib/modestMaps.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/jogl/gluegen-rt.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/examples/advanced/physics/lib/jbox2d.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/examples/advanced/water/lib/waterScene.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/gsvideo/jna-3.1.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/gsvideo/gstreamer-java-bin-1.2.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/gsvideo/gsvideo06pre.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/jogl/opengl.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/mt4jLibs/GlulogicMT.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+      <src_folder value="file://$MODULE_DIR$/examples" expected_position="1" />
+      <src_folder value="file://$MODULE_DIR$/tests" expected_position="2" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library name="core.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/core.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mri.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/mri.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="muito_blobtracking.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/muito_blobtracking.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-anim.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-anim.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-awt-util.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-awt-util.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-bridge.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-bridge.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-css.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-css.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-dom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-dom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-ext.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-ext.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-extension.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-extension.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-gvt.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-gvt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-parser.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-parser.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-script.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-script.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svg-dom.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-svg-dom.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-svggen.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-svggen.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-transcoder.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-transcoder.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-util.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-util.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="batik-xml.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/batik-xml.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="js.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/js.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="pdf-transcoder.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/pdf-transcoder.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xml-apis.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/xml-apis.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xml-apis-ext.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/batik/xml-apis-ext.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-collections-3.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/whirlylib/commons-collections-3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-logging.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/whirlylib/commons-logging.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="concurrent-1.3.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/whirlylib/concurrent-1.3.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="junit-3.8.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/whirlylib/junit-3.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log4j-1.2.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/whirlylib/log4j-1.2.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="whirlycache-1.0.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/whirlylib/whirlycache-1.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jogl.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/jogl/jogl.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="libTUIO.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/tuio/libTUIO.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="flickrj.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/examples/advanced/flickrMT/lib/flickrj.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="MSAFluid.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/examples/advanced/fluidSimulator/lib/MSAFluid.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="modestMaps.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/examples/advanced/modestMapsMT/lib/modestMaps.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="gluegen-rt.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/jogl/gluegen-rt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jbox2d.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/examples/advanced/physics/lib/jbox2d.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="waterScene.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/examples/advanced/water/lib/waterScene.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jna-3.1.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/gsvideo/jna-3.1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="gstreamer-java-bin-1.2.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/gsvideo/gstreamer-java-bin-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="gsvideo06pre.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/gsvideo/gsvideo06pre.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="opengl.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/jogl/opengl.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="GlulogicMT.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/mt4jLibs/GlulogicMT.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
