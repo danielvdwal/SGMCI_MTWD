@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.IMain;
 import de.fh_koeln.sgmci.mtwd.controller.SplashSceneController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +18,7 @@ import processing.core.PImage;
 
 /**
  *
- * @author Robert Scherbarth
+ * @author Robert Scherbarth, Daniel van der Wal
  * @version 0.1.0
  */
 public class SplashScene extends AbstractMTWDScene {
@@ -25,13 +26,12 @@ public class SplashScene extends AbstractMTWDScene {
     private final SplashSceneController controller;
     private MTTextArea headlineTextArea;
     private MTTextArea subheadlineTextArea;
-    private MTTextArea loadingTextArea;
     private MTTextArea descriptionTextArea;
     private MTTextArea personsTextArea;
     private MTTextArea moduleTextArea;
     private MTTextArea profTextArea;
-
     private MTSvgButton startButton;
+    private MTTextArea loadingTextArea;
 
     public SplashScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -65,12 +65,6 @@ public class SplashScene extends AbstractMTWDScene {
         subheadlineTextArea.setPickable(false);
         subheadlineTextArea.setText(SplashSceneController.APPLICATION_NAME);
 
-        loadingTextArea = new MTTextArea(mtApp, subheadlineFont);
-        loadingTextArea.setNoFill(true);
-        loadingTextArea.setNoStroke(true);
-        loadingTextArea.setPickable(false);
-        loadingTextArea.setText(SplashSceneController.LOADING_TEXT);
-
         //The description of the technique
         descriptionTextArea = new MTTextArea(mtApp, descriptionFont);
         descriptionTextArea.setNoFill(true);
@@ -101,25 +95,31 @@ public class SplashScene extends AbstractMTWDScene {
         
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
-        startButton.setVisible(false);
+        
+        loadingTextArea = new MTTextArea(mtApp, subheadlineFont);
+        loadingTextArea.setNoFill(true);
+        loadingTextArea.setNoStroke(true);
+        loadingTextArea.setPickable(false);
+        loadingTextArea.setText(SplashSceneController.LOADING_TEXT);
+        loadingTextArea.setVisible(false);
 
         getCanvas().addChild(headlineTextArea);
         getCanvas().addChild(subheadlineTextArea);
         getCanvas().addChild(descriptionTextArea);
-        getCanvas().addChild(loadingTextArea);
         getCanvas().addChild(personsTextArea);
         getCanvas().addChild(moduleTextArea);
         getCanvas().addChild(profTextArea);
         getCanvas().addChild(startButton);
+        getCanvas().addChild(loadingTextArea);
 
         headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 250, 0));
         subheadlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 280, 0));
-        loadingTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150, 0));
         descriptionTextArea.setPositionGlobal(new Vector3D(mtApp.width / 6, 350, 0));
         personsTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2 + personsTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 50, 400, 0));
         moduleTextArea.setPositionGlobal(new Vector3D(moduleTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height - 20, 0));
         profTextArea.setPositionGlobal(new Vector3D(mtApp.width - profTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height - 20, 0));
         startButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150, 0));
+        loadingTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 200, 0));
     }
 
     @Override
@@ -129,7 +129,12 @@ public class SplashScene extends AbstractMTWDScene {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {
+                    case TapEvent.BUTTON_DOWN:
+                        loadingTextArea.setVisible(true);
+                        startButton.setVisible(false);
+                        break;
                     case TapEvent.BUTTON_CLICKED:
+                        main.loadResources();
                         controller.proceed();
                         break;
                     default:
@@ -137,13 +142,5 @@ public class SplashScene extends AbstractMTWDScene {
                 }
             }
         });
-    }
-    
-    @Override
-    public void updateScene() {
-        loadingTextArea.setVisible(false);
-        startButton.setVisible(true);
-        getCanvas().removeChild(loadingTextArea);
-        getCanvas().addChild(startButton);  
     }
 }
