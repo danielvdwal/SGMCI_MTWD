@@ -2,17 +2,20 @@ package de.fh_koeln.sgmci.mtwd;
 
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
 import de.fh_koeln.sgmci.mtwd.scene.factory.AbstractMTWDSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerCommentingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerVotingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.DreamerSceneFactory;
-import de.fh_koeln.sgmci.mtwd.scene.factory.RealistVotingSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.EvaluationSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.RealistCommentingSceneFactory;
+import de.fh_koeln.sgmci.mtwd.scene.factory.RealistVotingSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.SplashSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.StartSceneFactory;
-import de.fh_koeln.sgmci.mtwd.scene.factory.EvaluationSceneFactory;
-import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerCommentingSceneFactory;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.media.opengl.GLContext;
 import static javax.media.opengl.Threading.disableSingleThreading;
-
+import javax.swing.SwingUtilities;
 import org.mt4j.MTApplication;
 
 /**
@@ -49,30 +52,38 @@ public class Main extends MTApplication {
         splashScene = splashSceneFactory.createMTWDScene(main, "Splash Scene");
         addScene(splashScene);
 
-        GLContext.getCurrent().release();
-
         new Thread(new Runnable() {
 
             @Override
             public void run() {
+                final AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
+                final AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
+                final AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
+                final AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
+                final AbstractMTWDSceneFactory criticerCommentingSceneFactory = new CriticerCommentingSceneFactory();
+                final AbstractMTWDSceneFactory criticerVotingSceneFactory = new CriticerVotingSceneFactory();
+                final AbstractMTWDSceneFactory evaluationSceneFactory = new EvaluationSceneFactory();
 
-                GLContext.getCurrent().makeCurrent();
+                try {
+                    SwingUtilities.invokeAndWait(new Runnable() {
 
-                AbstractMTWDSceneFactory startSceneFactory = new StartSceneFactory();
-                AbstractMTWDSceneFactory dreamerSceneFactory = new DreamerSceneFactory();
-                AbstractMTWDSceneFactory realistVotingSceneFactory = new RealistVotingSceneFactory();
-                AbstractMTWDSceneFactory realistCommentingSceneFactory = new RealistCommentingSceneFactory();
-                AbstractMTWDSceneFactory criticerCommentingSceneFactory = new CriticerCommentingSceneFactory();
-                AbstractMTWDSceneFactory criticerVotingSceneFactory = new CriticerVotingSceneFactory();
-                AbstractMTWDSceneFactory evaluationSceneFactory = new EvaluationSceneFactory();
+                        @Override
+                        public void run() {
+                            startScene = startSceneFactory.createMTWDScene(main, "Start Scene");
+                            dreamerScene = dreamerSceneFactory.createMTWDScene(main, "Dreamer Scene");
+                            realistVotingScene = realistVotingSceneFactory.createMTWDScene(main, "Realist Voting Scene");
+                            realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(main, "Realist Commenting Scene");
+                            criticerCommentingScene = criticerCommentingSceneFactory.createMTWDScene(main, "Criticer Commenting Scene");
+                            criticerVotingScene = criticerVotingSceneFactory.createMTWDScene(main, "Criticer Voting Scene");
+                            evaluationScene = evaluationSceneFactory.createMTWDScene(main, "Evaluation Scene");
 
-                startScene = startSceneFactory.createMTWDScene(main, "Start Scene");
-                dreamerScene = dreamerSceneFactory.createMTWDScene(main, "Dreamer Scene");
-                realistVotingScene = realistVotingSceneFactory.createMTWDScene(main, "Realist Voting Scene");
-                realistCommentingScene = realistCommentingSceneFactory.createMTWDScene(main, "Realist Commenting Scene");
-                criticerCommentingScene = criticerCommentingSceneFactory.createMTWDScene(main, "Criticer Commenting Scene");
-                criticerVotingScene = criticerVotingSceneFactory.createMTWDScene(main, "Criticer Voting Scene");
-                evaluationScene = evaluationSceneFactory.createMTWDScene(main, "Evaluation Scene");
+                        }
+                    });
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InvocationTargetException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 splashScene.setNextScene(startScene);
                 startScene.setNextScene(dreamerScene);
@@ -92,8 +103,6 @@ public class Main extends MTApplication {
                 addScene(criticerCommentingScene);
                 addScene(criticerVotingScene);
                 addScene(evaluationScene);
-
-                GLContext.getCurrent().release();
             }
         }).start();
     }
