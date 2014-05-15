@@ -2,6 +2,8 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.SplitKeyboard;
+import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
+import de.fh_koeln.sgmci.mtwd.model.Idea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -28,18 +30,19 @@ import processing.core.PImage;
  * @version 0.2.0
  */
 public class DreamerScene extends AbstractMTWDScene {
-    
+
+    private final IFont ideaFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18);
     private final DreamerSceneController controller;
     private MTTextArea problemTextArea;
     private MTTextArea problemTextAreaInverted;
-    
+
     private MTSvgButton startButton;
-    
+
     public DreamerScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         controller = new DreamerSceneController(this);
     }
-    
+
     @Override
     public void createBackground() {
         // 2400 x 1600
@@ -47,26 +50,25 @@ public class DreamerScene extends AbstractMTWDScene {
         backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
         getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
     }
-    
+
     @Override
     public void createComponents() {
         final IFont problemFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 30);
-        final IFont ideaFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18);
-        
+
         problemTextArea = new MTTextArea(mtApp, problemFont);
         problemTextArea.setNoFill(true);
         problemTextArea.setNoStroke(true);
         problemTextArea.setPickable(false);
-        
+
         problemTextAreaInverted = new MTTextArea(mtApp, problemFont);
         problemTextAreaInverted.setNoFill(true);
         problemTextAreaInverted.setNoStroke(true);
         problemTextAreaInverted.setPickable(false);
         problemTextAreaInverted.rotateZ(Vector3D.ZERO_VECTOR, 180);
-        
+
         getCanvas().addChild(problemTextArea);
         getCanvas().addChild(problemTextAreaInverted);
-        
+
         for (int i = 0; i < 4; i++) {
             final SplitKeyboard keyboard = new SplitKeyboard(mtApp);
             float width = keyboard.getWidth();
@@ -74,10 +76,10 @@ public class DreamerScene extends AbstractMTWDScene {
             float ratio = (mtApp.getWidth() * 0.5f) / width;
             keyboard.setSpaceBetweenKeyboards(200);
             keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
-            
+
             width = width * ratio;
             height = height * ratio;
-            
+
             final MTTextArea currentTextArea = new MTTextArea(mtApp, ideaFont);
             currentTextArea.setExpandDirection(MTTextArea.ExpandDirection.UP);
             currentTextArea.setStrokeColor(new MTColor(0, 0, 0, 255));
@@ -86,7 +88,7 @@ public class DreamerScene extends AbstractMTWDScene {
             keyboard.getLeftKeyboard().addChild(currentTextArea);
             currentTextArea.setPositionRelativeToParent(new Vector3D(40, -currentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
             keyboard.addTextInputListener(currentTextArea);
-            
+
             final MTRectangle rectangle = new MTRectangle(-100, 0, 30, 30, mtApp);
             rectangle.translate(new Vector3D(0, 15, 0));
             rectangle.registerInputProcessor(new TapProcessor(mtApp));
@@ -96,17 +98,18 @@ public class DreamerScene extends AbstractMTWDScene {
                         public boolean processGestureEvent(MTGestureEvent ge) {
                             TapEvent te = (TapEvent) ge;
                             if (te.getId() == TapEvent.GESTURE_DETECTED) {
-                                final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
-                                newTextArea.setText(currentTextArea.getText());
-                                getCanvas().addChild(newTextArea);
-                                
-                                currentTextArea.setText("");
+                                try {
+                                    controller.createIdea(currentTextArea.getText());
+                                    currentTextArea.setText("");
+                                } catch (NoIdeaTextException ex) {
+                                    // do nothing
+                                }
                             }
                             return false;
                         }
                     });
             keyboard.addChild(rectangle);
-            
+
             switch (i) {
                 case 0:
                     keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - height / 2, 0));
@@ -124,40 +127,57 @@ public class DreamerScene extends AbstractMTWDScene {
                     keyboard.setPositionGlobal(new Vector3D(mtApp.width - height / 2, mtApp.height / 2, 0));
                     break;
             }
-            
+
             keyboard.setPickable(false);
             keyboard.removeAllGestureEventListeners();
             keyboard.unregisterAllInputProcessors();
             this.getCanvas().addChild(keyboard);
         }
-        
+
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         getCanvas().addChild(startButton);
         startButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
     }
-    
+
     @Override
-    public void updateScene() {
+    public void startScene() {
+        for (Idea idea : controller.getAllVisibleIdeasForCurrentProblem()) {
+            final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
+            newTextArea.setText(idea.getDescription());
+            getCanvas().addChild(newTextArea);
+        }
+
+        // needs to be removed and set for each user
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextArea.translate(new Vector3D(0, problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        
+
         problemTextAreaInverted.setText(controller.getCurrentProblemDescription());
         problemTextAreaInverted.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextAreaInverted.translate(new Vector3D(0, -problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
-    
+
+    @Override
+    public void updateScene() {
+        Idea newestIdea = controller.popNewestIdeaForCurrentProblem();
+        if (newestIdea != null) {
+            final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
+            newTextArea.setText(newestIdea.getDescription());
+            getCanvas().addChild(newTextArea);
+        }
+    }
+
     @Override
     public void init() {
         mtApp.registerKeyEvent(this);
     }
-    
+
     @Override
     public void shutDown() {
         mtApp.unregisterKeyEvent(this);
     }
-    
+
     public void keyEvent(KeyEvent e) {
         int evtID = e.getID();
         if (evtID != KeyEvent.KEY_PRESSED) {
@@ -171,10 +191,10 @@ public class DreamerScene extends AbstractMTWDScene {
                 break;
         }
     }
-    
+
     @Override
     public void createEventListeners() {
-        
+
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {

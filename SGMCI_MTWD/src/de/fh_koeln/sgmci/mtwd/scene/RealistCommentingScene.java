@@ -1,7 +1,9 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
+import de.fh_koeln.sgmci.mtwd.model.Idea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
@@ -20,12 +22,9 @@ import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
-import org.mt4j.sceneManagement.transition.BlendTransition;
-import org.mt4j.sceneManagement.transition.FadeTransition;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
-import org.mt4j.util.opengl.GLFBO;
 import processing.core.PImage;
 
 /**
@@ -35,7 +34,7 @@ import processing.core.PImage;
  */
 public class RealistCommentingScene extends AbstractMTWDScene {
 
-    //private final RealistCommentingSceneController controller;
+    private final RealistCommentingSceneController controller;
     private MTTextArea problemTextArea;
     private MTTextArea ideaTextArea;
     private MTTextArea problemNorthTextArea;
@@ -49,18 +48,12 @@ public class RealistCommentingScene extends AbstractMTWDScene {
     private MTSvgButton helpButton;
     private MTSvgButton settingsButton;
     private MTSvgButton startButton;
+    private Idea[] ideas;
+    private int ideaIndex = 1;
 
     public RealistCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
-        //controller = new RealistCommentingSceneController(this);
-
-        // Set a scene transition for our StartScene.
-        // Blend transition only available using opengl supporting the FBO extenstion.
-        if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {
-            this.setTransition(new BlendTransition(mtApp, 1200));
-        } else {
-            this.setTransition(new FadeTransition(mtApp));
-        }
+        controller = new RealistCommentingSceneController(this);
     }
 
     @Override
@@ -79,49 +72,41 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         problemTextArea = new MTTextArea(mtApp, problemFont);
         problemTextArea.setNoFill(true);
         problemTextArea.setNoStroke(true);
-        problemTextArea.setPickable(false);
-        problemTextArea.setText("Problem");
+        problemTextArea.setPickable(false); 
         problemNorthTextArea = new MTTextArea(mtApp, problemFont);
         problemNorthTextArea.setNoFill(true);
         problemNorthTextArea.setNoStroke(true);
         problemNorthTextArea.setPickable(false);
-        problemNorthTextArea.setText("Problem");
         problemNorthTextArea.rotateZ(Vector3D.ZERO_VECTOR, 180);
         problemWestTextArea = new MTTextArea(mtApp, problemFont);
         problemWestTextArea.setNoFill(true);
         problemWestTextArea.setNoStroke(true);
         problemWestTextArea.setPickable(false);
-        problemWestTextArea.setText("Problem");
         problemWestTextArea.rotateZ(Vector3D.ZERO_VECTOR, 90);
         problemEastTextArea = new MTTextArea(mtApp, problemFont);
         problemEastTextArea.setNoFill(true);
         problemEastTextArea.setNoStroke(true);
         problemEastTextArea.setPickable(false);
-        problemEastTextArea.setText("Problem");
         problemEastTextArea.rotateZ(Vector3D.ZERO_VECTOR, 270);
 
         ideaTextArea = new MTTextArea(mtApp, ideaFont);
         ideaTextArea.setNoFill(true);
         ideaTextArea.setNoStroke(true);
         ideaTextArea.setPickable(false);
-        ideaTextArea.setText("Idee");
         ideaNorthTextArea = new MTTextArea(mtApp, ideaFont);
         ideaNorthTextArea.setNoFill(true);
         ideaNorthTextArea.setNoStroke(true);
         ideaNorthTextArea.setPickable(false);
-        ideaNorthTextArea.setText("Idee");
         ideaNorthTextArea.rotateZ(Vector3D.ZERO_VECTOR, 180);
         ideaWestTextArea = new MTTextArea(mtApp, ideaFont);
         ideaWestTextArea.setNoFill(true);
         ideaWestTextArea.setNoStroke(true);
         ideaWestTextArea.setPickable(false);
-        ideaWestTextArea.setText("Idee");
         ideaWestTextArea.rotateZ(Vector3D.ZERO_VECTOR, 90);
         ideaEastTextArea = new MTTextArea(mtApp, ideaFont);
         ideaEastTextArea.setNoFill(true);
         ideaEastTextArea.setNoStroke(true);
         ideaEastTextArea.setPickable(false);
-        ideaEastTextArea.setText("Idee");
         ideaEastTextArea.rotateZ(Vector3D.ZERO_VECTOR, 270);
 
         getCanvas().addChild(problemTextArea);
@@ -265,30 +250,36 @@ public class RealistCommentingScene extends AbstractMTWDScene {
 
     @Override
     public void updateScene() {
-        //problemTextArea.setText(controller.getCurrentProblemDescription());
+        problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextArea.translate(new Vector3D(0, -100));
-        //problemNorthTextArea.setText(controller.getCurrentProblemDescription());
+        
+        problemNorthTextArea.setText(controller.getCurrentProblemDescription());
         problemNorthTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 100, 0));
-        //problemNorthTextArea.translate(new Vector3D(0, -problemNorthTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //problemWestTextArea.setText(controller.getCurrentProblemDescription());
+        problemNorthTextArea.translate(new Vector3D(0, -problemNorthTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        
+        problemWestTextArea.setText(controller.getCurrentProblemDescription());
         problemWestTextArea.setPositionGlobal(new Vector3D(100, mtApp.height / 2, 0));
-        //problemWestTextArea.translate(new Vector3D(0, -problemWestTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //problemEastTextArea.setText(controller.getCurrentProblemDescription());
+        problemWestTextArea.translate(new Vector3D(0, -problemWestTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        
+        problemEastTextArea.setText(controller.getCurrentProblemDescription());
         problemEastTextArea.setPositionGlobal(new Vector3D(mtApp.width - 100, mtApp.height / 2, 0));
-        //problemEastTextArea.translate(new Vector3D(0, -problemEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        problemEastTextArea.translate(new Vector3D(0, -problemEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
 
-        //ideaTextArea.setText(controller.getCurrentProblemDescription());
+        ideaTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         ideaTextArea.translate(new Vector3D(0, ideaTextArea.getHeightXY(TransformSpace.LOCAL) - 100));
-        //ideaNorthTextArea.setText(controller.getCurrentProblemDescription());
+        
+        ideaNorthTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaNorthTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 50, 0));
-        //ideaNorthTextArea.translate(new Vector3D(0, -ideaNorthTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //ideaWestTextArea.setText(controller.getCurrentProblemDescription());
+        ideaNorthTextArea.translate(new Vector3D(0, -ideaNorthTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        
+        ideaWestTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaWestTextArea.setPositionGlobal(new Vector3D(50, mtApp.height / 2, 0));
-        //ideaWestTextArea.translate(new Vector3D(0, -ideaWestTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //ideaEastTextArea.setText(controller.getCurrentProblemDescription());
+        ideaWestTextArea.translate(new Vector3D(0, -ideaWestTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        
+        ideaEastTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaEastTextArea.setPositionGlobal(new Vector3D(mtApp.width - 50, mtApp.height / 2, 0));
-        //ideaEastTextArea.translate(new Vector3D(0, -ideaEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        ideaEastTextArea.translate(new Vector3D(0, -ideaEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
 }

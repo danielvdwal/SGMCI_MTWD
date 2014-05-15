@@ -1,7 +1,9 @@
 package de.fh_koeln.sgmci.mtwd.model;
 
+import java.util.List;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -13,6 +15,7 @@ import java.util.Map;
 public class Problem extends AbstractModel {
 
     private final Map<String, Idea> ideas;
+    private Idea newestIdea;
 
     private String description;
 
@@ -36,7 +39,9 @@ public class Problem extends AbstractModel {
      * @param description the description for that idea
      */
     public void addIdea(String id, String description) {
-        this.ideas.put(id, new Idea(id, description));
+        Idea idea = new Idea(id, description);
+        this.ideas.put(id, idea);
+        this.newestIdea = idea;
     }
 
     /**
@@ -59,12 +64,38 @@ public class Problem extends AbstractModel {
     }
 
     /**
+     * Get the newest idea that was added.<br >
+     * And sets the newest idea to null.
+     *
+     * @return the newest idea
+     */
+    public Idea popNewestIdea() {
+        Idea idea = newestIdea;
+        newestIdea = null;
+        return idea;
+    }
+
+    /**
      * Get all ideas as a collection that are used for this problem.
      *
      * @return all ideas used for this problem
      */
     public Collection<Idea> getAllIdeas() {
         return ideas.values();
+    }
+
+    /**
+     * Get all ideas as a collection that are still visible and used for this
+     * problem.
+     *
+     * @return all ideas that are still visible and used for this problem
+     */
+    public List<Idea> getAllVisibleIdeas() {
+        List<Idea> visibleIdeas = new LinkedList<Idea>();
+        for (Idea idea : ideas.values()) {
+            visibleIdeas.add(idea);
+        }
+        return visibleIdeas;
     }
 
     // description

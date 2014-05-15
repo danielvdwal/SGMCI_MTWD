@@ -22,6 +22,8 @@ public interface IScene extends Iscene {
 
     void createComponents();
 
+    void startScene();
+
     void updateScene();
 
     /**

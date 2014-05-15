@@ -105,10 +105,4 @@ public class EvaluationScene extends AbstractMTWDScene {
             }
         });
     }
-
-    @Override
-    public void updateScene() {
-        //startButton.setVisible(true);
-        //getCanvas().addChild(startButton);  
-    }
 }

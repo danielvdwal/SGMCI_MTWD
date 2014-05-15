@@ -27,6 +27,7 @@ public class Idea extends AbstractModel {
         this.description = description;
         this.commentedIdea = new CommentedIdea(this.id, this);
         this.critizedIdea = new CritiziedIdea(this.id, this);
+        this.stillDisplayed = true;
     }
 
     // description

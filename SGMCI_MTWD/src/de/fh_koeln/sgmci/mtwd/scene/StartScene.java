@@ -17,12 +17,9 @@ import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
-import org.mt4j.sceneManagement.transition.BlendTransition;
-import org.mt4j.sceneManagement.transition.FadeTransition;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
-import org.mt4j.util.opengl.GLFBO;
 import processing.core.PImage;
 
 /**
@@ -45,14 +42,6 @@ public class StartScene extends AbstractMTWDScene {
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
         this.controller = new StartSceneController(this);
-
-        // Set a scene transition for our StartScene.
-        // Blend transition only available using opengl supporting the FBO extenstion.
-        if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {
-            this.setTransition(new BlendTransition(mtApp, 1200));
-        } else {
-            this.setTransition(new FadeTransition(mtApp));
-        }
     }
 
     @Override

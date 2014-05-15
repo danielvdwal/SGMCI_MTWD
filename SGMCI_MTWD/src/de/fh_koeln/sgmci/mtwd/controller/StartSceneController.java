@@ -21,8 +21,7 @@ public class StartSceneController extends AbstractMTWDSceneController {
     }
 
     /**
-     * Creates a new problem with an ongoing identity and given description.<br
-     * >
+     * Creates a new problem with an ongoing identity and given description.<br>
      * After its creation, the scene is ordered to continue to the next one.
      *
      * @param problemDesc the problem description that should be used

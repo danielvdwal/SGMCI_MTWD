@@ -1,7 +1,10 @@
 package de.fh_koeln.sgmci.mtwd.controller;
 
+import de.fh_koeln.sgmci.mtwd.model.Idea;
 import de.fh_koeln.sgmci.mtwd.model.MultitouchWaltDisneyApplication;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * This class is used as the super class for all SceneControllers.<br >
@@ -83,6 +86,25 @@ public abstract class AbstractMTWDSceneController {
      */
     public String getCurrentProblemDescription() {
         return application.getProblem(currentProblemId).getDescription();
+    }
+
+    /**
+     * Get all ideas for the current problem that are still visible.
+     *
+     * @return a list of all ideas for the current problem that are still
+     * visible
+     */
+    public List<Idea> getAllVisibleIdeasForCurrentProblem() {
+        return application.getProblem(currentProblemId).getAllVisibleIdeas();
+    }
+
+    /**
+     * Get the newest idea for the current problem.
+     *
+     * @return the newest idea for the current problem
+     */
+    public Idea popNewestIdeaForCurrentProblem() {
+        return application.getProblem(currentProblemId).popNewestIdea();
     }
 
     /**

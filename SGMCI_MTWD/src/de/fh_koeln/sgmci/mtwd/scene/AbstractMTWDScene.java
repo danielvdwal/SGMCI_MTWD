@@ -3,6 +3,10 @@ package de.fh_koeln.sgmci.mtwd.scene;
 import de.fh_koeln.sgmci.mtwd.IMain;
 import org.mt4j.MTApplication;
 import org.mt4j.sceneManagement.AbstractScene;
+import org.mt4j.sceneManagement.transition.BlendTransition;
+import org.mt4j.sceneManagement.transition.FadeTransition;
+import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.opengl.GLFBO;
 
 /**
  *
@@ -28,6 +32,14 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
     public AbstractMTWDScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         this.mtApp = mtApp;
+
+        // Set a scene transition for our StartScene.
+        // Blend transition only available using opengl supporting the FBO extenstion.
+        if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {
+            this.setTransition(new BlendTransition(mtApp, 1200));
+        } else {
+            this.setTransition(new FadeTransition(mtApp));
+        }
     }
 
     @Override
@@ -51,7 +63,7 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
     @Override
     public void gotoNextScene() {
         mtApp.pushScene();
-        nextScene.updateScene();
+        nextScene.startScene();
         mtApp.changeScene(nextScene);
     }
 
@@ -65,6 +77,10 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
 
     @Override
     public void createComponents() {
+    }
+
+    @Override
+    public void startScene() {
     }
 
     @Override

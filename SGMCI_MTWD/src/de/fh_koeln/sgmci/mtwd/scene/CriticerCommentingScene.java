@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
 import java.awt.event.ActionEvent;
@@ -35,7 +36,7 @@ import processing.core.PImage;
  */
 public class CriticerCommentingScene extends AbstractMTWDScene {
 
-    //private final RealistCommentingSceneController controller;
+    private final RealistCommentingSceneController controller;
     private MTTextArea problemTextArea;
     private MTTextArea ideaTextArea;
     private MTTextArea problemNorthTextArea;
@@ -52,15 +53,7 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
 
     public CriticerCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
-        //controller = new RealistCommentingSceneController(this);
-
-        // Set a scene transition for our StartScene.
-        // Blend transition only available using opengl supporting the FBO extenstion.
-        if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {
-            this.setTransition(new BlendTransition(mtApp, 1200));
-        } else {
-            this.setTransition(new FadeTransition(mtApp));
-        }
+        controller = new RealistCommentingSceneController(this);
     }
 
     @Override
