@@ -15,8 +15,10 @@ public class SplashSceneController extends AbstractMTWDSceneController {
     public final static String APPLICATION_ABBREVIATION = "MTWD";
     public final static String APPLICATION_NAME = "Multi-Touch-Walt-Disney Methode";
     public final static String LOADING_TEXT = "wird geladen . . .";
-    public final static String TECHINQUE_DESCRIPTION = "Beschreibung \n"
-            + "kurze Beschreibung der Technik";
+    public final static String TECHINQUE_DESCRIPTION = "Beschreibung \n\n"
+            + "In der Walt Disney Kreativitätstechnik, welche\n vom berühmten Filmproduzenten Walt Disney \n"
+    		+ "erdacht wurde, versetzt sich eine Gruppe oder\n auch Einzelperson nacheinander in drei Rollen \n"
+            + "(Träumer, Macher und Kritiker) um somit auf\n verschiedene kreative Ideen zu kommen.";
     public final static String DEVELOPERS = "Entwickler: \n"
             + "Daniel van der Wal \n"
             + "Robert Scherbarth \n"
