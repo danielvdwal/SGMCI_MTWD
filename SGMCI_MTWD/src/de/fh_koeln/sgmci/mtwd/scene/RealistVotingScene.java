@@ -73,8 +73,8 @@ public class RealistVotingScene extends AbstractMTWDScene {
                             rightButton.setEnabled(true);
                             rightButton.setVisible(true);
                             ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
-                            ideaUser1.setSizeLocal(300f, 250f);
-                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+                            ideaUser1.setSizeLocal(200f, 150f);
+                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 200f, 0));
                             if (ideaIndex == 0) {
                                 leftButton.setEnabled(false);
                                 leftButton.setVisible(false);
@@ -97,8 +97,8 @@ public class RealistVotingScene extends AbstractMTWDScene {
                             leftButton.setEnabled(true);
                             leftButton.setVisible(true);
                             ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
-                            ideaUser1.setSizeLocal(300f, 250f);
-                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+                            ideaUser1.setSizeLocal(200f, 150f);
+                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 200f, 0));
                             if (ideaIndex == allIdeas.size() - 1) {
                                 rightButton.setEnabled(false);
                                 rightButton.setVisible(false);
@@ -153,12 +153,16 @@ public class RealistVotingScene extends AbstractMTWDScene {
         allIdeas = controller.getAllVisibleIdeasForCurrentProblem();
         
         ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
-        ideaUser1.setSizeLocal(300f, 250f);
-        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+        ideaUser1.setSizeLocal(200f, 150f);
+        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 200f, 0));
         
-        leftButton.setPositionRelativeToParent(new Vector3D(-100, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
-        rightButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 100, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
+        leftButton.setPositionRelativeToParent(new Vector3D(-50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        rightButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
+        rightButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        likeButton.scale(1.5f, 1.5f, 1.5f, Vector3D.ZERO_VECTOR);
         likeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
+        dislikeButton.scale(1.5f, 1.5f, 1.5f, Vector3D.ZERO_VECTOR);
         dislikeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3 * 2, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
         continueButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         continueButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 250, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
