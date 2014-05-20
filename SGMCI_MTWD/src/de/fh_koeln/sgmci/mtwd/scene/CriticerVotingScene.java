@@ -159,7 +159,6 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         rightButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 100, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
         likeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
         dislikeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3 * 2, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
-        continueButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         continueButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 250, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
 
         problemTextArea.setText(controller.getCurrentProblemDescription());

@@ -22,7 +22,7 @@ public class SplashSceneController extends AbstractMTWDSceneController {
             + "auch Einzelperson nacheinander in drei Rollen \n"
             + "(Tr\u00e4umer, Macher und Kritiker) um somit auf \n"
             + "verschiedene kreative Ideen zu kommen.";
-    public final static String DEVELOPERS = "Entwickler: \n"
+    public final static String DEVELOPERS = "Entwickler: \n\n"
             + "Daniel van der Wal \n"
             + "Robert Scherbarth \n"
             + "Nadim Khan \n"
