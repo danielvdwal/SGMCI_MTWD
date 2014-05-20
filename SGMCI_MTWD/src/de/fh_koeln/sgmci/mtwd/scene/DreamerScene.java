@@ -327,8 +327,7 @@ public class DreamerScene extends AbstractMTWDScene {
         });
         this.getCanvas().addChild(addUser4KeyboardButton);
 
-        startButton = new MTSvgButton("data/button_start.svg", mtApp);
-        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        startButton = new MTSvgButton("data/startButton.svg", mtApp);
         getCanvas().addChild(startButton);
         startButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
     }

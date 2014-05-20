@@ -168,16 +168,13 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
 
         getCanvas().addChild(commentList);
 
-        helpButton = new MTSvgButton("data/button_help.svg", mtApp);
-        helpButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        helpButton = new MTSvgButton("data/helpButton.svg", mtApp);
         helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
-        startButton = new MTSvgButton("data/button_start.svg", mtApp);
-        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        startButton = new MTSvgButton("data/startButton.svg", mtApp);
         startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
-        settingsButton = new MTSvgButton("data/button_settings.svg", mtApp);
-        settingsButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        settingsButton = new MTSvgButton("data/settingsButton.svg", mtApp);
         settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
         getCanvas().addChild(helpButton);

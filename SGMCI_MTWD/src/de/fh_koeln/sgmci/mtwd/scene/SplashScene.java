@@ -95,8 +95,7 @@ public class SplashScene extends AbstractMTWDScene {
         profTextArea.setPickable(false);
         profTextArea.setText(SplashSceneController.PROF);
 
-        startButton = new MTSvgButton("data/button_start.svg", mtApp);
-        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        startButton = new MTSvgButton("data/startButton.svg", mtApp);
 
         loadingTextArea = new MTTextArea(mtApp, subheadlineFont);
         loadingTextArea.setNoFill(true);

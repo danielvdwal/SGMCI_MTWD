@@ -137,7 +137,7 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         rightButton = new MTSvgButton("data/arrowRight.svg", mtApp);
         likeButton = new MTSvgButton("data/likeButton2.svg", mtApp);
         dislikeButton = new MTSvgButton("data/dislikeButton2.svg", mtApp);
-        continueButton = new MTSvgButton("data/button_start.svg", mtApp);
+        continueButton = new MTSvgButton("data/startButton.svg", mtApp);
 
         ideaUser1.addChild(rightButton);
         ideaUser1.addChild(leftButton);

@@ -72,8 +72,7 @@ public class EvaluationScene extends AbstractMTWDScene {
         profTextArea.setPickable(false);
         profTextArea.setText("Prof. Dr. Heiner Klocke");
 
-        startButton = new MTSvgButton("data/button_start.svg", mtApp);
-        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        startButton = new MTSvgButton("data/startButton.svg", mtApp);
 
         getCanvas().addChild(headlineTextArea);
         getCanvas().addChild(foundTextArea);
