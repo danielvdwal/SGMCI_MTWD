@@ -23,7 +23,8 @@ import org.mt4j.MTApplication;
  */
 public class Main extends MTApplication implements IMain {
 
-    private IScene splashScene;
+    private static final long serialVersionUID = 1L;
+	private IScene splashScene;
     private IScene startScene;
     private IScene dreamerScene;
     private IScene realistVotingScene;

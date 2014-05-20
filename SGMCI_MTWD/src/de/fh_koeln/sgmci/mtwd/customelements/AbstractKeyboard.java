@@ -107,7 +107,7 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
     /**
      * This value is used to have a fixed value to calculate all keyboards to scale factor.
      */
-    public static final int INITIAL_WIDTH = 800;
+    public static final int INITIAL_WIDTH = 850;
     /**
      * The PApplet this component is used in.
      */
