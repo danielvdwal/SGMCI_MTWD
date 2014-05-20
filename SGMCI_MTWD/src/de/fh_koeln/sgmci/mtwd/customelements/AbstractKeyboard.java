@@ -105,6 +105,10 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      */
     static final String BACKSPACE_ID = "backspace";
     /**
+     * This value is used to have a fixed value to calculate all keyboards to scale factor.
+     */
+    public static final int INITIAL_WIDTH = 900;
+    /**
      * The PApplet this component is used in.
      */
     final PApplet pApplet;
@@ -201,6 +205,22 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
 
         this.setBoundsBehaviour(AbstractShape.BOUNDS_ONLY_CHECK);
     }
+
+    /**
+     * Get the height of the keyboard.
+     *
+     * @return the height of the keyboard
+     */
+    public float getHeight() {
+        return KEYBOARD_HEIGHT;
+    }
+
+     /**
+     * Get the complete width of the keyboard.
+     *
+     * @return the complete width of the keyboard
+     */
+    public abstract float getWidth();
 
     /**
      * Changes the visibility of the buttons on the keyboard in regard to the

@@ -36,6 +36,11 @@ public final class Keyboard extends AbstractKeyboard {
         this.createKeyboard();
     }
 
+    @Override
+    public float getWidth() {
+        return KEYBOARD_WIDTH;
+    }
+
     private void createKeyboard() {
         Collection<KeyInfo> keyInfos = new LinkedList<KeyInfo>();
 

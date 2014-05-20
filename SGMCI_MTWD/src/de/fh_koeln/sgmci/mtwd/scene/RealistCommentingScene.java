@@ -119,8 +119,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         getCanvas().addChild(ideaEastTextArea);
 
         final AbstractKeyboard keyboard = new Keyboard(mtApp);
-        float ratio = (mtApp.getWidth() * 0.5f) / keyboard.getWidthXY(TransformSpace.LOCAL);
-        keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
+        keyboard.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
         keyboard.setPositionRelativeToParent(new Vector3D(mtApp.width / 2, mtApp.height - keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
 
         getCanvas().addChild(keyboard);
@@ -165,15 +164,15 @@ public class RealistCommentingScene extends AbstractMTWDScene {
 
         helpButton = new MTSvgButton("data/button_help.svg", mtApp);
         helpButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
-        helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
+        helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
-        startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
+        startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
         settingsButton = new MTSvgButton("data/button_settings.svg", mtApp);
         settingsButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
-        settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * ratio / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * ratio / 2));
+        settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
         getCanvas().addChild(helpButton);
         getCanvas().addChild(startButton);

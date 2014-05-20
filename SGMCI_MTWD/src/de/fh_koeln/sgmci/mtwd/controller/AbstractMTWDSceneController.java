@@ -3,7 +3,6 @@ package de.fh_koeln.sgmci.mtwd.controller;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
 import de.fh_koeln.sgmci.mtwd.model.MultitouchWaltDisneyApplication;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -23,6 +22,7 @@ public abstract class AbstractMTWDSceneController {
      * with the model.
      */
     final static MultitouchWaltDisneyApplication application = new MultitouchWaltDisneyApplication();
+
     /**
      * The id of the current problem used in the application.
      */
@@ -77,7 +77,24 @@ public abstract class AbstractMTWDSceneController {
         // the user on the south side should be active since he/she is the moderator
         user1Activate = true;
     }
+    
+    /**
+     * Get the application object.
+     * 
+     * @return the application object
+     */
+    public static MultitouchWaltDisneyApplication getApplication() {
+        return application;
+    }
 
+    /**
+     * Set the id of the current problem
+     * @param currentProblemId the id of the current problem
+     */
+    public static void setCurrentProblemId(String currentProblemId) {
+        AbstractMTWDSceneController.currentProblemId = currentProblemId;
+    }
+    
     /**
      * Get the current problem description which was entered via the start
      * scene.

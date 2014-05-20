@@ -1,6 +1,7 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.IMain;
+import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import org.mt4j.MTApplication;
 import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.sceneManagement.transition.BlendTransition;
@@ -28,11 +29,15 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
      * The main object which is used to start the application.
      */
     IMain main;
+    /**
+     * The scale factor for all keyboards.
+     */
+    float keyboardScaleFactor;
 
     public AbstractMTWDScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         this.mtApp = mtApp;
-
+        this.keyboardScaleFactor = (mtApp.getWidth() * 0.4f) / AbstractKeyboard.INITIAL_WIDTH;
         // Set a scene transition for our StartScene.
         // Blend transition only available using opengl supporting the FBO extenstion.
         if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {

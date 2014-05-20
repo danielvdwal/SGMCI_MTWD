@@ -69,17 +69,9 @@ public final class SplitKeyboard extends AbstractKeyboard {
      *
      * @return the complete width of the keyboard, including the space between
      */
+    @Override
     public float getWidth() {
         return spaceBetweenKeyboards + 2 * KEYBOARD_WIDTH;
-    }
-
-    /**
-     * Get the height of the keyboard.
-     *
-     * @return the height of the keyboard
-     */
-    public float getHeight() {
-        return KEYBOARD_HEIGHT;
     }
 
     /**

@@ -1,6 +1,7 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
+import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import de.fh_koeln.sgmci.mtwd.customelements.SplitKeyboard;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
@@ -73,12 +74,11 @@ public class DreamerScene extends AbstractMTWDScene {
             final SplitKeyboard keyboard = new SplitKeyboard(mtApp);
             float width = keyboard.getWidth();
             float height = keyboard.getHeight();
-            float ratio = (mtApp.getWidth() * 0.5f) / width;
             keyboard.setSpaceBetweenKeyboards(200);
-            keyboard.scale(ratio, ratio, ratio, Vector3D.ZERO_VECTOR);
+            keyboard.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
 
-            width = width * ratio;
-            height = height * ratio;
+            width = width * keyboardScaleFactor;
+            height = height * keyboardScaleFactor;
 
             final MTTextArea currentTextArea = new MTTextArea(mtApp, ideaFont);
             currentTextArea.setExpandDirection(MTTextArea.ExpandDirection.UP);
