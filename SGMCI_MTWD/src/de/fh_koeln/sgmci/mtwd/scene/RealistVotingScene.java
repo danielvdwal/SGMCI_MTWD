@@ -74,7 +74,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
                             rightButton.setVisible(true);
                             ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
                             ideaUser1.setSizeLocal(200f, 150f);
-                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 200f, 0));
+                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
                             if (ideaIndex == 0) {
                                 leftButton.setEnabled(false);
                                 leftButton.setVisible(false);
@@ -98,7 +98,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
                             leftButton.setVisible(true);
                             ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
                             ideaUser1.setSizeLocal(200f, 150f);
-                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 200f, 0));
+                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
                             if (ideaIndex == allIdeas.size() - 1) {
                                 rightButton.setEnabled(false);
                                 rightButton.setVisible(false);
@@ -154,7 +154,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
         
         ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
         ideaUser1.setSizeLocal(200f, 150f);
-        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 200f, 0));
+        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
         
         leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
         leftButton.setPositionRelativeToParent(new Vector3D(-50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
