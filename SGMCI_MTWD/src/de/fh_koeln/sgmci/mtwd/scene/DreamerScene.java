@@ -122,7 +122,7 @@ public class DreamerScene extends AbstractMTWDScene {
                 });
         user1Keyboard.addChild(user1Rectangle);
 
-        user1Keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - height / 2, 0));
+        user1Keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - height / 2 - 20, 0));
 
         user2Keyboard = new SplitKeyboard(mtApp);
         user2Keyboard.setSpaceBetweenKeyboards(200);
@@ -159,7 +159,7 @@ public class DreamerScene extends AbstractMTWDScene {
         user2Keyboard.addChild(user2Rectangle);
 
         user2Keyboard.rotateZ(new Vector3D(width / 2, height / 2), 180);
-        user2Keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2, height / 2, 0));
+        user2Keyboard.setPositionGlobal(new Vector3D(mtApp.width / 2, height / 2  + 20, 0));
 
         user3Keyboard = new SplitKeyboard(mtApp);
         user3Keyboard.setSpaceBetweenKeyboards(200);
@@ -196,7 +196,7 @@ public class DreamerScene extends AbstractMTWDScene {
         user3Keyboard.addChild(user3Rectangle);
 
         user3Keyboard.rotateZ(new Vector3D(width / 2, height / 2), 90);
-        user3Keyboard.setPositionGlobal(new Vector3D(height / 2, mtApp.height / 2, 0));
+        user3Keyboard.setPositionGlobal(new Vector3D(height / 2 + 20, mtApp.height / 2, 0));
 
         user4Keyboard = new SplitKeyboard(mtApp);
         user4Keyboard.setSpaceBetweenKeyboards(200);
@@ -233,7 +233,7 @@ public class DreamerScene extends AbstractMTWDScene {
         user4Keyboard.addChild(user4Rectangle);
 
         user4Keyboard.rotateZ(new Vector3D(width / 2, height / 2), -90);
-        user4Keyboard.setPositionGlobal(new Vector3D(mtApp.width - height / 2, mtApp.height / 2, 0));
+        user4Keyboard.setPositionGlobal(new Vector3D(mtApp.width - height / 2 - 20, mtApp.height / 2, 0));
 
         user1Keyboard.setPickable(false);
         user1Keyboard.removeAllGestureEventListeners();

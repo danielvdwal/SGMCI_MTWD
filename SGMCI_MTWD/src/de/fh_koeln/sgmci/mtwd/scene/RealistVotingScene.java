@@ -140,6 +140,18 @@ public class RealistVotingScene extends AbstractMTWDScene {
         dislikeButton = new MTSvgButton("data/dislikeButton2.svg", mtApp);
         continueButton = new MTSvgButton("data/startButton.svg", mtApp);
         
+        leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
+        leftButton.setPositionRelativeToParent(new Vector3D(-50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        rightButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
+        rightButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        likeButton.scale(1.5f, 1.5f, 1.5f, Vector3D.ZERO_VECTOR);
+        likeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
+        dislikeButton.scale(1.5f, 1.5f, 1.5f, Vector3D.ZERO_VECTOR);
+        dislikeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3 * 2, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
+        
+        continueButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 250, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        
+        
         ideaUser1.addChild(rightButton);
         ideaUser1.addChild(leftButton);
         ideaUser1.addChild(likeButton);
@@ -155,12 +167,6 @@ public class RealistVotingScene extends AbstractMTWDScene {
         ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
         ideaUser1.setSizeLocal(200f, 150f);
         ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
-        
-        leftButton.setPositionRelativeToParent(new Vector3D(-50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
-        rightButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
-        likeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
-        dislikeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3 * 2, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
-        continueButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 250, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
         
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
