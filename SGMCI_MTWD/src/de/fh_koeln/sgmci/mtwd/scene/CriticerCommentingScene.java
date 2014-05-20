@@ -204,9 +204,6 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
                         helpPop.setPickable(false);
                         getCanvas().addChild(helpPop);
 
-                        final MTSvg svgTest = new MTSvg(mtApp, "data/Zeichnung.svg");
-                        getCanvas().addChild(svgTest);
-
                         mtApp.getCurrentScene().getCanvas().addChild(textarea);
                         break;
                     default:
