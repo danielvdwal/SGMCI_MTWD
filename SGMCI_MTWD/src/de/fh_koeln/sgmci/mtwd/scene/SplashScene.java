@@ -116,7 +116,7 @@ public class SplashScene extends AbstractMTWDScene {
 
         headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 - 120, 0));
         subheadlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 - 90, 0));
-        descriptionTextArea.setPositionGlobal(new Vector3D(20 + descriptionTextArea.getWidthXY(TransformSpace.LOCAL) / 2, mtApp.height / 2 - 50 + descriptionTextArea.getHeightXY(TransformSpace.LOCAL) / 2, 0));
+        descriptionTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2 - descriptionTextArea.getWidthXY(TransformSpace.LOCAL) / 2 - 20, mtApp.height / 2 - 50 + descriptionTextArea.getHeightXY(TransformSpace.LOCAL) / 2, 0));
         personsTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2 + personsTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2 - 50 + personsTextArea.getHeightXY(TransformSpace.LOCAL) / 2, 0));
         moduleTextArea.setPositionGlobal(new Vector3D(moduleTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height - moduleTextArea.getHeightXY(TransformSpace.LOCAL) / 2  - 20, 0));
         profTextArea.setPositionGlobal(new Vector3D(mtApp.width - profTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height - profTextArea.getHeightXY(TransformSpace.LOCAL) / 2 - 20, 0));
