@@ -140,6 +140,9 @@ public class RealistVotingScene extends AbstractMTWDScene {
         dislikeButton = new MTSvgButton("data/dislikeButton2.svg", mtApp);
         continueButton = new MTSvgButton("data/startButton.svg", mtApp);
         
+        ideaUser1.setSizeLocal(300f, 250f);
+        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+        
         leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
         leftButton.setPositionRelativeToParent(new Vector3D(-50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
         rightButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
