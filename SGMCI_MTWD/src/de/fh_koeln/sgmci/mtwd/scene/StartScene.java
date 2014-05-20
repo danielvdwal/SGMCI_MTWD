@@ -87,6 +87,13 @@ public class StartScene extends AbstractMTWDScene {
         errorMessageTextArea.setStrokeColor(MTColor.BLACK);
         errorMessageTextArea.setVisible(false);
 
+        MTSvgButton button1 = new MTSvgButton("data/problemButton.svg", mtApp);
+        MTSvgButton button2 = new MTSvgButton("data/readyButton.svg", mtApp);
+        MTSvgButton button3 = new MTSvgButton("data/helpButton.svg", mtApp);
+        MTSvgButton button4 = new MTSvgButton("data/plusButton.svg", mtApp);
+        MTSvgButton button5 = new MTSvgButton("data/readyButtonDone.svg", mtApp);
+        
+        
         this.getCanvas().addChild(problemLabel);
         this.getCanvas().addChild(problemInputField);
         this.getCanvas().addChild(keyboard);
@@ -95,6 +102,18 @@ public class StartScene extends AbstractMTWDScene {
         this.getCanvas().addChild(settingsButton);
         this.getCanvas().addChild(errorMessageTextArea);
 
+        button1.setPositionGlobal(new Vector3D(100, 100, 0));
+        button2.setPositionGlobal(new Vector3D(200, 200, 0));
+        button3.setPositionGlobal(new Vector3D(300, 300, 0));
+        button4.setPositionGlobal(new Vector3D(400, 400, 0));
+        button5.setPositionGlobal(new Vector3D(500, 500, 0));
+        
+        this.getCanvas().addChild(button1);
+        this.getCanvas().addChild(button2);
+        this.getCanvas().addChild(button3);
+        this.getCanvas().addChild(button4);
+        this.getCanvas().addChild(button5);
+        
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
         problemTextAreaUpdateThread.start();
     }
