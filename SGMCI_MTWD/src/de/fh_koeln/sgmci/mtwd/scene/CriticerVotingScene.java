@@ -72,8 +72,8 @@ public class CriticerVotingScene extends AbstractMTWDScene {
                             rightButton.setEnabled(true);
                             rightButton.setVisible(true);
                             ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
-                            ideaUser1.setSizeLocal(300f, 250f);
-                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+                            ideaUser1.setSizeLocal(200f, 150f);
+                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
                             if (ideaIndex == 0) {
                                 leftButton.setEnabled(false);
                                 leftButton.setVisible(false);
@@ -96,8 +96,8 @@ public class CriticerVotingScene extends AbstractMTWDScene {
                             leftButton.setEnabled(true);
                             leftButton.setVisible(true);
                             ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
-                            ideaUser1.setSizeLocal(300f, 250f);
-                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+                            ideaUser1.setSizeLocal(200f, 150f);
+                            ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
                             if (ideaIndex == allIdeas.size() - 1) {
                                 rightButton.setEnabled(false);
                                 rightButton.setVisible(false);
@@ -139,26 +139,26 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         dislikeButton = new MTSvgButton("data/dislikeButton2.svg", mtApp);
         continueButton = new MTSvgButton("data/startButton.svg", mtApp);
         
-        ideaUser1.setSizeLocal(300f, 250f);
-        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-
+        ideaUser1.setSizeLocal(200f, 200f);
+        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
+        
         leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
-        leftButton.setPositionRelativeToParent(new Vector3D(-50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        leftButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150));
         rightButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
-        rightButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 50, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        rightButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 150, mtApp.height - 150));
         likeButton.scale(1.5f, 1.5f, 1.5f, Vector3D.ZERO_VECTOR);
-        likeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
+        likeButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 30, mtApp.height - 40));
         dislikeButton.scale(1.5f, 1.5f, 1.5f, Vector3D.ZERO_VECTOR);
-        dislikeButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) / 3 * 2, ideaUser1.getHeightXY(TransformSpace.LOCAL) + 25));
+        dislikeButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 30, mtApp.height - 40));
         
-        continueButton.setPositionRelativeToParent(new Vector3D(ideaUser1.getWidthXY(TransformSpace.LOCAL) + 250, ideaUser1.getHeightXY(TransformSpace.LOCAL) / 2));
+        continueButton.setPositionRelativeToParent(new Vector3D(mtApp.width / 2 + ideaUser1.getWidthXY(TransformSpace.LOCAL) + 150, mtApp.height - 150));
         
-        ideaUser1.addChild(rightButton);
-        ideaUser1.addChild(leftButton);
-        ideaUser1.addChild(likeButton);
-        ideaUser1.addChild(dislikeButton);
-        ideaUser1.addChild(continueButton);
         getCanvas().addChild(ideaUser1);
+        getCanvas().addChild(rightButton);
+        getCanvas().addChild(leftButton);
+        getCanvas().addChild(likeButton);
+        getCanvas().addChild(dislikeButton);
+        getCanvas().addChild(continueButton);
     }
 
     @Override
@@ -166,9 +166,9 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         allIdeas = controller.getAllVisibleIdeasForCurrentProblem();
         
         ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
-        ideaUser1.setSizeLocal(300f, 250f);
-        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-
+        ideaUser1.setSizeLocal(200f, 150f);
+        ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
+        
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextArea.translate(new Vector3D(0, problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
@@ -177,7 +177,7 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         problemTextAreaInverted.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextAreaInverted.translate(new Vector3D(0, -problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
-
+    
     @Override
     public void updateScene() {
     }
