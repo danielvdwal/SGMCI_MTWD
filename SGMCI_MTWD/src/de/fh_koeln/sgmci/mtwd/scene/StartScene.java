@@ -70,16 +70,13 @@ public class StartScene extends AbstractMTWDScene {
         keyboard.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
         keyboard.setPositionRelativeToParent(new Vector3D(mtApp.width / 2, mtApp.height - keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
 
-        helpButton = new MTSvgButton("data/button_help.svg", mtApp);
-        helpButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        helpButton = new MTSvgButton("data/helpButton.svg", mtApp);
         helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
-        startButton = new MTSvgButton("data/button_start.svg", mtApp);
-        startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        startButton = new MTSvgButton("data/startButton.svg", mtApp);
         startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
-        settingsButton = new MTSvgButton("data/button_settings.svg", mtApp);
-        settingsButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
+        settingsButton = new MTSvgButton("data/settingsButton.svg", mtApp);
         settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
         errorMessageTextArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLACK, MTColor.WHITE));
@@ -92,8 +89,13 @@ public class StartScene extends AbstractMTWDScene {
         MTSvgButton button3 = new MTSvgButton("data/helpButton.svg", mtApp);
         MTSvgButton button4 = new MTSvgButton("data/plusButton.svg", mtApp);
         MTSvgButton button5 = new MTSvgButton("data/readyButtonDone.svg", mtApp);
-        
-        
+        MTSvgButton button6 = new MTSvgButton("data/startButton.svg", mtApp);
+        MTSvgButton button7 = new MTSvgButton("data/closeButton.svg", mtApp);
+        MTSvgButton button8 = new MTSvgButton("data/settingsButton.svg", mtApp);
+        MTSvgButton button9 = new MTSvgButton("data/endButton.svg", mtApp);
+        MTSvgButton button10 = new MTSvgButton("data/restartButton.svg", mtApp);
+        MTSvgButton button11 = new MTSvgButton("data/replayButton.svg", mtApp);
+
         this.getCanvas().addChild(problemLabel);
         this.getCanvas().addChild(problemInputField);
         this.getCanvas().addChild(keyboard);
@@ -107,13 +109,25 @@ public class StartScene extends AbstractMTWDScene {
         button3.setPositionGlobal(new Vector3D(300, 300, 0));
         button4.setPositionGlobal(new Vector3D(400, 400, 0));
         button5.setPositionGlobal(new Vector3D(500, 500, 0));
-        
+        button6.setPositionGlobal(new Vector3D(600, 600, 0));
+        button7.setPositionGlobal(new Vector3D(600, 500, 0));
+        button8.setPositionGlobal(new Vector3D(700, 400, 0));
+        button9.setPositionGlobal(new Vector3D(800, 300, 0));
+        button10.setPositionGlobal(new Vector3D(900, 200, 0));
+        button11.setPositionGlobal(new Vector3D(1000, 100, 0));
+
         this.getCanvas().addChild(button1);
         this.getCanvas().addChild(button2);
         this.getCanvas().addChild(button3);
         this.getCanvas().addChild(button4);
         this.getCanvas().addChild(button5);
-        
+        this.getCanvas().addChild(button6);
+        this.getCanvas().addChild(button7);
+        this.getCanvas().addChild(button8);
+        this.getCanvas().addChild(button9);
+        this.getCanvas().addChild(button10);
+        this.getCanvas().addChild(button11);
+
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
         problemTextAreaUpdateThread.start();
     }
@@ -143,9 +157,6 @@ public class StartScene extends AbstractMTWDScene {
                         helpPop.setPositionRelativeToOther(helpButton, new Vector3D(helpPop.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, -300));
                         helpPop.setPickable(false);
                         getCanvas().addChild(helpPop);
-
-                        final MTSvg svgTest = new MTSvg(mtApp, "data/Zeichnung.svg");
-                        getCanvas().addChild(svgTest);
 
                         mtApp.getCurrentScene().getCanvas().addChild(textarea);
                         break;
