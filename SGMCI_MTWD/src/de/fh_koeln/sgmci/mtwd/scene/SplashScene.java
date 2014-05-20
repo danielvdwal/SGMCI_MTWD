@@ -11,7 +11,6 @@ import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
-import org.mt4j.sceneManagement.transition.BlendTransition;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
