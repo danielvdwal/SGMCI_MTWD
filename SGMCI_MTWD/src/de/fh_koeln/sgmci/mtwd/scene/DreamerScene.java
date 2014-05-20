@@ -44,6 +44,10 @@ public class DreamerScene extends AbstractMTWDScene {
     private SplitKeyboard user2Keyboard;
     private SplitKeyboard user3Keyboard;
     private SplitKeyboard user4Keyboard;
+    private MTSvgButton addUser1KeyboardButton;
+    private MTSvgButton addUser2KeyboardButton;
+    private MTSvgButton addUser3KeyboardButton;
+    private MTSvgButton addUser4KeyboardButton;
 
     private MTSvgButton startButton;
 
@@ -256,6 +260,73 @@ public class DreamerScene extends AbstractMTWDScene {
         user3Keyboard.setVisible(false);
         user4Keyboard.setVisible(false);
 
+        addUser1KeyboardButton = new MTSvgButton("data/plusButton.svg", mtApp);
+        addUser1KeyboardButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - height / 2, 0));
+        addUser1KeyboardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch (ae.getID()) {
+                    case TapEvent.BUTTON_CLICKED:
+                            controller.setUser1Activate(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        this.getCanvas().addChild(addUser1KeyboardButton);
+
+        addUser2KeyboardButton = new MTSvgButton("data/plusButton.svg", mtApp);
+        addUser2KeyboardButton.rotateZ(new Vector3D(width / 2, height / 2), 180);
+        addUser2KeyboardButton.setPositionGlobal(new Vector3D(mtApp.width / 2, height / 2, 0));
+        addUser2KeyboardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch (ae.getID()) {
+                    case TapEvent.BUTTON_CLICKED:
+                            controller.setUser2Activate(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        this.getCanvas().addChild(addUser2KeyboardButton);
+
+        addUser3KeyboardButton = new MTSvgButton("data/plusButton.svg", mtApp);
+        addUser3KeyboardButton.rotateZ(new Vector3D(width / 2, height / 2), 90);
+        addUser3KeyboardButton.setPositionGlobal(new Vector3D(height / 2, mtApp.height / 2, 0));
+        addUser3KeyboardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch (ae.getID()) {
+                    case TapEvent.BUTTON_CLICKED:
+                            controller.setUser3Activate(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        this.getCanvas().addChild(addUser3KeyboardButton);
+
+        addUser4KeyboardButton = new MTSvgButton("data/plusButton.svg", mtApp);
+        addUser4KeyboardButton.rotateZ(new Vector3D(width / 2, height / 2), -90);
+        addUser4KeyboardButton.setPositionGlobal(new Vector3D(mtApp.width - height / 2, mtApp.height / 2, 0));
+        addUser4KeyboardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                switch (ae.getID()) {
+                    case TapEvent.BUTTON_CLICKED:
+                            controller.setUser4Activate(true);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        this.getCanvas().addChild(addUser4KeyboardButton);
+
         startButton = new MTSvgButton("data/button_start.svg", mtApp);
         startButton.scale(0.2f, 0.2f, 0.2f, Vector3D.ZERO_VECTOR);
         getCanvas().addChild(startButton);
@@ -273,24 +344,32 @@ public class DreamerScene extends AbstractMTWDScene {
         }
 
         if (AbstractMTWDSceneController.isUser1Activate()) {
+            addUser1KeyboardButton.setVisible(false);
             user1Keyboard.setVisible(true);
         } else {
             user1Keyboard.setVisible(false);
+            addUser1KeyboardButton.setVisible(true);
         }
         if (AbstractMTWDSceneController.isUser2Activate()) {
+            addUser2KeyboardButton.setVisible(false);
             user2Keyboard.setVisible(true);
         } else {
             user2Keyboard.setVisible(false);
+            addUser2KeyboardButton.setVisible(true);
         }
         if (AbstractMTWDSceneController.isUser3Activate()) {
+            addUser3KeyboardButton.setVisible(false);
             user3Keyboard.setVisible(true);
         } else {
             user3Keyboard.setVisible(false);
+            addUser3KeyboardButton.setVisible(true);
         }
         if (AbstractMTWDSceneController.isUser4Activate()) {
+            addUser4KeyboardButton.setVisible(false);
             user4Keyboard.setVisible(true);
         } else {
             user4Keyboard.setVisible(false);
+            addUser4KeyboardButton.setVisible(true);
         }
 
         // needs to be removed and set for each user
@@ -314,25 +393,34 @@ public class DreamerScene extends AbstractMTWDScene {
                 getCanvas().addChild(newTextArea);
             }
         }
+
         if (AbstractMTWDSceneController.isUser1Activate()) {
+            addUser1KeyboardButton.setVisible(false);
             user1Keyboard.setVisible(true);
         } else {
             user1Keyboard.setVisible(false);
+            addUser1KeyboardButton.setVisible(true);
         }
         if (AbstractMTWDSceneController.isUser2Activate()) {
+            addUser2KeyboardButton.setVisible(false);
             user2Keyboard.setVisible(true);
         } else {
             user2Keyboard.setVisible(false);
+            addUser2KeyboardButton.setVisible(true);
         }
         if (AbstractMTWDSceneController.isUser3Activate()) {
+            addUser3KeyboardButton.setVisible(false);
             user3Keyboard.setVisible(true);
         } else {
             user3Keyboard.setVisible(false);
+            addUser3KeyboardButton.setVisible(true);
         }
         if (AbstractMTWDSceneController.isUser4Activate()) {
+            addUser4KeyboardButton.setVisible(false);
             user4Keyboard.setVisible(true);
         } else {
             user4Keyboard.setVisible(false);
+            addUser4KeyboardButton.setVisible(true);
         }
     }
 

@@ -135,6 +135,16 @@ public abstract class AbstractMTWDSceneController {
     public static boolean isUser1Activate() {
         return user1Activate;
     }
+    
+    /**
+     * Sets if the user on the south side of the Multi-touch table is active.
+     *
+     * @param active the new value to be set
+     */
+    public void setUser1Activate(boolean active) {
+        user1Activate = active;
+        observer.updateScene();
+    }
 
     /**
      * Check if a user on the north side of the Multi-touch table is using the
@@ -146,6 +156,16 @@ public abstract class AbstractMTWDSceneController {
      */
     public static boolean isUser2Activate() {
         return user2Activate;
+    }
+    
+    /**
+     * Sets if the user on the north side of the Multi-touch table is active.
+     *
+     * @param active the new value to be set
+     */
+    public void setUser2Activate(boolean active) {
+        user2Activate = active;
+        observer.updateScene();
     }
 
     /**
@@ -159,6 +179,16 @@ public abstract class AbstractMTWDSceneController {
     public static boolean isUser3Activate() {
         return user3Activate;
     }
+    
+    /**
+     * Sets if the user on the west side of the Multi-touch table is active.
+     *
+     * @param active the new value to be set
+     */
+    public void setUser3Activate(boolean active) {
+        user3Activate = active;
+        observer.updateScene();
+    }
 
     /**
      * Check if a user on the east side of the Multi-touch table is using the
@@ -170,6 +200,16 @@ public abstract class AbstractMTWDSceneController {
      */
     public static boolean isUser4Activate() {
         return user4Activate;
+    }
+    
+    /**
+     * Sets if the user on the east side of the Multi-touch table is active.
+     *
+     * @param active the new value to be set
+     */
+    public void setUser4Activate(boolean active) {
+        user4Activate = active;
+        observer.updateScene();
     }
 
     /**
