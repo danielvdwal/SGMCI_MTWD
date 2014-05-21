@@ -29,7 +29,7 @@ import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
 /**
- * 
+ *
  * @author Robert Scherbarth, Daniel van der Wal
  * @version 0.2.0
  */
@@ -119,8 +119,9 @@ public class DreamerScene extends AbstractMTWDScene {
             public boolean processGestureEvent(MTGestureEvent ge) {
                 TapAndHoldEvent te = (TapAndHoldEvent) ge;
                 if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if(te.isHoldComplete()) {
+                    if (te.isHoldComplete()) {
                         controller.setUser1Activate(false);
+                        controller.proceed();
                     }
                 }
                 return false;
@@ -177,8 +178,9 @@ public class DreamerScene extends AbstractMTWDScene {
             public boolean processGestureEvent(MTGestureEvent ge) {
                 TapAndHoldEvent te = (TapAndHoldEvent) ge;
                 if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if(te.isHoldComplete()) {
+                    if (te.isHoldComplete()) {
                         controller.setUser2Activate(false);
+                        controller.proceed();
                     }
                 }
                 return false;
@@ -235,8 +237,9 @@ public class DreamerScene extends AbstractMTWDScene {
             public boolean processGestureEvent(MTGestureEvent ge) {
                 TapAndHoldEvent te = (TapAndHoldEvent) ge;
                 if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if(te.isHoldComplete()) {
+                    if (te.isHoldComplete()) {
                         controller.setUser3Activate(false);
+                        controller.proceed();
                     }
                 }
                 return false;
@@ -293,8 +296,9 @@ public class DreamerScene extends AbstractMTWDScene {
             public boolean processGestureEvent(MTGestureEvent ge) {
                 TapAndHoldEvent te = (TapAndHoldEvent) ge;
                 if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if(te.isHoldComplete()) {
+                    if (te.isHoldComplete()) {
                         controller.setUser4Activate(false);
+                        controller.proceed();
                     }
                 }
                 return false;

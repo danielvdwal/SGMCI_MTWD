@@ -152,6 +152,7 @@ public abstract class AbstractMTWDSceneController {
     public void setUser1Activate(boolean active) {
         user1Activate = active;
         observer.updateScene();
+        updateUserContinueStrategy();
     }
 
     /**
@@ -174,6 +175,7 @@ public abstract class AbstractMTWDSceneController {
     public void setUser2Activate(boolean active) {
         user2Activate = active;
         observer.updateScene();
+        updateUserContinueStrategy();
     }
 
     /**
@@ -196,6 +198,7 @@ public abstract class AbstractMTWDSceneController {
     public void setUser3Activate(boolean active) {
         user3Activate = active;
         observer.updateScene();
+        updateUserContinueStrategy();
     }
 
     /**
@@ -218,6 +221,7 @@ public abstract class AbstractMTWDSceneController {
     public void setUser4Activate(boolean active) {
         user4Activate = active;
         observer.updateScene();
+        updateUserContinueStrategy();
     }
 
     /**
