@@ -49,6 +49,10 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      */
     static final int MARGIN_BOTTOM = 20;
     /**
+     * The arc value for the corners.
+     */
+    static final int CORNER_RADIUS = 30;
+    /**
      * The size of a button itself.
      */
     static final float INNER_BUTTON_SIZE = 42;

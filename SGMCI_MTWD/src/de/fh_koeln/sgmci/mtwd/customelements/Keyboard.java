@@ -26,7 +26,6 @@ public final class Keyboard extends AbstractKeyboard {
     private static final int MARGIN_RIGHT = 20;
     private static final float BUTTON_MARGIN_NUMBERS_AND_SIGNS = 5.5f;
     private static final float BACKSPACE_AND_RIGHT_SHIFT_WIDTH = 74 + 2 * BUTTON_MARGIN;
-    private static final int CORNER_RADIUS = 30;
     private static final int KEYBOARD_WIDTH = (int) (34.0 / 3 * BUTTON_SIZE + RETURN_WIDTH) + MARGIN_LEFT + MARGIN_RIGHT;
 
     public Keyboard(PApplet pApplet) {

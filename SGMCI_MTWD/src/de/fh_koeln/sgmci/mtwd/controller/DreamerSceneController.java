@@ -18,8 +18,9 @@ public class DreamerSceneController extends AbstractMTWDSceneController {
 
     public DreamerSceneController(IScene observer) {
         super(observer);
+        updateUserContinueStrategy();
     }
-
+    
     public void createIdea(String ideaDescription) throws NoIdeaTextException {
         ideaDescription = ideaDescription.trim();
         if (ideaDescription.isEmpty()) {
@@ -27,5 +28,11 @@ public class DreamerSceneController extends AbstractMTWDSceneController {
         }
         application.getProblem(currentProblemId).addIdea(String.format("idea_%03d", ideaIdCounter++), ideaDescription);
         observer.updateScene();
+    }
+    
+    public void proceed() {
+        if(userContinueStrategy.canContinue()) {
+            observer.gotoNextScene();
+        }
     }
 }

@@ -92,42 +92,6 @@ public class StartScene extends AbstractMTWDScene {
         this.getCanvas().addChild(settingsButton);
         this.getCanvas().addChild(errorMessageTextArea);
 
-        /*MTSvgButton button1 = new MTSvgButton("data/problemButton.svg", mtApp);
-        MTSvgButton button2 = new MTSvgButton("data/readyButton.svg", mtApp);
-        MTSvgButton button3 = new MTSvgButton("data/helpButton.svg", mtApp);
-        MTSvgButton button4 = new MTSvgButton("data/plusButton.svg", mtApp);
-        MTSvgButton button5 = new MTSvgButton("data/readyButtonDone.svg", mtApp);
-        MTSvgButton button6 = new MTSvgButton("data/startButton.svg", mtApp);
-        MTSvgButton button7 = new MTSvgButton("data/closeButton.svg", mtApp);
-        MTSvgButton button8 = new MTSvgButton("data/settingsButton.svg", mtApp);
-        MTSvgButton button9 = new MTSvgButton("data/endButton.svg", mtApp);
-        MTSvgButton button10 = new MTSvgButton("data/restartButton.svg", mtApp);
-        MTSvgButton button11 = new MTSvgButton("data/replayButton.svg", mtApp);
-
-        this.getCanvas().addChild(button1);
-        this.getCanvas().addChild(button2);
-        this.getCanvas().addChild(button3);
-        this.getCanvas().addChild(button4);
-        this.getCanvas().addChild(button5);
-        this.getCanvas().addChild(button6);
-        this.getCanvas().addChild(button7);
-        this.getCanvas().addChild(button8);
-        this.getCanvas().addChild(button9);
-        this.getCanvas().addChild(button10);
-        this.getCanvas().addChild(button11);
-        
-        button1.setPositionGlobal(new Vector3D(100, 100, 0));
-        button2.setPositionGlobal(new Vector3D(200, 200, 0));
-        button3.setPositionGlobal(new Vector3D(300, 300, 0));
-        button4.setPositionGlobal(new Vector3D(400, 400, 0));
-        button5.setPositionGlobal(new Vector3D(500, 500, 0));
-        button6.setPositionGlobal(new Vector3D(600, 600, 0));
-        button7.setPositionGlobal(new Vector3D(600, 500, 0));
-        button8.setPositionGlobal(new Vector3D(700, 400, 0));
-        button9.setPositionGlobal(new Vector3D(800, 300, 0));
-        button10.setPositionGlobal(new Vector3D(900, 200, 0));
-        button11.setPositionGlobal(new Vector3D(1000, 100, 0));*/
-
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
         problemTextAreaUpdateThread.start();
     }

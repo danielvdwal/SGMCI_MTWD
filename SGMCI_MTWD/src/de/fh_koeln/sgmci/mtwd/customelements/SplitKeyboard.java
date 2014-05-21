@@ -27,7 +27,6 @@ public final class SplitKeyboard extends AbstractKeyboard {
     private static final int MARGIN_KEYBOARD_INSIDE = 20;
     private static final int MARGIN_KEYBOARD_OUTSIDE = 20;
     private static final float SPACE_WIDTH = 199 + 2 * BUTTON_MARGIN;
-    private static final int CORNER_RADIUS = 30;
     private static final int KEYBOARD_WIDTH = 317 + MARGIN_KEYBOARD_INSIDE + MARGIN_KEYBOARD_OUTSIDE;
     private final MTRoundRectangle leftKeyboard;
     private final MTRoundRectangle rightKeyboard;
@@ -133,22 +132,6 @@ public final class SplitKeyboard extends AbstractKeyboard {
 
         createKeyButtonsOutOfKeyInfos(leftKeyInfos, leftKeyboard);
         createKeyButtonsOutOfKeyInfos(rightKeyInfos, rightKeyboard);
-
-        // 64px * 64px 
-        MTSvgButton keybCloseSvg = new MTSvgButton(MT4jSettings.getInstance().getDefaultSVGPath() + "keybClose.svg", pApplet);
-        keybCloseSvg.scale(0.8f, 0.8f, 1, new Vector3D(0, 0, 0));
-        keybCloseSvg.translate(new Vector3D(KEYBOARD_WIDTH - BUTTON_SIZE - BUTTON_MARGIN, BUTTON_MARGIN, 0));
-        keybCloseSvg.translate(new Vector3D(BUTTON_SIZE / 2, -BUTTON_SIZE / 2, 0));
-        keybCloseSvg.setBoundsPickingBehaviour(AbstractShape.BOUNDS_ONLY_CHECK);
-        keybCloseSvg.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (arg0.getID() == TapEvent.BUTTON_CLICKED) {
-                    closeKeyboard();
-                }
-            }
-        });
-        rightKeyboard.addChild(keybCloseSvg);
 
         // set start position of right keyboard
         rightKeyboard.translate(new Vector3D(KEYBOARD_WIDTH, 0));

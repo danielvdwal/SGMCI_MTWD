@@ -1,5 +1,10 @@
 package de.fh_koeln.sgmci.mtwd.controller;
 
+import de.fh_koeln.sgmci.mtwd.controller.strategy.FourUsersContinueStrategy;
+import de.fh_koeln.sgmci.mtwd.controller.strategy.IUserContinueStrategy;
+import de.fh_koeln.sgmci.mtwd.controller.strategy.OneUserContinueStrategy;
+import de.fh_koeln.sgmci.mtwd.controller.strategy.ThreeUsersContinueStrategy;
+import de.fh_koeln.sgmci.mtwd.controller.strategy.TwoUsersContinueStrategy;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
 import de.fh_koeln.sgmci.mtwd.model.MultitouchWaltDisneyApplication;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
@@ -72,15 +77,17 @@ public abstract class AbstractMTWDSceneController {
      */
     IScene observer;
 
+    IUserContinueStrategy userContinueStrategy;
+
     public AbstractMTWDSceneController(IScene observer) {
         this.observer = observer;
         // the user on the south side should be active since he/she is the moderator
         user1Activate = true;
     }
-    
+
     /**
      * Get the application object.
-     * 
+     *
      * @return the application object
      */
     public static MultitouchWaltDisneyApplication getApplication() {
@@ -89,12 +96,13 @@ public abstract class AbstractMTWDSceneController {
 
     /**
      * Set the id of the current problem
+     *
      * @param currentProblemId the id of the current problem
      */
     public static void setCurrentProblemId(String currentProblemId) {
         AbstractMTWDSceneController.currentProblemId = currentProblemId;
     }
-    
+
     /**
      * Get the current problem description which was entered via the start
      * scene.
@@ -135,7 +143,7 @@ public abstract class AbstractMTWDSceneController {
     public static boolean isUser1Activate() {
         return user1Activate;
     }
-    
+
     /**
      * Sets if the user on the south side of the Multi-touch table is active.
      *
@@ -157,7 +165,7 @@ public abstract class AbstractMTWDSceneController {
     public static boolean isUser2Activate() {
         return user2Activate;
     }
-    
+
     /**
      * Sets if the user on the north side of the Multi-touch table is active.
      *
@@ -179,7 +187,7 @@ public abstract class AbstractMTWDSceneController {
     public static boolean isUser3Activate() {
         return user3Activate;
     }
-    
+
     /**
      * Sets if the user on the west side of the Multi-touch table is active.
      *
@@ -201,7 +209,7 @@ public abstract class AbstractMTWDSceneController {
     public static boolean isUser4Activate() {
         return user4Activate;
     }
-    
+
     /**
      * Sets if the user on the east side of the Multi-touch table is active.
      *
@@ -233,6 +241,8 @@ public abstract class AbstractMTWDSceneController {
      */
     public void setUser1ReadyToContinue(boolean ready) {
         this.user1ReadyToContinue = ready;
+        observer.updateScene();
+        updateUserContinueStrategy();
     }
 
     /**
@@ -256,6 +266,8 @@ public abstract class AbstractMTWDSceneController {
      */
     public void setUser2ReadyToContinue(boolean ready) {
         this.user2ReadyToContinue = ready;
+        observer.updateScene();
+        updateUserContinueStrategy();
     }
 
     /**
@@ -279,6 +291,8 @@ public abstract class AbstractMTWDSceneController {
      */
     public void setUser3ReadyToContinue(boolean ready) {
         this.user3ReadyToContinue = ready;
+        observer.updateScene();
+        updateUserContinueStrategy();
     }
 
     /**
@@ -302,5 +316,27 @@ public abstract class AbstractMTWDSceneController {
      */
     public void setUser4ReadyToContinue(boolean ready) {
         this.user4ReadyToContinue = ready;
+        observer.updateScene();
+        updateUserContinueStrategy();
+    }
+
+    public final void updateUserContinueStrategy() {
+        if (user1Activate && user2Activate && user3Activate && user4Activate) {
+            userContinueStrategy = new FourUsersContinueStrategy(this);
+        } else if (user1Activate && user2Activate && user3Activate
+                || user1Activate && user2Activate && user4Activate
+                || user1Activate && user3Activate && user4Activate
+                || user2Activate && user3Activate && user4Activate) {
+            userContinueStrategy = new ThreeUsersContinueStrategy(this);
+        } else if (user1Activate && user2Activate
+                || user1Activate && user3Activate
+                || user1Activate && user4Activate
+                || user2Activate && user3Activate
+                || user2Activate && user4Activate
+                || user3Activate && user4Activate) {
+            userContinueStrategy = new TwoUsersContinueStrategy(this);
+        } else if (user1Activate || user2Activate || user3Activate || user4Activate) {
+            userContinueStrategy = new OneUserContinueStrategy(this);
+        }
     }
 }
