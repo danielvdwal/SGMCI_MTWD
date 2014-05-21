@@ -402,6 +402,11 @@ public class DreamerScene extends AbstractMTWDScene {
     @Override
     public void shutDown() {
         mtApp.unregisterKeyEvent(this);
+        controller.setUser1ReadyToContinue(false);
+        controller.setUser2ReadyToContinue(false);
+        controller.setUser3ReadyToContinue(false);
+        controller.setUser4ReadyToContinue(false);
+        
         for (MTTextArea textArea : displayedIdeas.values()) {
             textArea.destroy();
         }
