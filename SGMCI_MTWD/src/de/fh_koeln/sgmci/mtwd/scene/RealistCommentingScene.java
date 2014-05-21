@@ -46,6 +46,8 @@ public class RealistCommentingScene extends AbstractMTWDScene {
     private MTList commentList;
     private MTListCell commentListCell;
     private MTSvgButton helpButton;
+    private MTSvgButton leftButton;
+    private MTSvgButton rightButton;
     private MTSvgButton settingsButton;
     private MTSvgButton startButton;
     private Idea[] ideas;
@@ -90,7 +92,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         problemEastTextArea.rotateZ(Vector3D.ZERO_VECTOR, 270);
 
         ideaTextArea = new MTTextArea(mtApp, ideaFont);
-        ideaTextArea.setNoFill(true);
+        ideaTextArea.setNoFill(false);
         ideaTextArea.setNoStroke(true);
         ideaTextArea.setPickable(false);
         ideaNorthTextArea = new MTTextArea(mtApp, ideaFont);
@@ -133,7 +135,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         commentTextArea.setPositionRelativeToParent(new Vector3D(40, -commentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
 
         keyboard.addTextInputListener(commentTextArea);
-
+        
         final MTRectangle rectangle = new MTRectangle(-100, 0, 30, 30, mtApp);
         rectangle.translate(new Vector3D(0, 15, 0));
         rectangle.registerInputProcessor(new TapProcessor(mtApp));
@@ -161,7 +163,21 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         commentList.translate(new Vector3D(0, 50));
 
         getCanvas().addChild(commentList);
+        
+        ideaTextArea.setSizeLocal(200f, 200f);
+        ideaTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 - commentList.getHeightXY(TransformSpace.LOCAL), 0));
+        
+        leftButton = new MTSvgButton("data/arrowLeft.svg", mtApp);
+        rightButton = new MTSvgButton("data/arrowRight.svg", mtApp);
+        
+        leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
+        leftButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - commentList.getWidthXY(TransformSpace.LOCAL) / 2 - 50, mtApp.height / 2 + commentList.getHeightXY(TransformSpace.LOCAL) / 4));
+        rightButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
+        rightButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + commentList.getWidthXY(TransformSpace.LOCAL) / 2 + 50, mtApp.height / 2 + commentList.getHeightXY(TransformSpace.LOCAL) / 4));
 
+        getCanvas().addChild(leftButton);
+        getCanvas().addChild(rightButton);
+        
         helpButton = new MTSvgButton("data/helpButton.svg", mtApp);
         helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2));
 
