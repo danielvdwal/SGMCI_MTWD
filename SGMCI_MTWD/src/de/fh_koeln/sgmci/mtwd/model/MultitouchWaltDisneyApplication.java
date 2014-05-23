@@ -2,6 +2,7 @@ package de.fh_koeln.sgmci.mtwd.model;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -57,6 +58,36 @@ public final class MultitouchWaltDisneyApplication {
      */
     public Collection<User> getAllUsers() {
         return users.values();
+    }
+    
+    /**
+     * Get all users as a collection that are registered and active in the application.
+     *
+     * @return all users registered and active in the application
+     */
+    public Collection<User> getAllActiveUsers() {
+        Collection<User> activeUsers = new LinkedList<User>();
+        for(User user : users.values()) {
+            if(user.isActive()) {
+                activeUsers.add(user);
+            }
+        }
+        return activeUsers;
+    }
+    
+    /**
+     * Get all users as a collection that are registered, active and ready to continue in the application.
+     *
+     * @return all users registered and active in the application
+     */
+    public Collection<User> getAllActiveUsersWhoAreReady() {
+        Collection<User> activeAndReadyUsers = new LinkedList<User>();
+        for(User user : users.values()) {
+            if(user.isActive() && user.isReadyToContinue()) {
+                activeAndReadyUsers.add(user);
+            }
+        }
+        return activeAndReadyUsers;
     }
 
     // problem

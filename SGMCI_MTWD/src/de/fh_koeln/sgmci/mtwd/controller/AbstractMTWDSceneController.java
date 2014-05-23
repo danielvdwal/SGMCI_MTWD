@@ -1,12 +1,10 @@
 package de.fh_koeln.sgmci.mtwd.controller;
 
-import de.fh_koeln.sgmci.mtwd.controller.strategy.FourUsersContinueStrategy;
 import de.fh_koeln.sgmci.mtwd.controller.strategy.IUserContinueStrategy;
-import de.fh_koeln.sgmci.mtwd.controller.strategy.OneUserContinueStrategy;
-import de.fh_koeln.sgmci.mtwd.controller.strategy.ThreeUsersContinueStrategy;
-import de.fh_koeln.sgmci.mtwd.controller.strategy.TwoUsersContinueStrategy;
+import de.fh_koeln.sgmci.mtwd.controller.strategy.UsersAreReadyContinueStrategy;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
 import de.fh_koeln.sgmci.mtwd.model.MultitouchWaltDisneyApplication;
+import de.fh_koeln.sgmci.mtwd.model.User;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
 import java.util.List;
 
@@ -28,50 +26,19 @@ public abstract class AbstractMTWDSceneController {
      */
     final static MultitouchWaltDisneyApplication application = new MultitouchWaltDisneyApplication();
 
+    public final static String user1Id = "user_1";
+    public final static String user2Id = "user_2";
+    public final static String user3Id = "user_3";
+    public final static String user4Id = "user_4";
+
+    final static User user1;
+    final static User user2;
+    final static User user3;
+    final static User user4;
     /**
      * The id of the current problem used in the application.
      */
     static String currentProblemId;
-    /**
-     * A flag to check if a user on the south side of the Multi-touch table is
-     * active.
-     */
-    static boolean user1Activate; // SOUTH
-    /**
-     * A flag to check if a user on the north side of the Multi-touch table is
-     * active.
-     */
-    static boolean user2Activate; // NORTH
-    /**
-     * A flag to check if a user on the west side of the Multi-touch table is
-     * active.
-     */
-    static boolean user3Activate; // WEST
-    /**
-     * A flag to check if a user on the east side of the Multi-touch table is
-     * active.
-     */
-    static boolean user4Activate; // EAST
-    /**
-     * A flag to check if the user on the south side of the Multi-touch table is
-     * ready to continue to the next scene.
-     */
-    boolean user1ReadyToContinue;
-    /**
-     * A flag to check if the user on the north side of the Multi-touch table is
-     * ready to continue to the next scene.
-     */
-    boolean user2ReadyToContinue;
-    /**
-     * A flag to check if the user on the west side of the Multi-touch table is
-     * ready to continue to the next scene.
-     */
-    boolean user3ReadyToContinue;
-    /**
-     * A flag to check if the user on the east side of the Multi-touch table is
-     * ready to continue to the next scene.
-     */
-    boolean user4ReadyToContinue;
     /**
      * The scene which is used as the observer to be notified on changes.
      */
@@ -79,10 +46,23 @@ public abstract class AbstractMTWDSceneController {
 
     IUserContinueStrategy userContinueStrategy;
 
+    static {
+        application.addUser(user1Id);
+        application.addUser(user2Id);
+        application.addUser(user3Id);
+        application.addUser(user4Id);
+        user1 = application.getUser(user1Id);
+        user2 = application.getUser(user2Id);
+        user3 = application.getUser(user3Id);
+        user4 = application.getUser(user4Id);
+    }
+
     public AbstractMTWDSceneController(IScene observer) {
         this.observer = observer;
         // the user on the south side should be active since he/she is the moderator
-        user1Activate = true;
+        user1.setActive(true);
+        userContinueStrategy = new UsersAreReadyContinueStrategy();
+        updateUserContinueStrategy();
     }
 
     /**
@@ -132,215 +112,27 @@ public abstract class AbstractMTWDSceneController {
         return application.getProblem(currentProblemId).popNewestIdea();
     }
 
-    /**
-     * Check if a user on the south side of the Multi-touch table is using the
-     * application.
-     *
-     * @return true, if the user on the south side of the Multi-touch table uses
-     * the application<br >
-     * false, if there is no user on the south side of the Multi-touch table
-     */
-    public static boolean isUser1Activate() {
-        return user1Activate;
+    public static boolean isUserActive(String id) {
+        return application.getUser(id).isActive();
     }
 
-    /**
-     * Sets if the user on the south side of the Multi-touch table is active.
-     *
-     * @param active the new value to be set
-     */
-    public void setUser1Activate(boolean active) {
-        user1Activate = active;
+    public void setUserActive(String id, boolean active) {
+        application.getUser(id).setActive(active);
         observer.updateScene();
         updateUserContinueStrategy();
     }
 
-    /**
-     * Check if a user on the north side of the Multi-touch table is using the
-     * application.
-     *
-     * @return true, if the user on the north side of the Multi-touch table uses
-     * the application<br >
-     * false, if there is no user on the north side of the Multi-touch table
-     */
-    public static boolean isUser2Activate() {
-        return user2Activate;
+    public boolean isUserReadyToContinue(String id) {
+        return application.getUser(id).isReadyToContinue();
     }
 
-    /**
-     * Sets if the user on the north side of the Multi-touch table is active.
-     *
-     * @param active the new value to be set
-     */
-    public void setUser2Activate(boolean active) {
-        user2Activate = active;
-        observer.updateScene();
-        updateUserContinueStrategy();
-    }
-
-    /**
-     * Check if a user on the west side of the Multi-touch table is using the
-     * application.
-     *
-     * @return true, if the user on the west side of the Multi-touch table uses
-     * the application<br >
-     * false, if there is no user on the west side of the Multi-touch table
-     */
-    public static boolean isUser3Activate() {
-        return user3Activate;
-    }
-
-    /**
-     * Sets if the user on the west side of the Multi-touch table is active.
-     *
-     * @param active the new value to be set
-     */
-    public void setUser3Activate(boolean active) {
-        user3Activate = active;
-        observer.updateScene();
-        updateUserContinueStrategy();
-    }
-
-    /**
-     * Check if a user on the east side of the Multi-touch table is using the
-     * application.
-     *
-     * @return true, if the user on the east side of the Multi-touch table uses
-     * the application<br >
-     * false, if there is no user on the east side of the Multi-touch table
-     */
-    public static boolean isUser4Activate() {
-        return user4Activate;
-    }
-
-    /**
-     * Sets if the user on the east side of the Multi-touch table is active.
-     *
-     * @param active the new value to be set
-     */
-    public void setUser4Activate(boolean active) {
-        user4Activate = active;
-        observer.updateScene();
-        updateUserContinueStrategy();
-    }
-
-    /**
-     * Check if the user on the south side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @return true, if the user on the south side of the Multi-touch table is
-     * ready to continue to the next scene<br >
-     * false, if there the user on the south side of the Multi-touch table is
-     * not ready
-     */
-    public boolean isUser1ReadyToContinue() {
-        return user1ReadyToContinue;
-    }
-
-    /**
-     * Sets if the user on the south side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @param ready the new value to be set
-     */
-    public void setUser1ReadyToContinue(boolean ready) {
-        this.user1ReadyToContinue = ready;
-        observer.updateScene();
-        updateUserContinueStrategy();
-    }
-
-    /**
-     * Check if the user on the north side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @return true, if the user on the north side of the Multi-touch table is
-     * ready to continue to the next scene<br >
-     * false, if there the user on the north side of the Multi-touch table is
-     * not ready
-     */
-    public boolean isUser2ReadyToContinue() {
-        return user2ReadyToContinue;
-    }
-
-    /**
-     * Sets if the user on the north side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @param ready the new value to be set
-     */
-    public void setUser2ReadyToContinue(boolean ready) {
-        this.user2ReadyToContinue = ready;
-        observer.updateScene();
-        updateUserContinueStrategy();
-    }
-
-    /**
-     * Check if the user on the west side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @return true, if the user on the west side of the Multi-touch table is
-     * ready to continue to the next scene<br >
-     * false, if there the user on the west side of the Multi-touch table is not
-     * ready
-     */
-    public boolean isUser3ReadyToContinue() {
-        return user3ReadyToContinue;
-    }
-
-    /**
-     * Sets if the user on the west side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @param ready the new value to be set
-     */
-    public void setUser3ReadyToContinue(boolean ready) {
-        this.user3ReadyToContinue = ready;
-        observer.updateScene();
-        updateUserContinueStrategy();
-    }
-
-    /**
-     * Check if the user on the east side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @return true, if the user on the east side of the Multi-touch table is
-     * ready to continue to the next scene<br >
-     * false, if there the user on the east side of the Multi-touch table is not
-     * ready
-     */
-    public boolean isUser4ReadyToContinue() {
-        return user4ReadyToContinue;
-    }
-
-    /**
-     * Sets if the user on the east side of the Multi-touch table is ready to
-     * continue to the next scene.
-     *
-     * @param ready the new value to be set
-     */
-    public void setUser4ReadyToContinue(boolean ready) {
-        this.user4ReadyToContinue = ready;
+    public void setUserReadyToContinue(String id, boolean ready) {
+        application.getUser(id).setReadyToContinue(ready);
         observer.updateScene();
         updateUserContinueStrategy();
     }
 
     public final void updateUserContinueStrategy() {
-        if (user1Activate && user2Activate && user3Activate && user4Activate) {
-            userContinueStrategy = new FourUsersContinueStrategy(this);
-        } else if (user1Activate && user2Activate && user3Activate
-                || user1Activate && user2Activate && user4Activate
-                || user1Activate && user3Activate && user4Activate
-                || user2Activate && user3Activate && user4Activate) {
-            userContinueStrategy = new ThreeUsersContinueStrategy(this);
-        } else if (user1Activate && user2Activate
-                || user1Activate && user3Activate
-                || user1Activate && user4Activate
-                || user2Activate && user3Activate
-                || user2Activate && user4Activate
-                || user3Activate && user4Activate) {
-            userContinueStrategy = new TwoUsersContinueStrategy(this);
-        } else if (user1Activate || user2Activate || user3Activate || user4Activate) {
-            userContinueStrategy = new OneUserContinueStrategy(this);
-        }
+        userContinueStrategy.setNrOfUsers(application.getAllActiveUsers().size());
     }
 }

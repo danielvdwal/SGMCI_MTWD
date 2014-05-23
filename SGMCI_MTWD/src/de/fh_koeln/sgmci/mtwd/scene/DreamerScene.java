@@ -7,7 +7,6 @@ import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,263 +103,46 @@ public class DreamerScene extends AbstractMTWDScene {
 
     @Override
     public void createEventListeners() {
-        user1Workplace.getAddWorkspaceButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser1Activate(true);
-                }
-            }
-        });
+        user1Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
-        user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new IGestureEventListener() {
-            @Override
-            public boolean processGestureEvent(MTGestureEvent ge) {
-                TapAndHoldEvent te = (TapAndHoldEvent) ge;
-                if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if (te.isHoldComplete()) {
-                        controller.setUser1Activate(false);
-                        controller.proceed();
-                    }
-                }
-                return false;
-            }
-        });
-        user1Workplace.getReadyButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser1ReadyToContinue(true);
-                    controller.proceed();
-                }
-            }
-        });
-        user1Workplace.getReadyButtonDone().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser1ReadyToContinue(false);
-                    controller.proceed();
-                }
-            }
-        });
+        user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getSendButton().registerInputProcessor(new TapProcessor(mtApp));
-        user1Workplace.getSendButton().addGestureListener(TapProcessor.class,
-                new IGestureEventListener() {
-                    @Override
-                    public boolean processGestureEvent(MTGestureEvent ge) {
-                        TapEvent te = (TapEvent) ge;
-                        if (te.getId() == TapEvent.GESTURE_DETECTED) {
-                            try {
-                                controller.createIdea(user1Workplace.getTextArea().getText());
-                                user1Workplace.getTextArea().setText("");
-                            } catch (NoIdeaTextException ex) {
-                                // do nothing
-                            }
-                        }
-                        return false;
-                    }
-                });
+        user1Workplace.getSendButton().addGestureListener(TapProcessor.class, new SendButtonListener(user1Workplace));
 
-        user2Workplace.getAddWorkspaceButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser2Activate(true);
-                }
-            }
-        });
+        user2Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
-        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new IGestureEventListener() {
-            @Override
-            public boolean processGestureEvent(MTGestureEvent ge) {
-                TapAndHoldEvent te = (TapAndHoldEvent) ge;
-                if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if (te.isHoldComplete()) {
-                        controller.setUser2Activate(false);
-                        controller.proceed();
-                    }
-                }
-                return false;
-            }
-        });
-        user2Workplace.getReadyButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser2ReadyToContinue(true);
-                    controller.proceed();
-                }
-            }
-        });
-        user2Workplace.getReadyButtonDone().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser2ReadyToContinue(false);
-                    controller.proceed();
-                }
-            }
-        });
+        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getSendButton().registerInputProcessor(new TapProcessor(mtApp));
-        user2Workplace.getSendButton().addGestureListener(TapProcessor.class,
-                new IGestureEventListener() {
-                    @Override
-                    public boolean processGestureEvent(MTGestureEvent ge) {
-                        TapEvent te = (TapEvent) ge;
-                        if (te.getId() == TapEvent.GESTURE_DETECTED) {
-                            try {
-                                controller.createIdea(user2Workplace.getTextArea().getText());
-                                user2Workplace.getTextArea().setText("");
-                            } catch (NoIdeaTextException ex) {
-                                // do nothing
-                            }
-                        }
-                        return false;
-                    }
-                });
+        user2Workplace.getSendButton().addGestureListener(TapProcessor.class, new SendButtonListener(user2Workplace));
 
-        user3Workplace.getAddWorkspaceButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser3Activate(true);
-                }
-            }
-        });
+        user3Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
-        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new IGestureEventListener() {
-            @Override
-            public boolean processGestureEvent(MTGestureEvent ge) {
-                TapAndHoldEvent te = (TapAndHoldEvent) ge;
-                if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if (te.isHoldComplete()) {
-                        controller.setUser3Activate(false);
-                        controller.proceed();
-                    }
-                }
-                return false;
-            }
-        });
-        user3Workplace.getReadyButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser3ReadyToContinue(true);
-                    controller.proceed();
-                }
-            }
-        });
-        user3Workplace.getReadyButtonDone().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser3ReadyToContinue(false);
-                    controller.proceed();
-                }
-            }
-        });
+        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getSendButton().registerInputProcessor(new TapProcessor(mtApp));
-        user3Workplace.getSendButton().addGestureListener(TapProcessor.class,
-                new IGestureEventListener() {
-                    @Override
-                    public boolean processGestureEvent(MTGestureEvent ge) {
-                        TapEvent te = (TapEvent) ge;
-                        if (te.getId() == TapEvent.GESTURE_DETECTED) {
-                            try {
-                                controller.createIdea(user3Workplace.getTextArea().getText());
-                                user3Workplace.getTextArea().setText("");
-                            } catch (NoIdeaTextException ex) {
-                                // do nothing
-                            }
-                        }
-                        return false;
-                    }
-                });
+        user3Workplace.getSendButton().addGestureListener(TapProcessor.class, new SendButtonListener(user3Workplace));
 
-        user4Workplace.getAddWorkspaceButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser4Activate(true);
-                }
-            }
-        });
+        user4Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
         user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
-        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new IGestureEventListener() {
-            @Override
-            public boolean processGestureEvent(MTGestureEvent ge) {
-                TapAndHoldEvent te = (TapAndHoldEvent) ge;
-                if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
-                    if (te.isHoldComplete()) {
-                        controller.setUser4Activate(false);
-                        controller.proceed();
-                    }
-                }
-                return false;
-            }
-        });
-        user4Workplace.getReadyButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser4ReadyToContinue(true);
-                    controller.proceed();
-                }
-            }
-        });
-        user4Workplace.getReadyButtonDone().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == TapEvent.BUTTON_DOWN) {
-                    controller.setUser4ReadyToContinue(false);
-                    controller.proceed();
-                }
-            }
-        });
+        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
         user4Workplace.getSendButton().registerInputProcessor(new TapProcessor(mtApp));
-        user4Workplace.getSendButton().addGestureListener(TapProcessor.class,
-                new IGestureEventListener() {
-                    @Override
-                    public boolean processGestureEvent(MTGestureEvent ge) {
-                        TapEvent te = (TapEvent) ge;
-                        if (te.getId() == TapEvent.GESTURE_DETECTED) {
-                            try {
-                                controller.createIdea(user4Workplace.getTextArea().getText());
-                                user4Workplace.getTextArea().setText("");
-                            } catch (NoIdeaTextException ex) {
-                                // do nothing
-                            }
-                        }
-                        return false;
-                    }
-                });
+        user4Workplace.getSendButton().addGestureListener(TapProcessor.class, new SendButtonListener(user4Workplace));
     }
 
     @Override
     public void startScene() {
-        Collection<Idea> ideas = controller.getAllVisibleIdeasForCurrentProblem();
-        for (Idea idea : ideas) {
-            final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
-            newTextArea.setText(idea.getDescription());
-            displayedIdeas.put(idea.getId(), newTextArea);
-            getCanvas().addChild(newTextArea);
-        }
-
-        user1Workplace.setIsActive(AbstractMTWDSceneController.isUser1Activate());
-        user2Workplace.setIsActive(AbstractMTWDSceneController.isUser2Activate());
-        user3Workplace.setIsActive(AbstractMTWDSceneController.isUser3Activate());
-        user4Workplace.setIsActive(AbstractMTWDSceneController.isUser4Activate());
-
-        user1Workplace.setIsReady(controller.isUser1ReadyToContinue());
-        user2Workplace.setIsReady(controller.isUser2ReadyToContinue());
-        user3Workplace.setIsReady(controller.isUser3ReadyToContinue());
-        user4Workplace.setIsReady(controller.isUser4ReadyToContinue());
-
+        updateScene();
         // needs to be removed and set for each user
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
@@ -383,47 +165,120 @@ public class DreamerScene extends AbstractMTWDScene {
             }
         }
 
-        user1Workplace.setIsActive(AbstractMTWDSceneController.isUser1Activate());
-        user2Workplace.setIsActive(AbstractMTWDSceneController.isUser2Activate());
-        user3Workplace.setIsActive(AbstractMTWDSceneController.isUser3Activate());
-        user4Workplace.setIsActive(AbstractMTWDSceneController.isUser4Activate());
+        user1Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
+        user2Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
+        user3Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
+        user4Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
 
-        user1Workplace.setIsReady(controller.isUser1ReadyToContinue());
-        user2Workplace.setIsReady(controller.isUser2ReadyToContinue());
-        user3Workplace.setIsReady(controller.isUser3ReadyToContinue());
-        user4Workplace.setIsReady(controller.isUser4ReadyToContinue());
-    }
-
-    @Override
-    public void init() {
-        mtApp.registerKeyEvent(this);
+        user1Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user1Id));
+        user2Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user2Id));
+        user3Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user3Id));
+        user4Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user4Id));
     }
 
     @Override
     public void shutDown() {
-        mtApp.unregisterKeyEvent(this);
-        controller.setUser1ReadyToContinue(false);
-        controller.setUser2ReadyToContinue(false);
-        controller.setUser3ReadyToContinue(false);
-        controller.setUser4ReadyToContinue(false);
-        
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user1Id, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user2Id, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user3Id, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user4Id, false);
+
         for (MTTextArea textArea : displayedIdeas.values()) {
             textArea.destroy();
         }
         displayedIdeas.clear();
     }
 
-    public void keyEvent(KeyEvent e) {
-        int evtID = e.getID();
-        if (evtID != KeyEvent.KEY_PRESSED) {
-            return;
+    public class AddWorkspaceButtonListener implements ActionListener {
+
+        private final String userId;
+
+        public AddWorkspaceButtonListener(String userId) {
+            this.userId = userId;
         }
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_F:
-                System.out.println("FPS: " + mtApp.frameRate);
-                break;
-            default:
-                break;
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getID() == TapEvent.BUTTON_DOWN) {
+                controller.setUserActive(userId, true);
+            }
+        }
+    }
+
+    public class CloseWorkspaceButtonListener implements IGestureEventListener {
+
+        private final String userId;
+
+        public CloseWorkspaceButtonListener(String userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapAndHoldEvent te = (TapAndHoldEvent) ge;
+            if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
+                if (te.isHoldComplete()) {
+                    controller.setUserActive(userId, false);
+                    controller.proceed();
+                }
+            }
+            return false;
+        }
+    }
+
+    public class ReadyButtonListener implements ActionListener {
+
+        private final String userId;
+
+        public ReadyButtonListener(String userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getID() == TapEvent.BUTTON_DOWN) {
+                controller.setUserReadyToContinue(userId, true);
+                controller.proceed();
+            }
+        }
+    }
+
+    public class ReadyButtonDoneListener implements ActionListener {
+
+        private final String userId;
+
+        public ReadyButtonDoneListener(String userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getID() == TapEvent.BUTTON_DOWN) {
+                controller.setUserReadyToContinue(userId, false);
+            }
+        }
+    }
+
+    public class SendButtonListener implements IGestureEventListener {
+
+        private final DreamerUserWorkplace workplace;
+
+        public SendButtonListener(DreamerUserWorkplace workplace) {
+            this.workplace = workplace;
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_DETECTED) {
+                try {
+                    controller.createIdea(workplace.getTextArea().getText());
+                    workplace.getTextArea().setText("");
+                } catch (NoIdeaTextException ex) {
+                    // do nothing
+                }
+            }
+            return false;
         }
     }
 }

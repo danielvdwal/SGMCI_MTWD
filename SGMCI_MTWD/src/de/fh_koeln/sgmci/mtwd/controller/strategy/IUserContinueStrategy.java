@@ -18,4 +18,11 @@ public interface IUserContinueStrategy {
      * false, if one or more of these requirements are not met
      */
     boolean canContinue();
+    
+    /**
+     * Sets the number of users the continue strategy shall consider.
+     * 
+     * @param nrOfUsers the number of users
+     */
+    void setNrOfUsers(int nrOfUsers);
 }

@@ -8,7 +8,26 @@ package de.fh_koeln.sgmci.mtwd.model;
  */
 public class User extends AbstractModel {
 
-    User(String id) {
+    private boolean active;
+    private boolean readyToContinue;
+    
+    public User(String id) {
         super(id);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isReadyToContinue() {
+        return readyToContinue;
+    }
+
+    public void setReadyToContinue(boolean ready) {
+        this.readyToContinue = ready;
     }
 }
