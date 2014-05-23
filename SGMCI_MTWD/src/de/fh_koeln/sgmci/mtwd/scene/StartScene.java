@@ -1,8 +1,7 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
-import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
-import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
+import de.fh_koeln.sgmci.mtwd.customelements.StartUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.exception.NoProblemTextException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,9 +12,7 @@ import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
-import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
-import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
@@ -31,18 +28,15 @@ import processing.core.PImage;
  */
 public class StartScene extends AbstractMTWDScene {
 
-    private final StartSceneController controller;
+    private final StartUserWorkplace user1Workplace;
     private MTTextArea problemLabel;
     private MTTextArea problemInputField;
-    private AbstractKeyboard keyboard;
-    private MTSvgButton helpButton;
-    private MTSvgButton settingsButton;
-    private MTSvgButton startButton;
     private MTTextArea errorMessageTextArea;
 
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
         this.controller = new StartSceneController(this);
+        this.user1Workplace = new StartUserWorkplace(mtApp);
     }
 
     @Override
@@ -66,18 +60,8 @@ public class StartScene extends AbstractMTWDScene {
         problemInputField.setEnableCaret(true);
         problemInputField.setPickable(false);
 
-        keyboard = new Keyboard(mtApp);
-        keyboard.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
-        keyboard.setPositionRelativeToParent(new Vector3D(mtApp.width / 2, mtApp.height - keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
-
-        helpButton = new MTSvgButton("data/helpButton.svg", mtApp);
-        helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 20));
-
-        startButton = new MTSvgButton("data/startButton.svg", mtApp);
-        startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 20));
-
-        settingsButton = new MTSvgButton("data/settingsButton.svg", mtApp);
-        settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * keyboardScaleFactor / 2 - 20));
+        user1Workplace.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
+        user1Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
 
         errorMessageTextArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLACK, MTColor.WHITE));
         errorMessageTextArea.setFillColor(MTColor.WHITE);
@@ -86,10 +70,7 @@ public class StartScene extends AbstractMTWDScene {
         
         this.getCanvas().addChild(problemLabel);
         this.getCanvas().addChild(problemInputField);
-        this.getCanvas().addChild(keyboard);
-        this.getCanvas().addChild(helpButton);
-        this.getCanvas().addChild(startButton);
-        this.getCanvas().addChild(settingsButton);
+        this.getCanvas().addChild(user1Workplace);
         this.getCanvas().addChild(errorMessageTextArea);
 
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
@@ -101,11 +82,9 @@ public class StartScene extends AbstractMTWDScene {
         // displays where the screen is touched
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        keyboard.addTextInputListener(problemInputField);
-        keyboard.removeAllGestureEventListeners();
-        keyboard.unregisterAllInputProcessors();
-
-        helpButton.addActionListener(new ActionListener() {
+        user1Workplace.getKeyboard().addTextInputListener(problemInputField);
+        
+        user1Workplace.getHelpButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {
@@ -118,7 +97,7 @@ public class StartScene extends AbstractMTWDScene {
 
                         final MTTextArea helpPop = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 25, MTColor.BLUE, MTColor.BLUE));
                         helpPop.setText("Such bei Google nach Hilfe -.-");
-                        helpPop.setPositionRelativeToOther(helpButton, new Vector3D(helpPop.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, -300));
+                        helpPop.setPositionRelativeToOther(user1Workplace.getHelpButton(), new Vector3D(helpPop.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, -300));
                         helpPop.setPickable(false);
                         getCanvas().addChild(helpPop);
 
@@ -130,13 +109,13 @@ public class StartScene extends AbstractMTWDScene {
             }
         });
 
-        startButton.addActionListener(new ActionListener() {
+        user1Workplace.getStartButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {
                     case TapEvent.BUTTON_CLICKED:
                         try {
-                            controller.proceed(problemInputField.getText());
+                            ((StartSceneController)controller).proceed(problemInputField.getText());
                         } catch (NoProblemTextException ex) {
                             errorMessageTextArea.setText(ex.getMessage());
                             errorMessageTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
@@ -149,7 +128,7 @@ public class StartScene extends AbstractMTWDScene {
             }
         });
 
-        settingsButton.addActionListener(new ActionListener() {
+        user1Workplace.getSettingsButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 switch (ae.getID()) {

@@ -64,6 +64,8 @@ public abstract class AbstractMTWDSceneController {
         userContinueStrategy = new UsersAreReadyContinueStrategy();
         updateUserContinueStrategy();
     }
+    
+    public void update() {}
 
     /**
      * Get the application object.

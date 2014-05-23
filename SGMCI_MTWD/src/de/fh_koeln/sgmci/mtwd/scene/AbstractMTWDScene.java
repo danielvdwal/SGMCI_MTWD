@@ -1,6 +1,7 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.IMain;
+import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import org.mt4j.MTApplication;
 import org.mt4j.sceneManagement.AbstractScene;
@@ -33,6 +34,8 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
      * The scale factor for all keyboards.
      */
     float keyboardScaleFactor;
+    
+    AbstractMTWDSceneController controller;
 
     public AbstractMTWDScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -68,6 +71,7 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
     @Override
     public void gotoNextScene() {
         mtApp.pushScene();
+        nextScene.updateController();
         nextScene.startScene();
         mtApp.changeScene(nextScene);
     }
@@ -90,6 +94,11 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
 
     @Override
     public void updateScene() {
+    }
+    
+    @Override
+    public void updateController() {
+        controller.update();
     }
 
     @Override

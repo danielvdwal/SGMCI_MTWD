@@ -32,7 +32,6 @@ import processing.core.PImage;
  */
 public class CriticerCommentingScene extends AbstractMTWDScene {
 
-    private final RealistCommentingSceneController controller;
     private MTTextArea problemTextArea;
     private MTTextArea ideaTextArea;
     private MTTextArea problemNorthTextArea;

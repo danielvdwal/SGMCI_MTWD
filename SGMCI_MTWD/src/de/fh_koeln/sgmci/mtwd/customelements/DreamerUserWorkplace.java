@@ -27,9 +27,9 @@ public final class DreamerUserWorkplace extends MTRectangle {
     private final AbstractKeyboard keyboard;
     private final MTSvgButton helpButton;
     private final MTSvgButton problemButton;
+    private final MTSvgButton closeButton;
     private final MTSvgButton readyButton;
     private final MTSvgButton readyButtonDone;
-    private final MTSvgButton closeButton;
     private final MTRectangle textAreaBackground;
     private final MTTextArea textArea;
     private final MTRectangle sendButton;
@@ -130,11 +130,11 @@ public final class DreamerUserWorkplace extends MTRectangle {
         closeButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         readyButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         readyButtonDone.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
-        helpButton.setPositionRelativeToParent(new Vector3D(-helpButton.getWidthXYRelativeToParent() - 100, helpButton.getHeightXYRelativeToParent() - 30));
-        problemButton.setPositionRelativeToParent(new Vector3D(-problemButton.getWidthXYRelativeToParent() - 100, keyboard.getHeight() - problemButton.getHeightXYRelativeToParent() + 30));
-        closeButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + closeButton.getWidthXYRelativeToParent() - 100, closeButton.getHeightXYRelativeToParent() - 30));
-        readyButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + readyButton.getWidthXYRelativeToParent() - 100, keyboard.getHeight() - readyButton.getHeightXYRelativeToParent() + 30));
-        readyButtonDone.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + readyButtonDone.getWidthXYRelativeToParent() - 100, keyboard.getHeight() - readyButtonDone.getHeightXYRelativeToParent() + 30));
+        helpButton.setPositionRelativeToParent(new Vector3D(-helpButton.getWidthXYRelativeToParent(), helpButton.getHeightXYRelativeToParent() - 30));
+        problemButton.setPositionRelativeToParent(new Vector3D(-problemButton.getWidthXYRelativeToParent(), keyboard.getHeight() - problemButton.getHeightXYRelativeToParent() + 30));
+        closeButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + closeButton.getWidthXYRelativeToParent(), closeButton.getHeightXYRelativeToParent() - 30));
+        readyButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + readyButton.getWidthXYRelativeToParent(), keyboard.getHeight() - readyButton.getHeightXYRelativeToParent() + 30));
+        readyButtonDone.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + readyButtonDone.getWidthXYRelativeToParent(), keyboard.getHeight() - readyButtonDone.getHeightXYRelativeToParent() + 30));
         readyButtonDone.setVisible(false);
         keyboard.setVisible(false);
         
@@ -146,6 +146,6 @@ public final class DreamerUserWorkplace extends MTRectangle {
         keyboard.addTextInputListener(textArea);   
         
         keyboard.addChild(sendButton);
-        sendButton.setPositionRelativeToParent(new Vector3D(-100, 0));
+        sendButton.setPositionRelativeToParent(new Vector3D(0, 0));
     }
 }

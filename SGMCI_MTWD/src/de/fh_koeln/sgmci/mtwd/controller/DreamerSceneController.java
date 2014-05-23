@@ -18,7 +18,6 @@ public class DreamerSceneController extends AbstractMTWDSceneController {
 
     public DreamerSceneController(IScene observer) {
         super(observer);
-        updateUserContinueStrategy();
     }
     
     public void createIdea(String ideaDescription) throws NoIdeaTextException {

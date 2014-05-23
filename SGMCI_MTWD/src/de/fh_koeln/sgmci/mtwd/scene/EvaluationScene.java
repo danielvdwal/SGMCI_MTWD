@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.controller.EvaluationSceneController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
@@ -31,6 +32,7 @@ public class EvaluationScene extends AbstractMTWDScene {
 
     public EvaluationScene(MTApplication mtApp, String name) {
         super(mtApp, name);
+        this.controller = new EvaluationSceneController(this);
     }
 
     @Override

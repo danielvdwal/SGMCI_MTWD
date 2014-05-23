@@ -1,14 +1,8 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import org.mt4j.components.visibleComponents.shapes.AbstractShape;
-import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
-import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
@@ -50,22 +44,6 @@ public final class Keyboard extends AbstractKeyboard {
         keyInfos.addAll(createKeyboardNormalKeyInfos());
 
         createKeyButtonsOutOfKeyInfos(keyInfos, this);
-
-        // 64px * 64px 
-        MTSvgButton keybCloseSvg = new MTSvgButton(MT4jSettings.getInstance().getDefaultSVGPath() + "keybClose.svg", pApplet);
-        keybCloseSvg.scale(0.8f, 0.8f, 1, new Vector3D(0, 0, 0));
-        keybCloseSvg.translate(new Vector3D(KEYBOARD_WIDTH - BUTTON_SIZE - BUTTON_MARGIN, BUTTON_MARGIN, 0));
-        keybCloseSvg.translate(new Vector3D(BUTTON_SIZE / 2, -BUTTON_SIZE / 2, 0));
-        keybCloseSvg.setBoundsPickingBehaviour(AbstractShape.BOUNDS_ONLY_CHECK);
-        keybCloseSvg.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                if (arg0.getID() == TapEvent.BUTTON_CLICKED) {
-                    closeKeyboard();
-                }
-            }
-        });
-        addChild(keybCloseSvg);
 
         changeVisibility();
     }

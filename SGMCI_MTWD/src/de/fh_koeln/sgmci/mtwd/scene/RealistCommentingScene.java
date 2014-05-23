@@ -14,7 +14,6 @@ import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTList;
 import org.mt4j.components.visibleComponents.widgets.MTListCell;
-import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
@@ -34,7 +33,6 @@ import processing.core.PImage;
  */
 public class RealistCommentingScene extends AbstractMTWDScene {
 
-    private final RealistCommentingSceneController controller;
     private MTTextArea problemTextArea;
     private MTTextArea ideaTextArea;
     private MTTextArea problemNorthTextArea;
@@ -275,19 +273,19 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         problemEastTextArea.setPositionGlobal(new Vector3D(mtApp.width - 100, mtApp.height / 2, 0));
         problemEastTextArea.translate(new Vector3D(0, -problemEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
 
-        ideaTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
+        ideaTextArea.setText(((RealistCommentingSceneController)controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         ideaTextArea.translate(new Vector3D(0, ideaTextArea.getHeightXY(TransformSpace.LOCAL) - 100));
         
-        ideaNorthTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
+        ideaNorthTextArea.setText(((RealistCommentingSceneController)controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaNorthTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 50, 0));
         ideaNorthTextArea.translate(new Vector3D(0, -ideaNorthTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
         
-        ideaWestTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
+        ideaWestTextArea.setText(((RealistCommentingSceneController)controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaWestTextArea.setPositionGlobal(new Vector3D(50, mtApp.height / 2, 0));
         ideaWestTextArea.translate(new Vector3D(0, -ideaWestTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
         
-        ideaEastTextArea.setText(controller.getCurrentlySelectedIdeaForCurrentProblem().getDescription());
+        ideaEastTextArea.setText(((RealistCommentingSceneController)controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription());
         ideaEastTextArea.setPositionGlobal(new Vector3D(mtApp.width - 50, mtApp.height / 2, 0));
         ideaEastTextArea.translate(new Vector3D(0, -ideaEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }

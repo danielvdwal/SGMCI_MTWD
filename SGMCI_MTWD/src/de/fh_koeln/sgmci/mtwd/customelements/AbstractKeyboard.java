@@ -6,17 +6,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.AbstractShape;
 import org.mt4j.components.visibleComponents.shapes.MTRoundRectangle;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.components.visibleComponents.widgets.keyboard.ITextInputListener;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.util.MT4jSettings;
-import org.mt4j.util.animation.Animation;
-import org.mt4j.util.animation.AnimationEvent;
-import org.mt4j.util.animation.IAnimationListener;
-import org.mt4j.util.animation.MultiPurposeInterpolator;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
@@ -292,34 +287,6 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
     }
 
     /**
-     * Shows an animation in which the keyboard shrinks and fades away when the
-     * keyboard is closed.
-     */
-    void closeKeyboard() {
-        float width = this.getWidthXY(TransformSpace.RELATIVE_TO_PARENT);
-        Animation keybCloseAnim = new Animation("Keyboard Fade", new MultiPurposeInterpolator(width, 1, 300, 0.2f, 0.5f, 1), this);
-        keybCloseAnim.addAnimationListener(new IAnimationListener() {
-            @Override
-            public void processAnimationEvent(AnimationEvent ae) {
-                switch (ae.getId()) {
-                    case AnimationEvent.ANIMATION_STARTED:
-                    case AnimationEvent.ANIMATION_UPDATED:
-                        float currentVal = ae.getAnimation().getInterpolator().getCurrentValue();
-                        setWidthRelativeToParent(currentVal);
-                        break;
-                    case AnimationEvent.ANIMATION_ENDED:
-                        setVisible(false);
-                        destroy();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        keybCloseAnim.start();
-    }
-
-    /**
      * Creates the MTSvgButton objects by using the given collection of key
      * information and adds them to the given container, as well as the
      * corresponding map.
@@ -371,24 +338,6 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
             }
 
             keyboard.addChild(key);
-        }
-    }
-
-    private boolean setWidthRelativeToParent(float width) {
-        if (width > 0) {
-            Vector3D centerPoint;
-            if (this.hasBounds()) {
-                centerPoint = this.getBounds().getCenterPointLocal();
-                centerPoint.transform(this.getLocalMatrix());
-            } else {
-                centerPoint = this.getCenterPointGlobal();
-                centerPoint.transform(this.getGlobalInverseMatrix());
-            }
-            this.scale(1 / this.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 1 / this.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 1, centerPoint);
-            this.scale(width, width, 1, centerPoint);
-            return true;
-        } else {
-            return false;
         }
     }
 

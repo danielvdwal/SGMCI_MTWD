@@ -23,6 +23,7 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.Ta
 import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
+import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
@@ -35,7 +36,6 @@ import processing.core.PImage;
 public class DreamerScene extends AbstractMTWDScene {
 
     private final IFont ideaFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18);
-    private final DreamerSceneController controller;
     private final Map<String, MTTextArea> displayedIdeas;
     private MTTextArea problemTextArea;
     private MTTextArea problemTextAreaInverted;
@@ -47,7 +47,7 @@ public class DreamerScene extends AbstractMTWDScene {
     public DreamerScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         controller = new DreamerSceneController(this);
-        this.displayedIdeas = new HashMap<String, MTTextArea>();
+        displayedIdeas = new HashMap<String, MTTextArea>();
     }
 
     @Override
@@ -86,23 +86,25 @@ public class DreamerScene extends AbstractMTWDScene {
         user4Workplace.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
 
         user1Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, 0));
-        this.getCanvas().addChild(user1Workplace);
+        getCanvas().addChild(user1Workplace);
 
         user2Workplace.rotateZ(new Vector3D(user2Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 180);
         user2Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, 0));
-        this.getCanvas().addChild(user2Workplace);
+        getCanvas().addChild(user2Workplace);
 
         user3Workplace.rotateZ(new Vector3D(user3Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 90);
         user3Workplace.setPositionGlobal(new Vector3D(user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2, 0));
-        this.getCanvas().addChild(user3Workplace);
+        getCanvas().addChild(user3Workplace);
 
         user4Workplace.rotateZ(new Vector3D(user4Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
         user4Workplace.setPositionGlobal(new Vector3D(mtApp.width - user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
-        this.getCanvas().addChild(user4Workplace);
+        getCanvas().addChild(user4Workplace);
     }
 
     @Override
     public void createEventListeners() {
+        this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
+        
         user1Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
@@ -142,7 +144,13 @@ public class DreamerScene extends AbstractMTWDScene {
 
     @Override
     public void startScene() {
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user1Id, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user2Id, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user3Id, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.user4Id, false);
+    
         updateScene();
+        
         // needs to be removed and set for each user
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
@@ -178,11 +186,6 @@ public class DreamerScene extends AbstractMTWDScene {
 
     @Override
     public void shutDown() {
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user1Id, false);
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user2Id, false);
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user3Id, false);
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user4Id, false);
-
         for (MTTextArea textArea : displayedIdeas.values()) {
             textArea.destroy();
         }
@@ -219,7 +222,7 @@ public class DreamerScene extends AbstractMTWDScene {
             if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
                 if (te.isHoldComplete()) {
                     controller.setUserActive(userId, false);
-                    controller.proceed();
+                    ((DreamerSceneController)controller).proceed();
                 }
             }
             return false;
@@ -238,7 +241,7 @@ public class DreamerScene extends AbstractMTWDScene {
         public void actionPerformed(ActionEvent e) {
             if (e.getID() == TapEvent.BUTTON_DOWN) {
                 controller.setUserReadyToContinue(userId, true);
-                controller.proceed();
+                    ((DreamerSceneController)controller).proceed();
             }
         }
     }
@@ -272,7 +275,7 @@ public class DreamerScene extends AbstractMTWDScene {
             TapEvent te = (TapEvent) ge;
             if (te.getId() == TapEvent.GESTURE_DETECTED) {
                 try {
-                    controller.createIdea(workplace.getTextArea().getText());
+                    ((DreamerSceneController)controller).createIdea(workplace.getTextArea().getText());
                     workplace.getTextArea().setText("");
                 } catch (NoIdeaTextException ex) {
                     // do nothing

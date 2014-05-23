@@ -1,16 +1,10 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import org.mt4j.components.MTComponent;
-import org.mt4j.components.visibleComponents.shapes.AbstractShape;
 import org.mt4j.components.visibleComponents.shapes.MTRoundRectangle;
-import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
-import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
@@ -33,7 +27,7 @@ public final class SplitKeyboard extends AbstractKeyboard {
     private float spaceBetweenKeyboards = 200;
 
     public SplitKeyboard(PApplet pApplet) {
-        super(0, 0, 0, KEYBOARD_WIDTH * 2, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
+        super(0, 0, 0, 200 + KEYBOARD_WIDTH * 2, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
 
         this.leftKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
         this.rightKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
@@ -134,10 +128,7 @@ public final class SplitKeyboard extends AbstractKeyboard {
         createKeyButtonsOutOfKeyInfos(rightKeyInfos, rightKeyboard);
 
         // set start position of right keyboard
-        rightKeyboard.translate(new Vector3D(KEYBOARD_WIDTH, 0));
-
-        leftKeyboard.translate(new Vector3D(-spaceBetweenKeyboards / 2, 0));
-        rightKeyboard.translate(new Vector3D(spaceBetweenKeyboards / 2, 0));
+        rightKeyboard.translate(new Vector3D(KEYBOARD_WIDTH + spaceBetweenKeyboards, 0));
 
         this.addChild(leftKeyboard);
         this.addChild(rightKeyboard);

@@ -26,6 +26,8 @@ public interface IScene extends Iscene {
 
     void updateScene();
 
+    void updateController();
+
     /**
      * Sets the main object which is used to start the application.
      *

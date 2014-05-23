@@ -25,7 +25,6 @@ import processing.core.PImage;
  */
 public class CriticerVotingScene extends AbstractMTWDScene {
 
-    private final CriticerVotingSceneController controller;
     private MTTextArea problemTextArea;
     private MTTextArea problemTextAreaInverted;
     private MTTextArea ideaUser1;

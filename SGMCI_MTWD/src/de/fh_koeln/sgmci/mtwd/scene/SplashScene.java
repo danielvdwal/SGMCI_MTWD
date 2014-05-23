@@ -22,7 +22,6 @@ import processing.core.PImage;
  */
 public class SplashScene extends AbstractMTWDScene {
 
-    private final SplashSceneController controller;
     private MTTextArea headlineTextArea;
     private MTTextArea subheadlineTextArea;
     private MTTextArea descriptionTextArea;
@@ -136,7 +135,7 @@ public class SplashScene extends AbstractMTWDScene {
                         break;
                     case TapEvent.BUTTON_CLICKED:
                         main.loadResources();
-                        controller.proceed();
+                        ((SplashSceneController)controller).proceed();
                         break;
                     default:
                         break;
