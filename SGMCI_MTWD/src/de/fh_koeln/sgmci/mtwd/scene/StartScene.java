@@ -34,6 +34,7 @@ public class StartScene extends AbstractMTWDScene {
     private MTTextArea problemLabel;
     private MTTextArea problemInputField;
     private Popup errorMessagePopup;
+    private float scaledKeyboardWidth;
 
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -67,7 +68,7 @@ public class StartScene extends AbstractMTWDScene {
 
         errorMessagePopup = new ClosablePopup(mtApp);
         errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-
+        
         getCanvas().addChild(problemLabel);
         getCanvas().addChild(problemInputField);
         getCanvas().addChild(user1Workplace);

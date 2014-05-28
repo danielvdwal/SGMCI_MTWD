@@ -1,14 +1,9 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
-import org.mt4j.components.visibleComponents.shapes.MTRoundRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
-import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
@@ -30,17 +25,17 @@ public class Popup extends MTRectangle {
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setVisible(false);
-        textArea = new MTTextArea(pApplet, FontManager.getInstance().createFont(pApplet, "arial.ttf", 50));
+        textArea = new MTTextArea(pApplet, FontManager.getInstance().createFont(pApplet, "arial.ttf", 30));
         
         positionAllComponents();
     }
     
     public float getWidth() {
-        return textArea.getWidthXY(TransformSpace.LOCAL);
+        return textArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT);
     }
     
     public float getHeight() {
-        return textArea.getHeightXY(TransformSpace.LOCAL);
+        return textArea.getHeightXY(TransformSpace.RELATIVE_TO_PARENT);
     }
     
     public void setText(String text) {
