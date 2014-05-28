@@ -35,6 +35,14 @@ public class Popup extends MTRectangle {
         positionAllComponents();
     }
     
+    public float getWidth() {
+        return textArea.getWidthXY(TransformSpace.LOCAL);
+    }
+    
+    public float getHeight() {
+        return textArea.getHeightXY(TransformSpace.LOCAL);
+    }
+    
     public void setText(String text) {
         textArea.setText(text);
         textArea.setPositionRelativeToParent(new Vector3D(getWidthXY(TransformSpace.LOCAL)/2, getHeightXY(TransformSpace.LOCAL)/2));

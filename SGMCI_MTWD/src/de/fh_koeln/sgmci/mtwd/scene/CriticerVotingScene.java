@@ -29,7 +29,7 @@ public class CriticerVotingScene extends AbstractMTWDScene {
     private MTTextArea problemTextAreaInverted;
     private MTTextArea ideaUser1;
     private MTSvgButton leftButton, rightButton, likeButton, dislikeButton, continueButton;
-    private int ideaIndex = 1;
+    private int ideaIndex = 0;
     private List<Idea> allIdeas;
 
     public CriticerVotingScene(MTApplication mtApp, String name) {

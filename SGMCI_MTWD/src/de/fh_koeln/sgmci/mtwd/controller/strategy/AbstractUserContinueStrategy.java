@@ -10,11 +10,15 @@ package de.fh_koeln.sgmci.mtwd.controller.strategy;
  * @version 0.2.0
  */
 public abstract class AbstractUserContinueStrategy implements IUserContinueStrategy {
-    
+
     int nrOfUsers;
 
     @Override
     public void setNrOfUsers(int nrOfUsers) {
-        this.nrOfUsers = nrOfUsers;
+        if (nrOfUsers == 0) {
+            this.nrOfUsers = 1;
+        } else {
+            this.nrOfUsers = nrOfUsers;
+        }
     }
 }

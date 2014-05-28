@@ -55,7 +55,7 @@ public class StartScene extends AbstractMTWDScene {
         problemLabel.setNoStroke(true);
         problemLabel.setText("Bitte geben Sie Ihr Problem ein:");
         problemLabel.setPickable(false);
-        problemLabel.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2 - 150));
+        problemLabel.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 - 150));
 
         problemInputField = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50));
         problemInputField.setNoFill(true);
@@ -67,7 +67,7 @@ public class StartScene extends AbstractMTWDScene {
 
         errorMessagePopup = new ClosablePopup(mtApp);
         errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        
+
         getCanvas().addChild(problemLabel);
         getCanvas().addChild(problemInputField);
         getCanvas().addChild(user1Workplace);
@@ -83,31 +83,8 @@ public class StartScene extends AbstractMTWDScene {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
         user1Workplace.getKeyboard().addTextInputListener(problemInputField);
-        
-        user1Workplace.getHelpButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
-                        final MTTextArea textarea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
-                        textarea.setText("Problem?");
-                        textarea.setNoStroke(true);
-                        textarea.setNoFill(true);
-                        textarea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
 
-                        final MTTextArea helpPop = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 25, MTColor.BLUE, MTColor.BLUE));
-                        helpPop.setText("Such bei Google nach Hilfe -.-");
-                        helpPop.setPositionRelativeToOther(user1Workplace.getHelpButton(), new Vector3D(helpPop.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, -300));
-                        helpPop.setPickable(false);
-                        getCanvas().addChild(helpPop);
-
-                        mtApp.getCurrentScene().getCanvas().addChild(textarea);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+        user1Workplace.getHelpButton().addActionListener(new HelpButtonListener());
 
         user1Workplace.getStartButton().addActionListener(new ActionListener() {
             @Override
@@ -115,10 +92,10 @@ public class StartScene extends AbstractMTWDScene {
                 switch (ae.getID()) {
                     case TapEvent.BUTTON_CLICKED:
                         try {
-                            ((StartSceneController)controller).proceed(problemInputField.getText());
+                            ((StartSceneController) controller).proceed(problemInputField.getText());
                         } catch (NoProblemTextException ex) {
                             errorMessagePopup.setText(ex.getMessage());
-                            errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                            errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
                             errorMessagePopup.setVisible(true);
                         }
                         break;
@@ -138,7 +115,7 @@ public class StartScene extends AbstractMTWDScene {
                         textArea.setText("Loesung!!!");
                         textArea.setNoStroke(true);
                         textArea.setNoFill(true);
-                        textArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                        textArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
 
                         mtApp.getCurrentScene().getCanvas().addChild(textArea);
                         break;
@@ -168,6 +145,32 @@ public class StartScene extends AbstractMTWDScene {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(StartScene.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        }
+    }
+
+    private class HelpButtonListener implements ActionListener {
+
+        private final Popup helpPopup;
+
+        public HelpButtonListener() {
+            helpPopup = new Popup(mtApp);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch (ae.getID()) {
+                case TapEvent.BUTTON_DOWN:
+                    user1Workplace.addChild(helpPopup);
+                    helpPopup.setText(((StartSceneController) controller).getHelpText());
+                    helpPopup.setPositionRelativeToParent(new Vector3D(user1Workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 + 10));
+                    helpPopup.setVisible(true);
+                    break;
+                case TapEvent.BUTTON_CLICKED:
+                    helpPopup.setVisible(false);
+                    user1Workplace.removeChild(helpPopup);
+                default:
+                    break;
             }
         }
     }
