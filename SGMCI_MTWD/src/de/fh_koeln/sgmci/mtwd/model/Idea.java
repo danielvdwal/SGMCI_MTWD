@@ -13,6 +13,8 @@ public class Idea extends AbstractModel {
     private final String description;
     private final CommentedIdea commentedIdea;
     private final CritiziedIdea critizedIdea;
+    private int totalLikes;
+    private int totalDislikes;
 
     private boolean stillDisplayed;
 
@@ -40,6 +42,22 @@ public class Idea extends AbstractModel {
         return description;
     }
 
+    public int getTotalLikes() {
+        return totalLikes;
+    }
+
+    public void setTotalLikes(int totalLikes) {
+        this.totalLikes = totalLikes;
+    }
+
+    public int getTotalDislikes() {
+        return totalDislikes;
+    }
+
+    public void setTotalDislikes(int totalDislikes) {
+        this.totalDislikes = totalDislikes;
+    }
+    
     // comments
     /**
      * Add a comment to this object.

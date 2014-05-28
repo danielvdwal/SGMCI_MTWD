@@ -1,7 +1,9 @@
 package de.fh_koeln.sgmci.mtwd.controller;
 
+import de.fh_koeln.sgmci.mtwd.model.Comment;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,6 +16,7 @@ import java.util.List;
  */
 public class RealistCommentingSceneController extends AbstractMTWDSceneController {
 
+    private static int commentIdCounter = 0;
     private int index = 0;
             
     public RealistCommentingSceneController(IScene observer) {
@@ -35,6 +38,14 @@ public class RealistCommentingSceneController extends AbstractMTWDSceneControlle
     
     public Idea getCurrentlySelectedIdeaForCurrentProblem() {
         return getAllVisibleIdeasForCurrentProblem().get(index);
+    }
+    
+    public Collection<Comment> getAllCommentsForCurrentlySelectedIdea() {
+        return getCurrentlySelectedIdeaForCurrentProblem().getAllComments();
+    }
+    
+    public void addCommentToCurrentlySelectedIdea(String commentDescription) {
+        getCurrentlySelectedIdeaForCurrentProblem().addComment(String.format("comment_%03d", commentIdCounter++), commentDescription);
     }
 }
 

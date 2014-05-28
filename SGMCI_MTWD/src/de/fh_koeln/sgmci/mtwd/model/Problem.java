@@ -15,8 +15,6 @@ import java.util.Map;
 public class Problem extends AbstractModel {
 
     private final Map<String, Idea> ideas;
-    private Idea newestIdea;
-
     private String description;
 
     /**
@@ -41,7 +39,6 @@ public class Problem extends AbstractModel {
     public void addIdea(String id, String description) {
         Idea idea = new Idea(id, description);
         this.ideas.put(id, idea);
-        this.newestIdea = idea;
     }
 
     /**
@@ -61,18 +58,6 @@ public class Problem extends AbstractModel {
      */
     public Idea getIdea(String id) {
         return ideas.get(id);
-    }
-
-    /**
-     * Get the newest idea that was added.<br >
-     * And sets the newest idea to null.
-     *
-     * @return the newest idea
-     */
-    public Idea popNewestIdea() {
-        Idea idea = newestIdea;
-        newestIdea = null;
-        return idea;
     }
 
     /**

@@ -105,15 +105,6 @@ public abstract class AbstractMTWDSceneController {
         return application.getProblem(currentProblemId).getAllVisibleIdeas();
     }
 
-    /**
-     * Get the newest idea for the current problem.
-     *
-     * @return the newest idea for the current problem
-     */
-    public Idea popNewestIdeaForCurrentProblem() {
-        return application.getProblem(currentProblemId).popNewestIdea();
-    }
-
     public static boolean isUserActive(String id) {
         return application.getUser(id).isActive();
     }

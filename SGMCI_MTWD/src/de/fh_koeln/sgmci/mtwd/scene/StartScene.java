@@ -68,10 +68,10 @@ public class StartScene extends AbstractMTWDScene {
         errorMessageTextArea.setStrokeColor(MTColor.BLACK);
         errorMessageTextArea.setVisible(false);
         
-        this.getCanvas().addChild(problemLabel);
-        this.getCanvas().addChild(problemInputField);
-        this.getCanvas().addChild(user1Workplace);
-        this.getCanvas().addChild(errorMessageTextArea);
+        getCanvas().addChild(problemLabel);
+        getCanvas().addChild(problemInputField);
+        getCanvas().addChild(user1Workplace);
+        getCanvas().addChild(errorMessageTextArea);
 
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
         problemTextAreaUpdateThread.start();

@@ -16,6 +16,10 @@ public class VotedIdea extends AbstractModel {
         this.voteType = VoteType.NONE;
     }
     
+    public Idea getIdea() {
+        return idea;
+    }
+    
     public String getDescription() {
         return idea.getDescription();
     }

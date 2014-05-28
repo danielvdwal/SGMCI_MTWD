@@ -21,7 +21,7 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.2.0
  */
-public final class RealistVotingUserWorkplace extends MTRectangle {
+public final class RealistCommentingModeratorWorkplace extends MTRectangle {
 
     private static final String addWorkspaceButtonSvgFile = "data/plusButton.svg";
     private static final String helpButtonSvgFile = "data/helpButton.svg";
@@ -52,7 +52,7 @@ public final class RealistVotingUserWorkplace extends MTRectangle {
     private final List<VotedIdea> votedIdeas;
     private int currentIndex;
 
-    public RealistVotingUserWorkplace(PApplet pApplet) {
+    public RealistCommentingModeratorWorkplace(PApplet pApplet) {
         super(400, 300, pApplet);
         this.setNoFill(true);
         this.setNoStroke(true);
@@ -224,10 +224,7 @@ public final class RealistVotingUserWorkplace extends MTRectangle {
             // TODO
         }
         
-        if(currentIndex == 0 && votedIdeas.size() == 1) {
-            leftButton.setVisible(false);
-            rightButton.setVisible(false);
-        } else if(currentIndex == 0) {
+        if(currentIndex == 0) {
             leftButton.setVisible(false);
             rightButton.setVisible(true);
         } else if (currentIndex == votedIdeas.size() - 1) {

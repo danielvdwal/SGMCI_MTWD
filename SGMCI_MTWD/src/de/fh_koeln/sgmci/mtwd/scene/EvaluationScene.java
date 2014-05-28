@@ -98,6 +98,7 @@ public class EvaluationScene extends AbstractMTWDScene {
                 switch (ae.getID()) {
                     case TapEvent.BUTTON_CLICKED:
                         //controller.proceed(problemInputField.getText());
+                        //((EvaluationSceneController)controller).saveResultsIntoXmlFile();
                         gotoNextScene();
                         break;
                     default:

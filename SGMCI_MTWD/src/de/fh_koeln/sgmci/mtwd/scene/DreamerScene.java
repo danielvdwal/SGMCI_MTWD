@@ -4,6 +4,7 @@ import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
+import de.fh_koeln.sgmci.mtwd.exception.NoIdeasException;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
@@ -39,6 +41,7 @@ public class DreamerScene extends AbstractMTWDScene {
     private final Map<String, MTTextArea> displayedIdeas;
     private MTTextArea problemTextArea;
     private MTTextArea problemTextAreaInverted;
+    private MTTextArea errorMessageTextArea;
     private DreamerUserWorkplace user1Workplace;
     private DreamerUserWorkplace user2Workplace;
     private DreamerUserWorkplace user3Workplace;
@@ -99,12 +102,19 @@ public class DreamerScene extends AbstractMTWDScene {
         user4Workplace.rotateZ(new Vector3D(user4Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
         user4Workplace.setPositionGlobal(new Vector3D(mtApp.width - user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
         getCanvas().addChild(user4Workplace);
+
+        errorMessageTextArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLACK, MTColor.WHITE));
+        errorMessageTextArea.setFillColor(MTColor.WHITE);
+        errorMessageTextArea.setStrokeColor(MTColor.BLACK);
+        errorMessageTextArea.setVisible(false);
+
+        getCanvas().addChild(errorMessageTextArea);
     }
 
     @Override
     public void createEventListeners() {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
-        
+
         user1Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
@@ -148,9 +158,9 @@ public class DreamerScene extends AbstractMTWDScene {
         controller.setUserReadyToContinue(AbstractMTWDSceneController.user2Id, false);
         controller.setUserReadyToContinue(AbstractMTWDSceneController.user3Id, false);
         controller.setUserReadyToContinue(AbstractMTWDSceneController.user4Id, false);
-    
+
         updateScene();
-        
+
         // needs to be removed and set for each user
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
@@ -222,7 +232,14 @@ public class DreamerScene extends AbstractMTWDScene {
             if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
                 if (te.isHoldComplete()) {
                     controller.setUserActive(userId, false);
-                    ((DreamerSceneController)controller).proceed();
+                    try {
+                        ((DreamerSceneController) controller).proceed();
+                    } catch (NoIdeasException ex) {
+                        errorMessageTextArea.setText(ex.getMessage());
+                        errorMessageTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                        errorMessageTextArea.setVisible(true);
+                        controller.setUserReadyToContinue(userId, false);
+                    }
                 }
             }
             return false;
@@ -241,7 +258,14 @@ public class DreamerScene extends AbstractMTWDScene {
         public void actionPerformed(ActionEvent e) {
             if (e.getID() == TapEvent.BUTTON_DOWN) {
                 controller.setUserReadyToContinue(userId, true);
-                    ((DreamerSceneController)controller).proceed();
+                try {
+                    ((DreamerSceneController) controller).proceed();
+                } catch (NoIdeasException ex) {
+                    errorMessageTextArea.setText(ex.getMessage());
+                    errorMessageTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                    errorMessageTextArea.setVisible(true);
+                    controller.setUserReadyToContinue(userId, false);
+                }
             }
         }
     }
@@ -275,7 +299,7 @@ public class DreamerScene extends AbstractMTWDScene {
             TapEvent te = (TapEvent) ge;
             if (te.getId() == TapEvent.GESTURE_DETECTED) {
                 try {
-                    ((DreamerSceneController)controller).createIdea(workplace.getTextArea().getText());
+                    ((DreamerSceneController) controller).createIdea(workplace.getTextArea().getText());
                     workplace.getTextArea().setText("");
                 } catch (NoIdeaTextException ex) {
                     // do nothing
