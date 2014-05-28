@@ -29,6 +29,7 @@ public class EvaluationScene extends AbstractMTWDScene {
     private MTTextArea profTextArea;
 
     private MTSvgButton startButton;
+    private MTSvgButton replayButton;
 
     public EvaluationScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -75,18 +76,21 @@ public class EvaluationScene extends AbstractMTWDScene {
         profTextArea.setText("Prof. Dr. Heiner Klocke");
 
         startButton = new MTSvgButton("data/startButton.svg", mtApp);
+        replayButton = new MTSvgButton("data/replayButton.svg", mtApp);
 
         getCanvas().addChild(headlineTextArea);
         getCanvas().addChild(foundTextArea);
         getCanvas().addChild(moduleTextArea);
         getCanvas().addChild(profTextArea);
         getCanvas().addChild(startButton);
+        getCanvas().addChild(replayButton);
 
         headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 250, 0));
         foundTextArea.setPositionGlobal(new Vector3D(mtApp.width / 6, 350, 0));
         moduleTextArea.setPositionGlobal(new Vector3D(moduleTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height - 20, 0));
         profTextArea.setPositionGlobal(new Vector3D(mtApp.width - profTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height - 20, 0));
         startButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150, 0));
+        replayButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150, 0));
     }
 
     @Override
