@@ -14,12 +14,18 @@ import de.fh_koeln.sgmci.mtwd.scene.IScene;
 public class StartSceneController extends AbstractMTWDSceneController {
 
     private static final String NO_PROBLEM_TEXT = "Es wurde kein Problem angegeben.";
+    private static final String HELP_TEXT = "Auf diesem Screen k\u00F6nnen Sie das Problem angeben,\n"
+            + "welches Sie im Weiteren behandeln m\u00F6chten.";
     private static int problemIdCounter = 0;
 
     public StartSceneController(IScene observer) {
         super(observer);
     }
 
+    public String getHelpText() {
+        return HELP_TEXT;
+    }
+    
     /**
      * Creates a new problem with an ongoing identity and given description.<br>
      * After its creation, the scene is ordered to continue to the next one.

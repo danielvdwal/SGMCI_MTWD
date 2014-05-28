@@ -25,6 +25,7 @@ public final class Keyboard extends AbstractKeyboard {
     public Keyboard(PApplet pApplet) {
         super(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
         this.setFillColor(MTColor.BLACK);
+        this.removeAllGestureEventListeners();
 
         this.createKeyboard();
     }

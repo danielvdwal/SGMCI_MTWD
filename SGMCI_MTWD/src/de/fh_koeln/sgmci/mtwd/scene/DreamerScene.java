@@ -28,7 +28,6 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
-import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
@@ -116,6 +115,8 @@ public class DreamerScene extends AbstractMTWDScene {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
         user1Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getHelpButton().addActionListener(new HelpButtonListener(user1Workplace));
+        user1Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user1Workplace));
         user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
@@ -125,6 +126,8 @@ public class DreamerScene extends AbstractMTWDScene {
         user1Workplace.getSendButton().addGestureListener(TapProcessor.class, new SendButtonListener(user1Workplace));
 
         user2Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getHelpButton().addActionListener(new HelpButtonListener(user2Workplace));
+        user2Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user2Workplace));
         user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
@@ -134,6 +137,8 @@ public class DreamerScene extends AbstractMTWDScene {
         user2Workplace.getSendButton().addGestureListener(TapProcessor.class, new SendButtonListener(user2Workplace));
 
         user3Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getHelpButton().addActionListener(new HelpButtonListener(user3Workplace));
+        user3Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user3Workplace));
         user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
@@ -143,6 +148,8 @@ public class DreamerScene extends AbstractMTWDScene {
         user3Workplace.getSendButton().addGestureListener(TapProcessor.class, new SendButtonListener(user3Workplace));
 
         user4Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getHelpButton().addActionListener(new HelpButtonListener(user4Workplace));
+        user4Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user4Workplace));
         user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
@@ -217,6 +224,62 @@ public class DreamerScene extends AbstractMTWDScene {
             }
         }
     }
+    
+    public class HelpButtonListener implements ActionListener {
+        
+        private final DreamerUserWorkplace workplace;
+        private final Popup helpPopup;
+
+        public HelpButtonListener(DreamerUserWorkplace workplace) {
+            this.workplace = workplace;
+            helpPopup = new Popup(mtApp);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch (ae.getID()) {
+                case TapEvent.BUTTON_DOWN:
+                    workplace.addChild(helpPopup);
+                    helpPopup.setText(((DreamerSceneController) controller).getHelpText());
+                    helpPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
+                    helpPopup.setVisible(true);
+                    break;
+                case TapEvent.BUTTON_CLICKED:
+                    helpPopup.setVisible(false);
+                    workplace.removeChild(helpPopup);
+                default:
+                    break;
+            }
+        }
+    }
+    
+    public class ProblemButtonListener implements ActionListener {
+        
+        private final DreamerUserWorkplace workplace;
+        private final Popup problemPopup;
+
+        public ProblemButtonListener(DreamerUserWorkplace workplace) {
+            this.workplace = workplace;
+            problemPopup = new Popup(mtApp);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch (ae.getID()) {
+                case TapEvent.BUTTON_DOWN:
+                    workplace.addChild(problemPopup);
+                    problemPopup.setText(controller.getCurrentProblemDescription());
+                    problemPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
+                    problemPopup.setVisible(true);
+                    break;
+                case TapEvent.BUTTON_CLICKED:
+                    problemPopup.setVisible(false);
+                    workplace.removeChild(problemPopup);
+                default:
+                    break;
+            }
+        }
+    }
 
     public class CloseWorkspaceButtonListener implements IGestureEventListener {
 
@@ -236,7 +299,7 @@ public class DreamerScene extends AbstractMTWDScene {
                         ((DreamerSceneController) controller).proceed();
                     } catch (NoIdeasException ex) {
                         errorMessagePopup.setText(ex.getMessage());
-                        errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                        errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
                         errorMessagePopup.setVisible(true);
                         controller.setUserReadyToContinue(userId, false);
                     }
@@ -262,7 +325,7 @@ public class DreamerScene extends AbstractMTWDScene {
                     ((DreamerSceneController) controller).proceed();
                 } catch (NoIdeasException ex) {
                     errorMessagePopup.setText(ex.getMessage());
-                    errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                    errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
                     errorMessagePopup.setVisible(true);
                     controller.setUserReadyToContinue(userId, false);
                 }
