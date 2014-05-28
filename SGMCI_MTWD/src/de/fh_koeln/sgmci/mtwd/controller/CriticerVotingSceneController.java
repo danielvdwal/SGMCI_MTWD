@@ -15,7 +15,7 @@ import java.util.Map;
  * the CriticerVotingScene.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class CriticerVotingSceneController extends AbstractMTWDSceneController {
 

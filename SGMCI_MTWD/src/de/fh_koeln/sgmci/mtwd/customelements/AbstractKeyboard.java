@@ -1,7 +1,5 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,7 +8,10 @@ import org.mt4j.components.visibleComponents.shapes.AbstractShape;
 import org.mt4j.components.visibleComponents.shapes.MTRoundRectangle;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.components.visibleComponents.widgets.keyboard.ITextInputListener;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
@@ -29,7 +30,7 @@ import processing.core.PApplet;
  * keyboard layout.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public abstract class AbstractKeyboard extends MTRoundRectangle {
 
@@ -175,8 +176,8 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      * keyboard
      * @param pApplet the PApplet this component is used in
      */
-    public AbstractKeyboard(float x, float y, float z, float width, float height, float widthArc, float heightArc, PApplet pApplet) {
-        super(x, y, z, width, height, widthArc, heightArc, pApplet);
+    public AbstractKeyboard(PApplet pApplet, float x, float y, float z, float width, float height, float widthArc, float heightArc) {
+        super(pApplet, x, y, z, width, height, widthArc, heightArc);
         this.pApplet = pApplet;
 
         this.shiftPressed = false;
@@ -210,7 +211,7 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
         return KEYBOARD_HEIGHT;
     }
 
-     /**
+    /**
      * Get the complete width of the keyboard.
      *
      * @return the complete width of the keyboard
@@ -293,7 +294,7 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      */
     void createKeyButtonsOutOfKeyInfos(Collection<KeyInfo> keyInfos, MTRoundRectangle keyboard) {
         for (KeyInfo keyInfo : keyInfos) {
-            MTSvgButton key = new MTSvgButton(keyInfo.svgFileName, pApplet);
+            MTSvgButton key = new MTSvgButton(pApplet, keyInfo.svgFileName);
 
             //Transform
             key.scale(SCALE_FACTOR, SCALE_FACTOR, 1, new Vector3D(0, 0, 0));
@@ -320,19 +321,18 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
             allKeys.put(key, keyInfo);
 
             if (keyInfo.id.equals(SHIFT_ID)) {
-                key.addActionListener(new ShiftButtonPressedListener());
+                key.addGestureListener(TapProcessor.class, new ShiftButtonPressedListener());
             } else if (keyInfo.id.equals(SHIFT_PRESSED_ID)) {
-                key.addActionListener(new ShiftPressedButtonPressedListener());
+                key.addGestureListener(TapProcessor.class, new ShiftPressedButtonPressedListener());
             } else if (keyInfo.id.equals(LETTERS_ID)) {
-                key.addActionListener(new LettersButtonPressedListener());
+                key.addGestureListener(TapProcessor.class, new LettersButtonPressedListener());
             } else if (keyInfo.id.equals(NUMBERS_ID)) {
-                key.addActionListener(new NumbersButtonPressedListener());
+                key.addGestureListener(TapProcessor.class, new NumbersButtonPressedListener());
             } else if (keyInfo.id.equals(SIGNS_ID)) {
-                key.addActionListener(new SignsButtonPressedListener());
+                key.addGestureListener(TapProcessor.class, new SignsButtonPressedListener());
             } else {
-                key.addActionListener(new KeyButtonPressedListener());
+                key.addGestureListener(TapProcessor.class, new KeyButtonPressedListener());
             }
-
             keyboard.addChild(key);
         }
     }
@@ -490,15 +490,16 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      * This class is used to implement an ActionListener, that, once the shift
      * button has been pressed, performs the necessary actions that take place.
      */
-    class ShiftButtonPressedListener implements ActionListener {
+    class ShiftButtonPressedListener implements IGestureEventListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_STARTED) {
                 shiftPressed = true;
                 keyboardVisiblity = KeyboardVisiblity.LETTERS_WITH_SHIFT_PRESSED;
                 changeVisibility();
             }
+            return false;
         }
     }
 
@@ -506,16 +507,16 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      * This class is used to implement an ActionListener, that, once a key has
      * been pressed, performs the necessary actions that take place.
      */
-    class KeyButtonPressedListener implements ActionListener {
+    class KeyButtonPressedListener implements IGestureEventListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
-                if (e.getSource() instanceof MTSvgButton) {
-                    MTSvgButton key = (MTSvgButton) e.getSource();
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_STARTED) {
+                if (mtge.getTarget() instanceof MTSvgButton) {
+                    MTSvgButton key = (MTSvgButton) mtge.getTarget();
                     KeyInfo value = allKeys.get(key);
                     if (value == null) {
-                        return;
+                        return false;
                     } else if (value.id.equals(BACKSPACE_ID)) {
                         ITextInputListener[] listeners = getTextInputListeners();
                         for (ITextInputListener listener : listeners) {
@@ -533,6 +534,7 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
                     }
                 }
             }
+            return false;
         }
     }
 
@@ -541,15 +543,16 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      * button has been pressed, in case the button was already in the pressed
      * state, performs the necessary actions that take place.
      */
-    class ShiftPressedButtonPressedListener implements ActionListener {
+    class ShiftPressedButtonPressedListener implements IGestureEventListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_STARTED) {
                 shiftPressed = false;
                 keyboardVisiblity = KeyboardVisiblity.LETTERS;
                 changeVisibility();
             }
+            return false;
         }
     }
 
@@ -558,11 +561,11 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      * to letters" button has been pressed, performs the necessary actions that
      * take place.
      */
-    class LettersButtonPressedListener implements ActionListener {
+    class LettersButtonPressedListener implements IGestureEventListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_STARTED) {
                 if (shiftPressed) {
                     keyboardVisiblity = KeyboardVisiblity.LETTERS_WITH_SHIFT_PRESSED;
                 } else {
@@ -570,6 +573,7 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
                 }
                 changeVisibility();
             }
+            return false;
         }
     }
 
@@ -578,14 +582,15 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      * to numbers" button has been pressed, performs the necessary actions that
      * take place.
      */
-    class NumbersButtonPressedListener implements ActionListener {
+    class NumbersButtonPressedListener implements IGestureEventListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_STARTED) {
                 keyboardVisiblity = KeyboardVisiblity.NUMBERS;
                 changeVisibility();
             }
+            return false;
         }
     }
 
@@ -594,14 +599,15 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      * to signs" button has been pressed, performs the necessary actions that
      * take place.
      */
-    class SignsButtonPressedListener implements ActionListener {
+    class SignsButtonPressedListener implements IGestureEventListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_STARTED) {
                 keyboardVisiblity = KeyboardVisiblity.SIGNS;
                 changeVisibility();
             }
+            return false;
         }
     }
 }

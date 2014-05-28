@@ -11,7 +11,7 @@ import processing.core.PApplet;
 /**
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public final class DreamerUserWorkplace extends MTRectangle {
 
@@ -42,17 +42,16 @@ public final class DreamerUserWorkplace extends MTRectangle {
         this.removeAllGestureEventListeners();
         this.unregisterAllInputProcessors();
 
-        addWorkspaceButton = new MTSvgButton(addWorkspaceButtonSvgFile, pApplet);
+        addWorkspaceButton = new MTSvgButton(pApplet, addWorkspaceButtonSvgFile);
         keyboard = new SplitKeyboard(pApplet);
-        helpButton = new MTSvgButton(helpButtonSvgFile, pApplet);
-        problemButton = new MTSvgButton(problemButtonSvgFile, pApplet);
-        closeButton = new MTSvgButton(closeButtonSvgFile, pApplet);
-        readyButton = new MTSvgButton(readyButtonSvgFile, pApplet);
-        readyButtonDone = new MTSvgButton(readyButtonDoneSvgFile, pApplet);
-        textAreaBackground = new MTRectangle(200, AbstractKeyboard.KEYBOARD_HEIGHT, pApplet);
+        helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
+        problemButton = new MTSvgButton(pApplet, problemButtonSvgFile);
+        closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
+        readyButton = new MTSvgButton(pApplet, readyButtonSvgFile);
+        readyButtonDone = new MTSvgButton(pApplet, readyButtonDoneSvgFile);
+        textAreaBackground = new MTRectangle(pApplet, 200, AbstractKeyboard.KEYBOARD_HEIGHT);
         textAreaBackground.setFillColor(MTColor.WHITE);
         textAreaBackground.setNoStroke(false);
-        textAreaBackground.setPickable(false);
         textAreaBackground.removeAllGestureEventListeners();
         textAreaBackground.unregisterAllInputProcessors();
         textArea = new MTTextArea(pApplet);

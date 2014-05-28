@@ -4,14 +4,8 @@ import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
-import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTList;
@@ -21,20 +15,20 @@ import org.mt4j.components.visibleComponents.widgets.MTTextField;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
-import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
-
 import processing.core.PImage;
 
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class RealistCommentingScene extends AbstractMTWDScene {
 
@@ -131,7 +125,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         
 
         //final MTTextArea commentTextArea = new MTTextArea(mtApp, commentFont);
-        final MTTextField commentTextArea = new MTTextField(0, 0, 0, 0, commentFont, mtApp);
+        final MTTextField commentTextArea = new MTTextField(mtApp, 0, 0, 0, 0, commentFont);
         commentTextArea.setFillColor(MTColor.YELLOW);
         commentTextArea.setExpandDirection(MTTextArea.ExpandDirection.UP);
         commentTextArea.unregisterAllInputProcessors();
@@ -142,7 +136,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
 
         keyboard.addTextInputListener(commentTextArea);
         
-        final MTRectangle rectangle = new MTRectangle(-100, 0, 30, 30, mtApp);
+        final MTRectangle rectangle = new MTRectangle(mtApp, -100, 0, 30, 30);
         rectangle.translate(new Vector3D(0, 15, 0));
         rectangle.registerInputProcessor(new TapProcessor(mtApp));
         rectangle.addGestureListener(TapProcessor.class,
@@ -150,7 +144,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
                     @Override
                     public boolean processGestureEvent(MTGestureEvent ge) {
                         TapEvent te = (TapEvent) ge;
-                        if (te.getId() == TapEvent.GESTURE_DETECTED) {
+                        if (te.getId() == TapEvent.GESTURE_STARTED) {
                             final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
                             newTextArea.setText(commentTextArea.getText());
                             getCanvas().addChild(newTextArea);
@@ -164,8 +158,8 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         
         commentTextArea.setPositionRelativeToOther(keyboard, new Vector3D((keyboard.getWidthXY(TransformSpace.LOCAL)/2-20)/2, -115));
 
-        commentList = new MTList(0, 0, keyboard.getWidthXY(TransformSpace.LOCAL)/2-40, 410, mtApp);
-        commentListCell = new MTListCell(keyboard.getWidthXY(TransformSpace.LOCAL)/2-40, 410, mtApp);
+        commentList = new MTList(mtApp, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL)/2-40, 410);
+        commentListCell = new MTListCell(mtApp, keyboard.getWidthXY(TransformSpace.LOCAL)/2-40, 410);
         commentList.addListElement(commentListCell);
         //commentList.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         commentList.setPositionRelativeToOther(keyboard, new Vector3D(keyboard.getWidthXY(TransformSpace.LOCAL)/2+commentList.getWidthXY(TransformSpace.LOCAL)/2+10, -commentList.getHeightXY(TransformSpace.LOCAL)/2-30));
@@ -176,8 +170,8 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         ideaTextArea.setSizeLocal(200, 200);
         ideaTextArea.setPositionRelativeToOther(commentTextArea, new Vector3D(commentTextArea.getWidthXY(TransformSpace.LOCAL)/2, -ideaTextArea.getHeightXY(TransformSpace.LOCAL)/2-20));;
         
-        leftButton = new MTSvgButton("data/arrowLeft.svg", mtApp);
-        rightButton = new MTSvgButton("data/arrowRight.svg", mtApp);
+        leftButton = new MTSvgButton(mtApp, "data/arrowLeft.svg");
+        rightButton = new MTSvgButton(mtApp, "data/arrowRight.svg");
         
         leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
         leftButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 50, mtApp.height / 2 + commentList.getHeightXY(TransformSpace.LOCAL) / 4));
@@ -187,13 +181,13 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         getCanvas().addChild(leftButton);
         getCanvas().addChild(rightButton);
         
-        helpButton = new MTSvgButton("data/helpButton.svg", mtApp);
+        helpButton = new MTSvgButton(mtApp, "data/helpButton.svg");
         helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * componentScaleFactor / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * componentScaleFactor / 2));
 
-        startButton = new MTSvgButton("data/startButton.svg", mtApp);
+        startButton = new MTSvgButton(mtApp, "data/startButton.svg");
         startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * componentScaleFactor / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * componentScaleFactor / 2));
 
-        settingsButton = new MTSvgButton("data/settingsButton.svg", mtApp);
+        settingsButton = new MTSvgButton(mtApp, "data/settingsButton.svg");
         settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * componentScaleFactor / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * componentScaleFactor / 2));
 
         getCanvas().addChild(helpButton);
@@ -206,62 +200,19 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         // displays where the screen is touched
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        helpButton.addActionListener(new ActionListener() {
+        startButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+            
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
-                        final MTTextArea textarea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
-                        textarea.setText("Problem?");
-                        textarea.setNoStroke(true);
-                        textarea.setNoFill(true);
-                        textarea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
-
-                        final MTTextArea helpPop = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 25, MTColor.BLUE, MTColor.BLUE));
-                        helpPop.setText("Such bei Google nach Hilfe -.-");
-                        helpPop.setPositionRelativeToOther(helpButton, new Vector3D(helpPop.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, -300));
-                        helpPop.setPickable(false);
-                        getCanvas().addChild(helpPop);
-
-                        mtApp.getCurrentScene().getCanvas().addChild(textarea);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
                         //controller.proceed(problemInputField.getText());
                         gotoNextScene();
                         break;
                     default:
                         break;
                 }
-            }
-        });
-
-        settingsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
-                        //wenn Button geklickt wurde
-                        MTTextArea textarea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
-                        textarea.setText("Loesung!!!");
-                        textarea.setNoStroke(true);
-                        textarea.setNoFill(true);
-                        textarea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
-
-                        mtApp.getCurrentScene().getCanvas().addChild(textarea);
-                        break;
-                    default:
-                        break;
-                }
+                return false;
             }
         });
     }

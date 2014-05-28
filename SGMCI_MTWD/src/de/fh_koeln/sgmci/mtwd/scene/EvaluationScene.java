@@ -1,25 +1,26 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.EvaluationSceneController;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
-import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
 /**
  *
  * @author Robert Scherbarth
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class EvaluationScene extends AbstractMTWDScene {
 
@@ -46,8 +47,8 @@ public class EvaluationScene extends AbstractMTWDScene {
     @Override
     public void createComponents() {
 
-        final IFont headlineFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 24, MTColor.WHITE, MTColor.WHITE);
-        final IFont generalFond = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18, MTColor.WHITE, MTColor.WHITE);
+        final IFont headlineFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 24, MTColor.WHITE);
+        final IFont generalFond = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18, MTColor.WHITE);
 
         headlineTextArea = new MTTextArea(mtApp, headlineFont);
         headlineTextArea.setNoFill(true);
@@ -75,8 +76,8 @@ public class EvaluationScene extends AbstractMTWDScene {
         profTextArea.setPickable(false);
         profTextArea.setText("Prof. Dr. Heiner Klocke");
 
-        startButton = new MTSvgButton("data/startButton.svg", mtApp);
-        replayButton = new MTSvgButton("data/replayButton.svg", mtApp);
+        startButton = new MTSvgButton(mtApp, "data/startButton.svg");
+        replayButton = new MTSvgButton(mtApp, "data/replayButton.svg");
 
         getCanvas().addChild(headlineTextArea);
         getCanvas().addChild(foundTextArea);
@@ -95,12 +96,12 @@ public class EvaluationScene extends AbstractMTWDScene {
 
     @Override
     public void createEventListeners() {
+        startButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
 
-        startButton.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
                         //controller.proceed(problemInputField.getText());
                         //((EvaluationSceneController)controller).saveResultsIntoXmlFile();
                         gotoNextScene();
@@ -108,6 +109,7 @@ public class EvaluationScene extends AbstractMTWDScene {
                     default:
                         break;
                 }
+                return false;
             }
         });
     }

@@ -1,24 +1,25 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.SplashSceneController;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
-import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class SplashScene extends AbstractMTWDScene {
 
@@ -94,7 +95,7 @@ public class SplashScene extends AbstractMTWDScene {
         profTextArea.setPickable(false);
         profTextArea.setText(SplashSceneController.PROF);
 
-        startButton = new MTSvgButton("data/startButton.svg", mtApp);
+        startButton = new MTSvgButton(mtApp, "data/startButton.svg");
 
         loadingTextArea = new MTTextArea(mtApp, subheadlineFont);
         loadingTextArea.setNoFill(true);
@@ -125,21 +126,23 @@ public class SplashScene extends AbstractMTWDScene {
     @Override
     public void createEventListeners() {
 
-        startButton.addActionListener(new ActionListener() {
+        startButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+            
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_DOWN:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_STARTED:
                         loadingTextArea.setVisible(true);
                         startButton.setVisible(false);
                         break;
-                    case TapEvent.BUTTON_CLICKED:
+                    case TapEvent.GESTURE_ENDED:
                         main.loadResources();
                         ((SplashSceneController)controller).proceed();
                         break;
                     default:
                         break;
                 }
+                return false;
             }
         });
     }

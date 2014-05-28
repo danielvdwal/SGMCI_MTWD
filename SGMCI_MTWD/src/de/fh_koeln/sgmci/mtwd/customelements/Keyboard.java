@@ -12,7 +12,7 @@ import processing.core.PApplet;
  * It represents a complete keyboard.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public final class Keyboard extends AbstractKeyboard {
 
@@ -23,7 +23,7 @@ public final class Keyboard extends AbstractKeyboard {
     private static final int KEYBOARD_WIDTH = (int) (34.0 / 3 * BUTTON_SIZE + RETURN_WIDTH) + MARGIN_LEFT + MARGIN_RIGHT;
 
     public Keyboard(PApplet pApplet) {
-        super(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
+        super(pApplet, 0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS);
         this.setFillColor(MTColor.BLACK);
         this.removeAllGestureEventListeners();
 

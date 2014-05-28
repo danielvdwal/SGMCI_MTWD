@@ -1,25 +1,26 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
 import de.fh_koeln.sgmci.mtwd.model.VotedIdea;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
-import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
 /**
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public final class RealistCommentingUserWorkplace extends MTRectangle {
 
@@ -37,6 +38,7 @@ public final class RealistCommentingUserWorkplace extends MTRectangle {
     private static final float arrowButtonScaleFactor = 0.5f;
     private static final float voteButtonScaleFactor = 2.0f;
     
+    private final PApplet pApplet;
     private final MTSvgButton addWorkspaceButton;
     private final MTRectangle workspace;
     private final MTTextArea currentDisplayedIdea;
@@ -53,7 +55,8 @@ public final class RealistCommentingUserWorkplace extends MTRectangle {
     private int currentIndex;
 
     public RealistCommentingUserWorkplace(PApplet pApplet) {
-        super(400, 300, pApplet);
+        super(pApplet, 400, 300);
+        this.pApplet = pApplet;
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setPickable(false);
@@ -62,8 +65,8 @@ public final class RealistCommentingUserWorkplace extends MTRectangle {
 
         IFont ideaFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 18);
 
-        this.addWorkspaceButton = new MTSvgButton(addWorkspaceButtonSvgFile, pApplet);
-        this.workspace = new MTRectangle(400, 300, pApplet);
+        this.addWorkspaceButton = new MTSvgButton(pApplet, addWorkspaceButtonSvgFile);
+        this.workspace = new MTRectangle(pApplet, 400, 300);
         this.workspace.setNoFill(true);
         this.workspace.setNoStroke(true);
         this.workspace.setPickable(false);
@@ -74,15 +77,15 @@ public final class RealistCommentingUserWorkplace extends MTRectangle {
         this.currentDisplayedIdea.setPickable(false);
         this.currentDisplayedIdea.removeAllGestureEventListeners();
         this.currentDisplayedIdea.unregisterAllInputProcessors();
-        this.helpButton = new MTSvgButton(helpButtonSvgFile, pApplet);
-        this.problemButton = new MTSvgButton(problemButtonSvgFile, pApplet);
-        this.closeButton = new MTSvgButton(closeButtonSvgFile, pApplet);
-        this.readyButton = new MTSvgButton(readyButtonSvgFile, pApplet);
-        this.readyButtonDone = new MTSvgButton(readyButtonDoneSvgFile, pApplet);
-        this.leftButton = new MTSvgButton(leftButtonSvgFile, pApplet);
-        this.rightButton = new MTSvgButton(rightButtonSvgFile, pApplet);
-        this.likeButton = new MTSvgButton(likeButtonSvgFile, pApplet);
-        this.dislikeButton = new MTSvgButton(dislikeButtonSvgFile, pApplet);
+        this.helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
+        this.problemButton = new MTSvgButton(pApplet, problemButtonSvgFile);
+        this.closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
+        this.readyButton = new MTSvgButton(pApplet, readyButtonSvgFile);
+        this.readyButtonDone = new MTSvgButton(pApplet, readyButtonDoneSvgFile);
+        this.leftButton = new MTSvgButton(pApplet, leftButtonSvgFile);
+        this.rightButton = new MTSvgButton(pApplet, rightButtonSvgFile);
+        this.likeButton = new MTSvgButton(pApplet, likeButtonSvgFile);
+        this.dislikeButton = new MTSvgButton(pApplet, dislikeButtonSvgFile);
 
         this.votedIdeas = new LinkedList<VotedIdea>();
         this.currentIndex = 0;
@@ -173,42 +176,54 @@ public final class RealistCommentingUserWorkplace extends MTRectangle {
     }
     
     private void addEventListeners() {
-        leftButton.addActionListener(new ActionListener() {
+        leftButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getID() == TapEvent.BUTTON_CLICKED) {
-                    if(currentIndex > 0) {
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                    if (currentIndex > 0) {
                         currentIndex--;
                         updateWorkspace();
-                    };
+                    }
                 }
+                return false;
             }
         });
-        rightButton.addActionListener(new ActionListener() {
+        rightButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if(e.getID() == TapEvent.BUTTON_CLICKED) {
-                    if(currentIndex < votedIdeas.size() - 1) {
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                    if (currentIndex < votedIdeas.size() - 1) {
                         currentIndex++;
                         updateWorkspace();
-                    };
+                    }
                 }
+                return false;
             }
         });
-        likeButton.addActionListener(new ActionListener() {
+        likeButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
             @Override
-            public void actionPerformed(ActionEvent e) {
-                VotedIdea votedIdea = votedIdeas.get(currentIndex);
-                votedIdea.like();
-                updateWorkspace();
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                    VotedIdea votedIdea = votedIdeas.get(currentIndex);
+                    votedIdea.like();
+                    updateWorkspace();
+                }
+                return false;
             }
         });
-        dislikeButton.addActionListener(new ActionListener() {
+        dislikeButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
             @Override
-            public void actionPerformed(ActionEvent e) {
-                VotedIdea votedIdea = votedIdeas.get(currentIndex);
-                votedIdea.dislike();
-                updateWorkspace();
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                    VotedIdea votedIdea = votedIdeas.get(currentIndex);
+                    votedIdea.dislike();
+                    updateWorkspace();
+                }
+                return false;
             }
         });
     }

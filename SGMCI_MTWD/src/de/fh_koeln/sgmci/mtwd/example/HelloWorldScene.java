@@ -1,7 +1,7 @@
 package de.fh_koeln.sgmci.mtwd.example;
 
 import org.mt4j.MTApplication;
-import org.mt4j.components.visibleComponents.font.FontManager;
+import org.mt4j.util.font.FontManager;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.keyboard.MTTextKeyboard;
 import org.mt4j.sceneManagement.AbstractScene;

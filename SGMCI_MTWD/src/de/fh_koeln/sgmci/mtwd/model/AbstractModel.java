@@ -5,7 +5,7 @@ package de.fh_koeln.sgmci.mtwd.model;
  * It provides an id field, which can be used by all models.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public abstract class AbstractModel {
 

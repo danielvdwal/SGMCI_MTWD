@@ -19,7 +19,7 @@ import org.mt4j.MTApplication;
  * create the individual scenes that are used throughout the whole application.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class Main extends MTApplication implements IMain {
 

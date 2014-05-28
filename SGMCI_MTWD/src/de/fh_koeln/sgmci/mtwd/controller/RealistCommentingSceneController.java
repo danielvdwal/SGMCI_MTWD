@@ -12,7 +12,7 @@ import java.util.List;
  * the RealistCommentingScene.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class RealistCommentingSceneController extends AbstractMTWDSceneController {
 

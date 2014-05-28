@@ -1,17 +1,17 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.util.MTColor;
+import org.mt4j.util.font.FontManager;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
 /**
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class Popup extends MTRectangle {
 
@@ -21,7 +21,7 @@ public class Popup extends MTRectangle {
     protected final MTTextArea textArea;
     
     public Popup(PApplet pApplet) {
-        super(100, 100, pApplet);
+        super(pApplet, 100, 100);
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setVisible(false);

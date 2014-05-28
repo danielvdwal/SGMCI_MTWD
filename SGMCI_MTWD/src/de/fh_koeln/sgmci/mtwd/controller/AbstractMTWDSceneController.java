@@ -16,7 +16,7 @@ import java.util.List;
  * the scenes about changes.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public abstract class AbstractMTWDSceneController {
 

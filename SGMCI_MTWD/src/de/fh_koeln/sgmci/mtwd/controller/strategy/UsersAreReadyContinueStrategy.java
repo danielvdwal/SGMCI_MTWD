@@ -5,7 +5,7 @@ import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 /**
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class UsersAreReadyContinueStrategy extends AbstractUserContinueStrategy {
     

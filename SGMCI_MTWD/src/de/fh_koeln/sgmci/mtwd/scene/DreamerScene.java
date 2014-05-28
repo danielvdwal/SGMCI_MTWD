@@ -8,35 +8,33 @@ import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeasException;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
-import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickEvent;
-import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickEvent.FlickDirection;
 import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class DreamerScene extends AbstractMTWDScene {
 
@@ -116,49 +114,49 @@ public class DreamerScene extends AbstractMTWDScene {
     public void createEventListeners() {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        user1Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getHelpButton().addActionListener(new HelpButtonListener(user1Workplace));
-        user1Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user1Workplace));
+        user1Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user1Workplace));
+        user1Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user1Workplace));
         user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getTextArea().registerInputProcessor(new FlickProcessor());
-        user1Workplace.getTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener(user1Workplace, FlickDirection.NORTH));
-
-        user2Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getHelpButton().addActionListener(new HelpButtonListener(user2Workplace));
-        user2Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user2Workplace));
+        user1Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
+        user1Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user1Workplace, FlickEvent.FlickDirection.NORTH));
+        
+        user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user2Workplace));
+        user2Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user2Workplace));
         user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getTextArea().registerInputProcessor(new FlickProcessor());
-        user2Workplace.getTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener(user2Workplace, FlickDirection.SOUTH));
+        user2Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
+        user2Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user2Workplace, FlickEvent.FlickDirection.NORTH));
 
-        user3Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getHelpButton().addActionListener(new HelpButtonListener(user3Workplace));
-        user3Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user3Workplace));
+        user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user3Workplace));
+        user3Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user3Workplace));
         user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getTextArea().registerInputProcessor(new FlickProcessor());
-        user3Workplace.getTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener(user3Workplace, FlickDirection.WEST));
+        user3Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
+        user3Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user3Workplace, FlickEvent.FlickDirection.NORTH));
 
-        user4Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getHelpButton().addActionListener(new HelpButtonListener(user4Workplace));
-        user4Workplace.getProblemButton().addActionListener(new ProblemButtonListener(user4Workplace));
+        user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user4Workplace));
+        user4Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user4Workplace));
         user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getTextArea().registerInputProcessor(new FlickProcessor());
-        user4Workplace.getTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener(user4Workplace, FlickDirection.EAST));
+        user4Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
+        user4Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user4Workplace, FlickEvent.FlickDirection.NORTH));
     }
 
     @Override
@@ -211,7 +209,7 @@ public class DreamerScene extends AbstractMTWDScene {
         displayedIdeas.clear();
     }
 
-    public class AddWorkspaceButtonListener implements ActionListener {
+    public class AddWorkspaceButtonListener implements IGestureEventListener {
 
         private final String userId;
 
@@ -219,16 +217,18 @@ public class DreamerScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+         @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
                 controller.setUserActive(userId, true);
             }
+            return false;
         }
     }
-
-    public class HelpButtonListener implements ActionListener {
-
+    
+    public class HelpButtonListener implements IGestureEventListener {
+        
         private final DreamerUserWorkplace workplace;
         private final Popup helpPopup;
 
@@ -238,25 +238,27 @@ public class DreamerScene extends AbstractMTWDScene {
         }
 
         @Override
-        public void actionPerformed(ActionEvent ae) {
-            switch (ae.getID()) {
-                case TapEvent.BUTTON_DOWN:
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            switch(te.getId()) {
+                case TapEvent.GESTURE_STARTED:
                     workplace.addChild(helpPopup);
                     helpPopup.setText(((DreamerSceneController) controller).getHelpText());
                     helpPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
-                case TapEvent.BUTTON_CLICKED:
+                case TapEvent.GESTURE_ENDED:
                     helpPopup.setVisible(false);
                     workplace.removeChild(helpPopup);
                 default:
                     break;
             }
+            return false;
         }
     }
-
-    public class ProblemButtonListener implements ActionListener {
-
+    
+    public class ProblemButtonListener implements IGestureEventListener {
+        
         private final DreamerUserWorkplace workplace;
         private final Popup problemPopup;
 
@@ -266,20 +268,22 @@ public class DreamerScene extends AbstractMTWDScene {
         }
 
         @Override
-        public void actionPerformed(ActionEvent ae) {
-            switch (ae.getID()) {
-                case TapEvent.BUTTON_DOWN:
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            switch(te.getId()) {
+                case TapEvent.GESTURE_STARTED:
                     workplace.addChild(problemPopup);
                     problemPopup.setText(controller.getCurrentProblemDescription());
                     problemPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
                     problemPopup.setVisible(true);
                     break;
-                case TapEvent.BUTTON_CLICKED:
+                case TapEvent.GESTURE_ENDED:
                     problemPopup.setVisible(false);
                     workplace.removeChild(problemPopup);
                 default:
                     break;
             }
+            return false;
         }
     }
 
@@ -311,7 +315,7 @@ public class DreamerScene extends AbstractMTWDScene {
         }
     }
 
-    public class ReadyButtonListener implements ActionListener {
+    public class ReadyButtonListener implements IGestureEventListener {
 
         private final String userId;
 
@@ -319,9 +323,10 @@ public class DreamerScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+         @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
                 controller.setUserReadyToContinue(userId, true);
                 try {
                     ((DreamerSceneController) controller).proceed();
@@ -332,10 +337,11 @@ public class DreamerScene extends AbstractMTWDScene {
                     controller.setUserReadyToContinue(userId, false);
                 }
             }
+            return false;
         }
     }
 
-    public class ReadyButtonDoneListener implements ActionListener {
+    public class ReadyButtonDoneListener implements IGestureEventListener {
 
         private final String userId;
 
@@ -344,54 +350,21 @@ public class DreamerScene extends AbstractMTWDScene {
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
                 controller.setUserReadyToContinue(userId, false);
             }
+            return false;
         }
     }
-
-    /*
-     registerInputProcessor(new FlickProcessor());
-     getCanvas().addGestureListener(FlickProcessor.class, new IGestureEventListener() {
-     public boolean processGestureEvent(MTGestureEvent ge) {
-     FlickEvent e = (FlickEvent)ge;
-     if (e.getId() == MTGestureEvent.GESTURE_ENDED && e.isFlick()){
-     switch (e.getDirection()) {
-     case WEST:
-     case NORTH_WEST:
-     case SOUTH_WEST:
-     setTransition(slideLeftTransition); 
-     //Save the current scene on the scene stack before changing
-     mtApp.pushScene();
-     if (scene3 == null){
-     scene3 = new Scene3(mtApp, "Scene 3");
-     mtApp.addScene(scene3);
-     }
-     //Do the scene change
-     mtApp.changeScene(scene3);
-     break;
-     case EAST:
-     case NORTH_EAST:
-     case SOUTH_EAST:
-     setTransition(slideRightTransition); 
-     mtApp.popScene();
-     break;
-     default:
-     break;
-     }
-     }
-     return false;
-     }
-     });
-     }
-     */
+    
     public class SendButtonListener implements IGestureEventListener {
 
         private final DreamerUserWorkplace workplace;
-        private final FlickDirection flickDirection;
+        private final FlickEvent.FlickDirection flickDirection;
 
-        public SendButtonListener(DreamerUserWorkplace workplace, FlickDirection flickDirection) {
+        public SendButtonListener(DreamerUserWorkplace workplace, FlickEvent.FlickDirection flickDirection) {
             this.workplace = workplace;
             this.flickDirection = flickDirection;
         }

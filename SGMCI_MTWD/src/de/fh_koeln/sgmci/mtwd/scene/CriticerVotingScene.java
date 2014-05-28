@@ -2,26 +2,27 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.CriticerVotingSceneController;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
-import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
 /**
  *
  * @author Robert Scherbarth, Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class CriticerVotingScene extends AbstractMTWDScene {
 
@@ -48,24 +49,27 @@ public class CriticerVotingScene extends AbstractMTWDScene {
     public void createEventListeners() {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        continueButton.addActionListener(new ActionListener() {
+        continueButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
                         gotoNextScene();
                         break;
                     default:
                         break;
                 }
+                return false;
             }
         });
 
-        leftButton.addActionListener(new ActionListener() {
+        leftButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
                         if (ideaIndex != 0) {
                             --ideaIndex;
                             rightButton.setEnabled(true);
@@ -82,14 +86,16 @@ public class CriticerVotingScene extends AbstractMTWDScene {
                     default:
                         break;
                 }
+                return false;
             }
         });
 
-        rightButton.addActionListener(new ActionListener() {
+        rightButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
                         if (ideaIndex != allIdeas.size() - 1) {
                             ++ideaIndex;
                             leftButton.setEnabled(true);
@@ -106,6 +112,7 @@ public class CriticerVotingScene extends AbstractMTWDScene {
                     default:
                         break;
                 }
+                return false;
             }
         });
     }
@@ -132,15 +139,15 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         ideaUser1 = new MTTextArea(mtApp, ideaFont);
         ideaUser1.setPickable(false);
 
-        leftButton = new MTSvgButton("data/arrowLeft.svg", mtApp);
-        rightButton = new MTSvgButton("data/arrowRight.svg", mtApp);
-        likeButton = new MTSvgButton("data/likeButton2.svg", mtApp);
-        dislikeButton = new MTSvgButton("data/dislikeButton2.svg", mtApp);
-        continueButton = new MTSvgButton("data/startButton.svg", mtApp);
-        
+        leftButton = new MTSvgButton(mtApp, "data/arrowLeft.svg");
+        rightButton = new MTSvgButton(mtApp, "data/arrowRight.svg");
+        likeButton = new MTSvgButton(mtApp, "data/likeButton2.svg");
+        dislikeButton = new MTSvgButton(mtApp, "data/dislikeButton2.svg");
+        continueButton = new MTSvgButton(mtApp, "data/startButton.svg");
+
         ideaUser1.setSizeLocal(200f, 200f);
         ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
-        
+
         leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
         leftButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150));
         rightButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
@@ -149,9 +156,9 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         likeButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 30, mtApp.height - 40));
         dislikeButton.scale(1.5f, 1.5f, 1.5f, Vector3D.ZERO_VECTOR);
         dislikeButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 30, mtApp.height - 40));
-        
+
         continueButton.setPositionRelativeToParent(new Vector3D(mtApp.width / 2 + ideaUser1.getWidthXY(TransformSpace.LOCAL) + 150, mtApp.height - 150));
-        
+
         getCanvas().addChild(ideaUser1);
         getCanvas().addChild(rightButton);
         getCanvas().addChild(leftButton);
@@ -163,11 +170,11 @@ public class CriticerVotingScene extends AbstractMTWDScene {
     @Override
     public void startScene() {
         allIdeas = controller.getAllVisibleIdeasForCurrentProblem();
-        
+
         ideaUser1.setText(allIdeas.get(ideaIndex).getDescription());
         ideaUser1.setSizeLocal(200f, 150f);
         ideaUser1.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150f, 0));
-        
+
         problemTextArea.setText(controller.getCurrentProblemDescription());
         problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextArea.translate(new Vector3D(0, problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
@@ -176,7 +183,7 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         problemTextAreaInverted.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
         problemTextAreaInverted.translate(new Vector3D(0, -problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
-    
+
     @Override
     public void updateScene() {
     }

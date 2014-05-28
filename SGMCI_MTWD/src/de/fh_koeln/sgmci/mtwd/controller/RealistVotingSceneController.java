@@ -15,7 +15,7 @@ import java.util.Map;
  * the RealistVotingScene.
  *
  * @author Nadim Khan, Ramon Victor
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class RealistVotingSceneController extends AbstractMTWDSceneController {
 

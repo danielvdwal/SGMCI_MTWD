@@ -14,7 +14,7 @@ import processing.core.PApplet;
  * It represents a split keyboard.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public final class SplitKeyboard extends AbstractKeyboard {
 
@@ -27,10 +27,10 @@ public final class SplitKeyboard extends AbstractKeyboard {
     private float spaceBetweenKeyboards = 200;
 
     public SplitKeyboard(PApplet pApplet) {
-        super(0, 0, 0, 200 + KEYBOARD_WIDTH * 2, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
+        super(pApplet, 0, 0, 0, 200 + KEYBOARD_WIDTH * 2, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS);
 
-        this.leftKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
-        this.rightKeyboard = new MTRoundRectangle(0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS, pApplet);
+        this.leftKeyboard = new MTRoundRectangle(pApplet, 0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS);
+        this.rightKeyboard = new MTRoundRectangle(pApplet, 0, 0, 0, KEYBOARD_WIDTH, KEYBOARD_HEIGHT, CORNER_RADIUS, CORNER_RADIUS);
         this.setFillColor(MTColor.BLACK);
         this.setNoFill(true);
         this.setNoStroke(true);

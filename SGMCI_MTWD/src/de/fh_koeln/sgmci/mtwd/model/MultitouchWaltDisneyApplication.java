@@ -10,7 +10,7 @@ import java.util.Map;
  * It is used to manage all problems and users in the application.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public final class MultitouchWaltDisneyApplication {
 

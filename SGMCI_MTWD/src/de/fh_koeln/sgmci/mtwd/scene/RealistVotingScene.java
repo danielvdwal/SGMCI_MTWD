@@ -3,12 +3,8 @@ package de.fh_koeln.sgmci.mtwd.scene;
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.RealistVotingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.RealistVotingUserWorkplace;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
-import org.mt4j.components.visibleComponents.font.IFont;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
@@ -17,15 +13,18 @@ import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
+import org.mt4j.util.font.FontManager;
+import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
 /**
  *
  * @author Nadim Khan, Ramon Victor
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class RealistVotingScene extends AbstractMTWDScene {
 
@@ -95,33 +94,34 @@ public class RealistVotingScene extends AbstractMTWDScene {
     public void createEventListeners() {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        user1Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
 
-        user2Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        
+        user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
         
-        user3Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
         
-        user4Workplace.getAddWorkspaceButton().addActionListener(new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
         user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getReadyButton().addActionListener(new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getReadyButtonDone().addActionListener(new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id)); 
+        user4Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
     }
 
     @Override
@@ -164,7 +164,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
     public void shutDown() {
     }
 
-    public class AddWorkspaceButtonListener implements ActionListener {
+    public class AddWorkspaceButtonListener implements IGestureEventListener {
 
         private final String userId;
 
@@ -172,14 +172,16 @@ public class RealistVotingScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+         @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
                 controller.setUserActive(userId, true);
             }
+            return false;
         }
     }
-
+    
     public class CloseWorkspaceButtonListener implements IGestureEventListener {
 
         private final String userId;
@@ -201,7 +203,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
         }
     }
 
-    public class ReadyButtonListener implements ActionListener {
+    public class ReadyButtonListener implements IGestureEventListener {
 
         private final String userId;
 
@@ -209,16 +211,18 @@ public class RealistVotingScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+         @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
                 controller.setUserReadyToContinue(userId, true);
                 ((RealistVotingSceneController) controller).proceed();
             }
+            return false;
         }
     }
 
-    public class ReadyButtonDoneListener implements ActionListener {
+    public class ReadyButtonDoneListener implements IGestureEventListener {
 
         private final String userId;
 
@@ -227,10 +231,12 @@ public class RealistVotingScene extends AbstractMTWDScene {
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getID() == TapEvent.BUTTON_DOWN) {
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
                 controller.setUserReadyToContinue(userId, false);
             }
+            return false;
         }
     }
 }

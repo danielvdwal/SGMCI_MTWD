@@ -4,7 +4,7 @@ package de.fh_koeln.sgmci.mtwd.model;
  * This class represents a critic on an idea object.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class Critic extends AbstractModel {
 

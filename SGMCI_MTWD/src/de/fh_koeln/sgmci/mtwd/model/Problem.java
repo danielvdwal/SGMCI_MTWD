@@ -10,7 +10,7 @@ import java.util.Map;
  * This class represents a problem.
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class Problem extends AbstractModel {
 

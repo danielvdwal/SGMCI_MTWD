@@ -2,7 +2,6 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.IMain;
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
-import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import org.mt4j.MTApplication;
 import org.mt4j.sceneManagement.AbstractScene;
 import org.mt4j.sceneManagement.transition.BlendTransition;
@@ -13,7 +12,7 @@ import org.mt4j.util.opengl.GLFBO;
 /**
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public abstract class AbstractMTWDScene extends AbstractScene implements IScene {
 

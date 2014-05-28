@@ -8,7 +8,7 @@ import de.fh_koeln.sgmci.mtwd.scene.IScene;
  * the StartScene.
  *
  * @author Daniel van der Wal, Robert Scherbarth
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class SplashSceneController extends AbstractMTWDSceneController {
 

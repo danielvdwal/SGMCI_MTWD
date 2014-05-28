@@ -5,20 +5,21 @@ import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.customelements.StartUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.exception.NoProblemTextException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.font.FontManager;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.input.inputProcessors.IGestureEventListener;
+import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
+import org.mt4j.util.font.FontManager;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
@@ -26,7 +27,7 @@ import processing.core.PImage;
  *
  * @author Nadim Khan, Ramon Victor, Daniel van der Wal - Fachhochschule Koeln
  * Campus Gummersbach 2014
- * @version 0.2.0
+ * @version 0.3.0
  */
 public class StartScene extends AbstractMTWDScene {
 
@@ -34,7 +35,6 @@ public class StartScene extends AbstractMTWDScene {
     private MTTextArea problemLabel;
     private MTTextArea problemInputField;
     private Popup errorMessagePopup;
-    private float scaledKeyboardWidth;
 
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -84,14 +84,13 @@ public class StartScene extends AbstractMTWDScene {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
         user1Workplace.getKeyboard().addTextInputListener(problemInputField);
+        user1Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
 
-        user1Workplace.getHelpButton().addActionListener(new HelpButtonListener());
-
-        user1Workplace.getStartButton().addActionListener(new ActionListener() {
+        user1Workplace.getStartButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_STARTED:
                         try {
                             ((StartSceneController) controller).proceed(problemInputField.getText());
                         } catch (NoProblemTextException ex) {
@@ -103,14 +102,15 @@ public class StartScene extends AbstractMTWDScene {
                     default:
                         break;
                 }
+                return false;
             }
         });
 
-        user1Workplace.getSettingsButton().addActionListener(new ActionListener() {
+        user1Workplace.getSettingsButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
             @Override
-            public void actionPerformed(ActionEvent ae) {
-                switch (ae.getID()) {
-                    case TapEvent.BUTTON_CLICKED:
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
                         //wenn Button geklickt wurde
                         MTTextArea textArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
                         textArea.setText("Loesung!!!");
@@ -123,6 +123,7 @@ public class StartScene extends AbstractMTWDScene {
                     default:
                         break;
                 }
+                return false;
             }
         });
     }
@@ -150,7 +151,7 @@ public class StartScene extends AbstractMTWDScene {
         }
     }
 
-    private class HelpButtonListener implements ActionListener {
+    private class HelpButtonListener implements IGestureEventListener {
 
         private final Popup helpPopup;
 
@@ -159,20 +160,21 @@ public class StartScene extends AbstractMTWDScene {
         }
 
         @Override
-        public void actionPerformed(ActionEvent ae) {
-            switch (ae.getID()) {
-                case TapEvent.BUTTON_DOWN:
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            switch (mtge.getId()) {
+                case TapEvent.GESTURE_STARTED:
                     user1Workplace.addChild(helpPopup);
                     helpPopup.setText(((StartSceneController) controller).getHelpText());
                     helpPopup.setPositionRelativeToParent(new Vector3D(user1Workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
-                case TapEvent.BUTTON_CLICKED:
+                case TapEvent.GESTURE_ENDED:
                     helpPopup.setVisible(false);
                     user1Workplace.removeChild(helpPopup);
                 default:
                     break;
             }
+            return false;
         }
     }
 }

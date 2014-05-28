@@ -9,7 +9,7 @@ import processing.core.PApplet;
 /**
  *
  * @author Daniel van der Wal
- * @version 0.2.0
+ * @version 0.3.0
  */
 public final class StartUserWorkplace extends MTRectangle {
 
@@ -24,7 +24,7 @@ public final class StartUserWorkplace extends MTRectangle {
     private final MTSvgButton startButton;
 
     public StartUserWorkplace(PApplet pApplet) {
-        super(916, AbstractKeyboard.KEYBOARD_HEIGHT, pApplet);
+        super(pApplet, 916, AbstractKeyboard.KEYBOARD_HEIGHT);
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setPickable(false);
@@ -32,9 +32,9 @@ public final class StartUserWorkplace extends MTRectangle {
         this.unregisterAllInputProcessors();
 
         keyboard = new Keyboard(pApplet);
-        helpButton = new MTSvgButton(helpButtonSvgFile, pApplet);
-        settingsButton = new MTSvgButton(settingsButtonSvgFile, pApplet);
-        startButton = new MTSvgButton(startButtonSvgFile, pApplet);
+        helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
+        settingsButton = new MTSvgButton(pApplet, settingsButtonSvgFile);
+        startButton = new MTSvgButton(pApplet, startButtonSvgFile);
         
         positionAllComponents();
     }
