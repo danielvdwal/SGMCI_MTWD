@@ -32,7 +32,6 @@ public final class DreamerUserWorkplace extends MTRectangle {
     private final MTSvgButton readyButtonDone;
     private final MTRectangle textAreaBackground;
     private final MTTextArea textArea;
-    private final MTRectangle sendButton;
 
     public DreamerUserWorkplace(PApplet pApplet) {
         super(916, AbstractKeyboard.KEYBOARD_HEIGHT, pApplet);
@@ -57,11 +56,6 @@ public final class DreamerUserWorkplace extends MTRectangle {
         textArea = new MTTextArea(pApplet);
         textArea.setEnableCaret(true);
         textArea.setPickable(false);
-
-        sendButton = new MTRectangle(30, 30, pApplet);
-        sendButton.setFillColor(MTColor.WHITE);
-        sendButton.removeAllGestureEventListeners();
-        sendButton.unregisterAllInputProcessors();
         
         positionAllComponents();
     }
@@ -107,10 +101,6 @@ public final class DreamerUserWorkplace extends MTRectangle {
     public MTTextArea getTextArea() {
         return textArea;
     }
-
-    public MTRectangle getSendButton() {
-        return sendButton;
-    }
     
     private void positionAllComponents() {
         addChild(addWorkspaceButton);
@@ -142,9 +132,6 @@ public final class DreamerUserWorkplace extends MTRectangle {
         textAreaBackground.addChild(textArea);
         textArea.setPositionRelativeToParent(new Vector3D(textArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, textArea.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
         
-        keyboard.addTextInputListener(textArea);   
-        
-        keyboard.addChild(sendButton);
-        sendButton.setPositionRelativeToParent(new Vector3D(0, 0));
+        keyboard.addTextInputListener(textArea);
     }
 }

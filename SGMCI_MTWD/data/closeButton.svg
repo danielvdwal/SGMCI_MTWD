@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" width="60" height="60" viewBox="0 0 60.00 60.00" enable-background="new 0 0 60.00 60.00" xml:space="preserve">
-	<ellipse fill="#D40000" fill-opacity="1" stroke-linejoin="round" cx="30" cy="30" rx="28" ry="28"/>
-	<path fill="#000000" fill-opacity="1" stroke-linejoin="round" d="M 30,0C 13.4532,0 -3.17891e-006,13.4532 -3.17891e-006,30C -3.17891e-006,46.5468 13.4532,60 30,60C 46.5468,60 60,46.5468 60,30C 60,13.4532 46.5468,0 30,0 Z M 30,55.1079C 16.1151,55.1079 4.89208,43.8849 4.89208,30C 4.89208,16.1871 16.1151,4.89209 30,4.89209C 43.8129,4.89209 55.1079,16.1871 55.1079,30C 55.1079,43.8849 43.8129,55.1079 30,55.1079 Z "/>
+	<ellipse fill="#D40000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" cx="30" cy="30" rx="28" ry="28"/>
+	<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 30,0C 13.4532,0 -3.17891e-006,13.4532 -3.17891e-006,30C -3.17891e-006,46.5468 13.4532,60 30,60C 46.5468,60 60,46.5468 60,30C 60,13.4532 46.5468,0 30,0 Z M 30,55.1079C 16.1151,55.1079 4.89208,43.8849 4.89208,30C 4.89208,16.1871 16.1151,4.89209 30,4.89209C 43.8129,4.89209 55.1079,16.1871 55.1079,30C 55.1079,43.8849 43.8129,55.1079 30,55.1079 Z "/>
 	<g>
-		<path fill="#000000" fill-opacity="1" stroke-linejoin="round" d="M 44.4,43.2L 34.9725,43.2L 30,36.42L 25.035,43.2L 15.6,43.2L 25.29,30.0075L 15.6,16.8L 25.0275,16.8L 30.3,23.97L 34.965,16.8L 44.4,16.8L 34.7175,30L 44.4,43.2 Z "/>
+		<path fill="#000000" fill-opacity="1" stroke-width="0.2" stroke-linejoin="round" d="M 44.4,43.2L 34.9725,43.2L 30,36.42L 25.035,43.2L 15.6,43.2L 25.29,30.0075L 15.6,16.8L 25.0275,16.8L 30.3,23.97L 34.965,16.8L 44.4,16.8L 34.7175,30L 44.4,43.2 Z "/>
 	</g>
 </svg>

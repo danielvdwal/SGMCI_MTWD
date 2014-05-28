@@ -32,10 +32,12 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
     private static final String readyButtonDoneSvgFile = "data/readyButtonDone.svg";
     private static final String leftButtonSvgFile = "data/arrowLeft.svg";
     private static final String rightButtonSvgFile = "data/arrowRight.svg";
-    private static final String likeButtonSvgFile = "data/likeButton2.svg";
-    private static final String dislikeButtonSvgFile = "data/dislikeButton2.svg";
+    private static final String likeButtonSvgFile = "data/likeButton.svg";
+    private static final String likeButtonSelectedSvgFile = "data/likeButton_selected.svg";
+    private static final String dislikeButtonSvgFile = "data/dislikeButton.svg";
+    private static final String dislikeButtonSelectedSvgFile = "data/dislikeButton_selected.svg";
     private static final float buttonScaleFactor = 1.4f;
-    private static final float arrowButtonScaleFactor = 0.5f;
+    private static final float arrowButtonScaleFactor = 2.0f;
     private static final float voteButtonScaleFactor = 2.0f;
 
     private final PApplet pApplet;
@@ -50,7 +52,9 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
     private final MTSvgButton leftButton;
     private final MTSvgButton rightButton;
     private final MTSvgButton likeButton;
+    private final MTSvgButton likeButtonSelected;
     private final MTSvgButton dislikeButton;
+    private final MTSvgButton dislikeButtonSelected;
     private final List<VotedIdea> votedIdeas;
     private int currentIndex;
 
@@ -85,7 +89,9 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         this.leftButton = new MTSvgButton(pApplet, leftButtonSvgFile);
         this.rightButton = new MTSvgButton(pApplet, rightButtonSvgFile);
         this.likeButton = new MTSvgButton(pApplet, likeButtonSvgFile);
+        this.likeButtonSelected = new MTSvgButton(pApplet, likeButtonSelectedSvgFile);
         this.dislikeButton = new MTSvgButton(pApplet, dislikeButtonSvgFile);
+        this.dislikeButtonSelected = new MTSvgButton(pApplet, dislikeButtonSelectedSvgFile);
 
         this.votedIdeas = new LinkedList<VotedIdea>();
         this.currentIndex = 0;
@@ -152,7 +158,9 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         currentDisplayedIdea.addChild(leftButton);
         currentDisplayedIdea.addChild(rightButton);
         currentDisplayedIdea.addChild(likeButton);
+        currentDisplayedIdea.addChild(likeButtonSelected);
         currentDisplayedIdea.addChild(dislikeButton);
+        currentDisplayedIdea.addChild(dislikeButtonSelected);
         helpButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         problemButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         closeButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
@@ -161,7 +169,9 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         leftButton.scale(arrowButtonScaleFactor, arrowButtonScaleFactor, arrowButtonScaleFactor, Vector3D.ZERO_VECTOR);
         rightButton.scale(arrowButtonScaleFactor, arrowButtonScaleFactor, arrowButtonScaleFactor, Vector3D.ZERO_VECTOR);
         likeButton.scale(voteButtonScaleFactor, voteButtonScaleFactor, voteButtonScaleFactor, Vector3D.ZERO_VECTOR);
+        likeButtonSelected.scale(voteButtonScaleFactor, voteButtonScaleFactor, voteButtonScaleFactor, Vector3D.ZERO_VECTOR);
         dislikeButton.scale(voteButtonScaleFactor, voteButtonScaleFactor, voteButtonScaleFactor, Vector3D.ZERO_VECTOR);
+        dislikeButtonSelected.scale(voteButtonScaleFactor, voteButtonScaleFactor, voteButtonScaleFactor, Vector3D.ZERO_VECTOR);
         helpButton.setPositionRelativeToParent(new Vector3D(-helpButton.getWidthXYRelativeToParent(), 50 + helpButton.getHeightXYRelativeToParent() - 30));
         problemButton.setPositionRelativeToParent(new Vector3D(-problemButton.getWidthXYRelativeToParent(), 300 - problemButton.getHeightXYRelativeToParent() + 30));
         closeButton.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) + closeButton.getWidthXYRelativeToParent(), 50 + closeButton.getHeightXYRelativeToParent() - 30));
@@ -171,7 +181,11 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         leftButton.setPositionRelativeToParent(new Vector3D(-leftButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) / 2));
         rightButton.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) + rightButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) / 2));
         likeButton.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 - likeButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + likeButton.getHeightXYRelativeToParent()));
+        likeButtonSelected.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 - likeButtonSelected.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + likeButtonSelected.getHeightXYRelativeToParent()));
+        likeButtonSelected.setVisible(false);
         dislikeButton.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + dislikeButton.getHeightXYRelativeToParent()));
+        dislikeButtonSelected.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButtonSelected.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + dislikeButtonSelected.getHeightXYRelativeToParent()));
+        dislikeButtonSelected.setVisible(false);
         workspace.setVisible(false);
     }
 
@@ -234,9 +248,20 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         currentDisplayedIdea.setSizeLocal(200, 200);
 
         if (votedIdea.isLiked()) {
-            // TODO
+            likeButton.setVisible(false);
+            likeButtonSelected.setVisible(true);
+            dislikeButton.setVisible(true);
+            dislikeButtonSelected.setVisible(false);
         } else if (votedIdea.isDisliked()) {
-            // TODO
+            likeButton.setVisible(true);
+            likeButtonSelected.setVisible(false);
+            dislikeButton.setVisible(false);
+            dislikeButtonSelected.setVisible(true);
+        } else {
+            likeButton.setVisible(true);
+            likeButtonSelected.setVisible(false);
+            dislikeButton.setVisible(true);
+            dislikeButtonSelected.setVisible(false);
         }
 
         if (currentIndex == 0) {
