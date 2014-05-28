@@ -21,6 +21,7 @@ import org.mt4j.components.visibleComponents.widgets.MTTextField;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
@@ -172,7 +173,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         
         getCanvas().addChild(commentList);
         
-        ideaTextArea.setSizeLocal(200f, 200f);
+        ideaTextArea.setSizeLocal(200, 200);
         ideaTextArea.setPositionRelativeToOther(commentTextArea, new Vector3D(commentTextArea.getWidthXY(TransformSpace.LOCAL)/2, -ideaTextArea.getHeightXY(TransformSpace.LOCAL)/2-20));;
         
         leftButton = new MTSvgButton("data/arrowLeft.svg", mtApp);
