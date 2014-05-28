@@ -55,9 +55,9 @@ public class RealistVotingSceneController extends AbstractMTWDSceneController {
             for (Collection<VotedIdea> votedIdeas : votedIdeasByUsers.values()) {
                 for (VotedIdea votedIdea : votedIdeas) {
                     if (votedIdea.isLiked()) {
-                        votedIdea.getIdea().setTotalLikes(votedIdea.getIdea().getTotalLikes() + 1);
+                        votedIdea.getIdea().setTotalRealistLikes(votedIdea.getIdea().getTotalRealistLikes()+ 1);
                     } else if (votedIdea.isDisliked()) {
-                        votedIdea.getIdea().setTotalDislikes(votedIdea.getIdea().getTotalDislikes() + 1);
+                        votedIdea.getIdea().setTotalRealistDislikes(votedIdea.getIdea().getTotalRealistDislikes()+ 1);
                     }
                 }
             }

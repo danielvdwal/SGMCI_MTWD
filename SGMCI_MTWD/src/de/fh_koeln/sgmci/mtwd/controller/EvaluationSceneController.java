@@ -36,7 +36,7 @@ public class EvaluationSceneController extends AbstractMTWDSceneController {
             for (Problem problem : getApplication().getAllProblems()) {
                 writer.write(String.format("    <problem id='%s' description='%s'>\n", problem.getId(), problem.getDescription()));
                 for (Idea idea : problem.getAllIdeas()) {
-                    writer.write(String.format("        <idea id='%s' description='%s' visible='%s' likes=%d dislikes=%d>\n", idea.getId(), idea.getDescription(), idea.isStillDisplayed(), idea.getTotalLikes(), idea.getTotalDislikes()));
+                    writer.write(String.format("        <idea id='%s' description='%s' visible='%s' realist_likes=%d realist_dislikes=%d criticer_likes=%d criticer_dislikes=%d>\n", idea.getId(), idea.getDescription(), idea.isStillDisplayed(), idea.getTotalRealistLikes(), idea.getTotalRealistDislikes(), idea.getTotalCriticerLikes(), idea.getTotalCriticerDislikes()));
                     for (Comment comment : idea.getAllComments()) {
                         writer.write(String.format("            <comment id='%s' description='%s' />\n", comment.getId(), comment.getDescription()));
                         writer.flush();

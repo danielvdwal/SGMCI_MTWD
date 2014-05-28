@@ -13,8 +13,10 @@ public class Idea extends AbstractModel {
     private final String description;
     private final CommentedIdea commentedIdea;
     private final CritiziedIdea critizedIdea;
-    private int totalLikes;
-    private int totalDislikes;
+    private int totalRealistLikes;
+    private int totalRealistDislikes;
+    private int totalCriticerLikes;
+    private int totalCriticerDislikes;
 
     private boolean stillDisplayed;
 
@@ -42,22 +44,38 @@ public class Idea extends AbstractModel {
         return description;
     }
 
-    public int getTotalLikes() {
-        return totalLikes;
+    public int getTotalRealistLikes() {
+        return totalRealistLikes;
     }
 
-    public void setTotalLikes(int totalLikes) {
-        this.totalLikes = totalLikes;
+    public void setTotalRealistLikes(int totalRealistLikes) {
+        this.totalRealistLikes = totalRealistLikes;
     }
 
-    public int getTotalDislikes() {
-        return totalDislikes;
+    public int getTotalRealistDislikes() {
+        return totalRealistDislikes;
     }
 
-    public void setTotalDislikes(int totalDislikes) {
-        this.totalDislikes = totalDislikes;
+    public void setTotalRealistDislikes(int totalRealistDislikes) {
+        this.totalRealistDislikes = totalRealistDislikes;
     }
-    
+
+    public int getTotalCriticerLikes() {
+        return totalCriticerLikes;
+    }
+
+    public void setTotalCriticerLikes(int totalCriticerLikes) {
+        this.totalCriticerLikes = totalCriticerLikes;
+    }
+
+    public int getTotalCriticerDislikes() {
+        return totalCriticerDislikes;
+    }
+
+    public void setTotalCriticerDislikes(int totalCriticerDislikes) {
+        this.totalCriticerDislikes = totalCriticerDislikes;
+    }
+
     // comments
     /**
      * Add a comment to this object.
