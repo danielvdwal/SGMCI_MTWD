@@ -136,7 +136,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         commentTextArea.unregisterAllInputProcessors();
         commentTextArea.setEnableCaret(true);
         keyboard.addChild(commentTextArea);
-        commentTextArea.setSizeLocal(keyboard.getWidth()/2-20, 200);
+        commentTextArea.setSizeLocal(keyboard.getWidthXY(TransformSpace.LOCAL)/2-20, 200);
         //commentTextArea.setPositionRelativeToParent(new Vector3D(40, -commentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
 
         keyboard.addTextInputListener(commentTextArea);
@@ -161,13 +161,13 @@ public class RealistCommentingScene extends AbstractMTWDScene {
                 });
         keyboard.addChild(rectangle);
         
-        commentTextArea.setPositionRelativeToOther(keyboard, new Vector3D((keyboard.getWidth()/2-20)/2, -115));
+        commentTextArea.setPositionRelativeToOther(keyboard, new Vector3D((keyboard.getWidthXY(TransformSpace.LOCAL)/2-20)/2, -115));
 
-        commentList = new MTList(0, 0, keyboard.getWidth()/2-40, 410, mtApp);
-        commentListCell = new MTListCell(keyboard.getWidth()/2-40, 410, mtApp);
+        commentList = new MTList(0, 0, keyboard.getWidthXY(TransformSpace.LOCAL)/2-40, 410, mtApp);
+        commentListCell = new MTListCell(keyboard.getWidthXY(TransformSpace.LOCAL)/2-40, 410, mtApp);
         commentList.addListElement(commentListCell);
         //commentList.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        commentList.setPositionRelativeToOther(keyboard, new Vector3D(keyboard.getWidth()/2+commentList.getWidthXY(TransformSpace.LOCAL)/2+10, -commentList.getHeightXY(TransformSpace.LOCAL)/2-30));
+        commentList.setPositionRelativeToOther(keyboard, new Vector3D(keyboard.getWidthXY(TransformSpace.LOCAL)/2+commentList.getWidthXY(TransformSpace.LOCAL)/2+10, -commentList.getHeightXY(TransformSpace.LOCAL)/2-30));
         //commentList.translate(new Vector3D(0, 50));
         
         getCanvas().addChild(commentList);
