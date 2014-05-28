@@ -163,7 +163,7 @@ public class StartScene extends AbstractMTWDScene {
                 case TapEvent.BUTTON_DOWN:
                     user1Workplace.addChild(helpPopup);
                     helpPopup.setText(((StartSceneController) controller).getHelpText());
-                    helpPopup.setPositionRelativeToParent(new Vector3D(user1Workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 + 10));
+                    helpPopup.setPositionRelativeToParent(new Vector3D(user1Workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
                 case TapEvent.BUTTON_CLICKED:

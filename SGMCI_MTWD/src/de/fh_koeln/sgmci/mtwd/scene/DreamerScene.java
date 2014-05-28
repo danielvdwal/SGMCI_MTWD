@@ -241,7 +241,7 @@ public class DreamerScene extends AbstractMTWDScene {
                 case TapEvent.BUTTON_DOWN:
                     workplace.addChild(helpPopup);
                     helpPopup.setText(((DreamerSceneController) controller).getHelpText());
-                    helpPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 + 10));
+                    helpPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
                 case TapEvent.BUTTON_CLICKED:
@@ -269,7 +269,7 @@ public class DreamerScene extends AbstractMTWDScene {
                 case TapEvent.BUTTON_DOWN:
                     workplace.addChild(problemPopup);
                     problemPopup.setText(controller.getCurrentProblemDescription());
-                    problemPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 + 10));
+                    problemPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
                     problemPopup.setVisible(true);
                     break;
                 case TapEvent.BUTTON_CLICKED:
