@@ -4,8 +4,10 @@ import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
 import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.font.FontManager;
@@ -15,6 +17,7 @@ import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTList;
 import org.mt4j.components.visibleComponents.widgets.MTListCell;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.components.visibleComponents.widgets.MTTextField;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
@@ -24,6 +27,7 @@ import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.math.Vector3D;
+
 import processing.core.PImage;
 
 /**
@@ -123,14 +127,17 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         keyboard.setPositionRelativeToParent(new Vector3D(mtApp.width / 2, mtApp.height - keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
 
         getCanvas().addChild(keyboard);
+        
 
-        final MTTextArea commentTextArea = new MTTextArea(mtApp, commentFont);
+        //final MTTextArea commentTextArea = new MTTextArea(mtApp, commentFont);
+        final MTTextField commentTextArea = new MTTextField(0, 0, 0, 0, commentFont, mtApp);
         commentTextArea.setFillColor(MTColor.YELLOW);
         commentTextArea.setExpandDirection(MTTextArea.ExpandDirection.UP);
         commentTextArea.unregisterAllInputProcessors();
         commentTextArea.setEnableCaret(true);
         keyboard.addChild(commentTextArea);
-        commentTextArea.setPositionRelativeToParent(new Vector3D(40, -commentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
+        commentTextArea.setSizeLocal(keyboard.getWidth()/2-20, 200);
+        //commentTextArea.setPositionRelativeToParent(new Vector3D(40, -commentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
 
         keyboard.addTextInputListener(commentTextArea);
         
@@ -153,25 +160,28 @@ public class RealistCommentingScene extends AbstractMTWDScene {
                     }
                 });
         keyboard.addChild(rectangle);
+        
+        commentTextArea.setPositionRelativeToOther(keyboard, new Vector3D((keyboard.getWidth()/2-20)/2, -115));
 
-        commentList = new MTList(0, 0, keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 150, mtApp);
-        commentListCell = new MTListCell(keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 150, mtApp);
+        commentList = new MTList(0, 0, keyboard.getWidth()/2-40, 410, mtApp);
+        commentListCell = new MTListCell(keyboard.getWidth()/2-40, 410, mtApp);
         commentList.addListElement(commentListCell);
-        commentList.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        commentList.translate(new Vector3D(0, 50));
-
+        //commentList.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+        commentList.setPositionRelativeToOther(keyboard, new Vector3D(keyboard.getWidth()/2+commentList.getWidthXY(TransformSpace.LOCAL)/2+10, -commentList.getHeightXY(TransformSpace.LOCAL)/2-30));
+        //commentList.translate(new Vector3D(0, 50));
+        
         getCanvas().addChild(commentList);
         
         ideaTextArea.setSizeLocal(200f, 200f);
-        ideaTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 - commentList.getHeightXY(TransformSpace.LOCAL), 0));
+        ideaTextArea.setPositionRelativeToOther(commentTextArea, new Vector3D(commentTextArea.getWidthXY(TransformSpace.LOCAL)/2, -ideaTextArea.getHeightXY(TransformSpace.LOCAL)/2-20));;
         
         leftButton = new MTSvgButton("data/arrowLeft.svg", mtApp);
         rightButton = new MTSvgButton("data/arrowRight.svg", mtApp);
         
         leftButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
-        leftButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - commentList.getWidthXY(TransformSpace.LOCAL) / 2 - 50, mtApp.height / 2 + commentList.getHeightXY(TransformSpace.LOCAL) / 4));
+        leftButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 50, mtApp.height / 2 + commentList.getHeightXY(TransformSpace.LOCAL) / 4));
         rightButton.scale(0.5f, 0.5f, 0.5f, Vector3D.ZERO_VECTOR);
-        rightButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + commentList.getWidthXY(TransformSpace.LOCAL) / 2 + 50, mtApp.height / 2 + commentList.getHeightXY(TransformSpace.LOCAL) / 4));
+        rightButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) / 2 + 50, mtApp.height / 2 + commentList.getHeightXY(TransformSpace.LOCAL) / 4));
 
         getCanvas().addChild(leftButton);
         getCanvas().addChild(rightButton);
