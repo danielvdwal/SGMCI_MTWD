@@ -2,7 +2,9 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
+import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
 import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkplace;
+import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeasException;
 import de.fh_koeln.sgmci.mtwd.model.Idea;
@@ -41,7 +43,7 @@ public class DreamerScene extends AbstractMTWDScene {
     private final Map<String, MTTextArea> displayedIdeas;
     private MTTextArea problemTextArea;
     private MTTextArea problemTextAreaInverted;
-    private MTTextArea errorMessageTextArea;
+    private Popup errorMessagePopup;
     private DreamerUserWorkplace user1Workplace;
     private DreamerUserWorkplace user2Workplace;
     private DreamerUserWorkplace user3Workplace;
@@ -80,13 +82,13 @@ public class DreamerScene extends AbstractMTWDScene {
         getCanvas().addChild(problemTextAreaInverted);
 
         user1Workplace = new DreamerUserWorkplace(mtApp);
-        user1Workplace.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
+        user1Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         user2Workplace = new DreamerUserWorkplace(mtApp);
-        user2Workplace.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
+        user2Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         user3Workplace = new DreamerUserWorkplace(mtApp);
-        user3Workplace.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
+        user3Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         user4Workplace = new DreamerUserWorkplace(mtApp);
-        user4Workplace.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
+        user4Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
 
         user1Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, 0));
         getCanvas().addChild(user1Workplace);
@@ -103,12 +105,10 @@ public class DreamerScene extends AbstractMTWDScene {
         user4Workplace.setPositionGlobal(new Vector3D(mtApp.width - user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
         getCanvas().addChild(user4Workplace);
 
-        errorMessageTextArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLACK, MTColor.WHITE));
-        errorMessageTextArea.setFillColor(MTColor.WHITE);
-        errorMessageTextArea.setStrokeColor(MTColor.BLACK);
-        errorMessageTextArea.setVisible(false);
+        errorMessagePopup = new ClosablePopup(mtApp);
+        errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
 
-        getCanvas().addChild(errorMessageTextArea);
+        getCanvas().addChild(errorMessagePopup);
     }
 
     @Override
@@ -235,9 +235,9 @@ public class DreamerScene extends AbstractMTWDScene {
                     try {
                         ((DreamerSceneController) controller).proceed();
                     } catch (NoIdeasException ex) {
-                        errorMessageTextArea.setText(ex.getMessage());
-                        errorMessageTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
-                        errorMessageTextArea.setVisible(true);
+                        errorMessagePopup.setText(ex.getMessage());
+                        errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                        errorMessagePopup.setVisible(true);
                         controller.setUserReadyToContinue(userId, false);
                     }
                 }
@@ -261,9 +261,9 @@ public class DreamerScene extends AbstractMTWDScene {
                 try {
                     ((DreamerSceneController) controller).proceed();
                 } catch (NoIdeasException ex) {
-                    errorMessageTextArea.setText(ex.getMessage());
-                    errorMessageTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
-                    errorMessageTextArea.setVisible(true);
+                    errorMessagePopup.setText(ex.getMessage());
+                    errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                    errorMessagePopup.setVisible(true);
                     controller.setUserReadyToContinue(userId, false);
                 }
             }

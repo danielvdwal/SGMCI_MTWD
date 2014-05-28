@@ -33,14 +33,14 @@ public abstract class AbstractMTWDScene extends AbstractScene implements IScene 
     /**
      * The scale factor for all keyboards.
      */
-    float keyboardScaleFactor;
+    float componentScaleFactor;
     
     AbstractMTWDSceneController controller;
 
     public AbstractMTWDScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         this.mtApp = mtApp;
-        this.keyboardScaleFactor = (mtApp.getWidth() * 0.4f) / AbstractKeyboard.INITIAL_WIDTH;
+        this.componentScaleFactor = (mtApp.getWidth() * 0.4f) / 850;
         // Set a scene transition for our StartScene.
         // Blend transition only available using opengl supporting the FBO extenstion.
         if (MT4jSettings.getInstance().isOpenGlMode() && GLFBO.isSupported(mtApp)) {
