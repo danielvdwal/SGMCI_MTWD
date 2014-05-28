@@ -3,6 +3,7 @@ package de.fh_koeln.sgmci.mtwd.scene;
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
+import de.fh_koeln.sgmci.mtwd.customelements.Cloud;
 import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
@@ -38,10 +39,7 @@ import processing.core.PImage;
  */
 public class DreamerScene extends AbstractMTWDScene {
 
-    private final IFont ideaFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18);
-    private final Map<String, MTTextArea> displayedIdeas;
-    private MTTextArea problemTextArea;
-    private MTTextArea problemTextAreaInverted;
+    private final Map<String, Cloud> displayedIdeas;
     private Popup errorMessagePopup;
     private DreamerUserWorkplace user1Workplace;
     private DreamerUserWorkplace user2Workplace;
@@ -51,7 +49,7 @@ public class DreamerScene extends AbstractMTWDScene {
     public DreamerScene(MTApplication mtApp, String name) {
         super(mtApp, name);
         controller = new DreamerSceneController(this);
-        displayedIdeas = new HashMap<String, MTTextArea>();
+        displayedIdeas = new HashMap<String, Cloud>();
     }
 
     @Override
@@ -64,22 +62,6 @@ public class DreamerScene extends AbstractMTWDScene {
 
     @Override
     public void createComponents() {
-        final IFont problemFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 30);
-
-        problemTextArea = new MTTextArea(mtApp, problemFont);
-        problemTextArea.setNoFill(true);
-        problemTextArea.setNoStroke(true);
-        problemTextArea.setPickable(false);
-
-        problemTextAreaInverted = new MTTextArea(mtApp, problemFont);
-        problemTextAreaInverted.setNoFill(true);
-        problemTextAreaInverted.setNoStroke(true);
-        problemTextAreaInverted.setPickable(false);
-        problemTextAreaInverted.rotateZ(Vector3D.ZERO_VECTOR, 180);
-
-        getCanvas().addChild(problemTextArea);
-        getCanvas().addChild(problemTextAreaInverted);
-
         user1Workplace = new DreamerUserWorkplace(mtApp);
         user1Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         user2Workplace = new DreamerUserWorkplace(mtApp);
@@ -122,9 +104,9 @@ public class DreamerScene extends AbstractMTWDScene {
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
-        user1Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user1Workplace, FlickEvent.FlickDirection.NORTH));
-        
+        user1Workplace.getCloud().registerInputProcessor(new FlickProcessor());
+        user1Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user1Workplace, FlickEvent.FlickDirection.NORTH));
+
         user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user2Workplace));
         user2Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user2Workplace));
@@ -133,8 +115,8 @@ public class DreamerScene extends AbstractMTWDScene {
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
-        user2Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user2Workplace, FlickEvent.FlickDirection.NORTH));
+        user2Workplace.getCloud().registerInputProcessor(new FlickProcessor());
+        user2Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user2Workplace, FlickEvent.FlickDirection.SOUTH));
 
         user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user3Workplace));
@@ -144,8 +126,8 @@ public class DreamerScene extends AbstractMTWDScene {
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
-        user3Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user3Workplace, FlickEvent.FlickDirection.NORTH));
+        user3Workplace.getCloud().registerInputProcessor(new FlickProcessor());
+        user3Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user3Workplace, FlickEvent.FlickDirection.EAST));
 
         user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
         user4Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user4Workplace));
@@ -155,8 +137,8 @@ public class DreamerScene extends AbstractMTWDScene {
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
         user4Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
         user4Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getTextAreaBackground().registerInputProcessor(new FlickProcessor());
-        user4Workplace.getTextAreaBackground().addGestureListener(FlickProcessor.class, new SendButtonListener(user4Workplace, FlickEvent.FlickDirection.NORTH));
+        user4Workplace.getCloud().registerInputProcessor(new FlickProcessor());
+        user4Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user4Workplace, FlickEvent.FlickDirection.WEST));
     }
 
     @Override
@@ -167,15 +149,6 @@ public class DreamerScene extends AbstractMTWDScene {
         controller.setUserReadyToContinue(AbstractMTWDSceneController.user4Id, false);
 
         updateScene();
-
-        // needs to be removed and set for each user
-        problemTextArea.setText(controller.getCurrentProblemDescription());
-        problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        problemTextArea.translate(new Vector3D(0, problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-
-        problemTextAreaInverted.setText(controller.getCurrentProblemDescription());
-        problemTextAreaInverted.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        problemTextAreaInverted.translate(new Vector3D(0, -problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
 
     @Override
@@ -183,10 +156,11 @@ public class DreamerScene extends AbstractMTWDScene {
         Collection<Idea> ideas = controller.getAllVisibleIdeasForCurrentProblem();
         for (Idea idea : ideas) {
             if (!displayedIdeas.containsKey(idea.getId())) {
-                final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
-                newTextArea.setText(idea.getDescription());
-                displayedIdeas.put(idea.getId(), newTextArea);
-                getCanvas().addChild(newTextArea);
+                final Cloud newIdea = new Cloud(mtApp, false);
+                newIdea.setTextAreaText(idea.getDescription());
+                displayedIdeas.put(idea.getId(), newIdea);
+                getCanvas().addChild(newIdea);
+                newIdea.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
             }
         }
 
@@ -203,8 +177,8 @@ public class DreamerScene extends AbstractMTWDScene {
 
     @Override
     public void shutDown() {
-        for (MTTextArea textArea : displayedIdeas.values()) {
-            textArea.destroy();
+        for (Cloud cloud : displayedIdeas.values()) {
+            cloud.destroy();
         }
         displayedIdeas.clear();
     }
@@ -217,7 +191,7 @@ public class DreamerScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-         @Override
+        @Override
         public boolean processGestureEvent(MTGestureEvent ge) {
             TapEvent te = (TapEvent) ge;
             if (te.getId() == TapEvent.GESTURE_STARTED) {
@@ -226,9 +200,9 @@ public class DreamerScene extends AbstractMTWDScene {
             return false;
         }
     }
-    
+
     public class HelpButtonListener implements IGestureEventListener {
-        
+
         private final DreamerUserWorkplace workplace;
         private final Popup helpPopup;
 
@@ -240,7 +214,7 @@ public class DreamerScene extends AbstractMTWDScene {
         @Override
         public boolean processGestureEvent(MTGestureEvent ge) {
             TapEvent te = (TapEvent) ge;
-            switch(te.getId()) {
+            switch (te.getId()) {
                 case TapEvent.GESTURE_STARTED:
                     workplace.addChild(helpPopup);
                     helpPopup.setText(((DreamerSceneController) controller).getHelpText());
@@ -256,9 +230,9 @@ public class DreamerScene extends AbstractMTWDScene {
             return false;
         }
     }
-    
+
     public class ProblemButtonListener implements IGestureEventListener {
-        
+
         private final DreamerUserWorkplace workplace;
         private final Popup problemPopup;
 
@@ -270,7 +244,7 @@ public class DreamerScene extends AbstractMTWDScene {
         @Override
         public boolean processGestureEvent(MTGestureEvent ge) {
             TapEvent te = (TapEvent) ge;
-            switch(te.getId()) {
+            switch (te.getId()) {
                 case TapEvent.GESTURE_STARTED:
                     workplace.addChild(problemPopup);
                     problemPopup.setText(controller.getCurrentProblemDescription());
@@ -323,7 +297,7 @@ public class DreamerScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-         @Override
+        @Override
         public boolean processGestureEvent(MTGestureEvent ge) {
             TapEvent te = (TapEvent) ge;
             if (te.getId() == TapEvent.GESTURE_STARTED) {
@@ -358,7 +332,7 @@ public class DreamerScene extends AbstractMTWDScene {
             return false;
         }
     }
-    
+
     public class SendButtonListener implements IGestureEventListener {
 
         private final DreamerUserWorkplace workplace;
@@ -375,8 +349,8 @@ public class DreamerScene extends AbstractMTWDScene {
             if (e.getId() == MTGestureEvent.GESTURE_ENDED && e.isFlick()) {
                 if (e.getDirection() == flickDirection) {
                     try {
-                        ((DreamerSceneController) controller).createIdea(workplace.getTextArea().getText());
-                        workplace.getTextArea().setText("");
+                        ((DreamerSceneController) controller).createIdea(workplace.getCloud().getTextArea().getText());
+                        workplace.getCloud().getTextArea().setText("");
                     } catch (NoIdeaTextException ex) {
                         // do nothing
                     }

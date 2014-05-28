@@ -1,10 +1,13 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
+import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.util.MTColor;
+import org.mt4j.util.font.FontManager;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
@@ -30,8 +33,7 @@ public final class DreamerUserWorkplace extends MTRectangle {
     private final MTSvgButton closeButton;
     private final MTSvgButton readyButton;
     private final MTSvgButton readyButtonDone;
-    private final MTRectangle textAreaBackground;
-    private final MTTextArea textArea;
+    private final Cloud cloud;
 
     public DreamerUserWorkplace(PApplet pApplet) {
         super(916, AbstractKeyboard.KEYBOARD_HEIGHT, pApplet);
@@ -48,14 +50,10 @@ public final class DreamerUserWorkplace extends MTRectangle {
         closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
         readyButton = new MTSvgButton(pApplet, readyButtonSvgFile);
         readyButtonDone = new MTSvgButton(pApplet, readyButtonDoneSvgFile);
-        textAreaBackground = new MTRectangle(pApplet, 200, AbstractKeyboard.KEYBOARD_HEIGHT);
-        textAreaBackground.setFillColor(MTColor.WHITE);
-        textAreaBackground.setNoStroke(false);
-        textAreaBackground.removeAllGestureEventListeners();
-        textAreaBackground.unregisterAllInputProcessors();
-        textArea = new MTTextArea(pApplet);
-        textArea.setEnableCaret(true);
-        textArea.setPickable(false);
+        cloud = new Cloud(pApplet, true);
+        cloud.getTextArea().setEnableCaret(true);
+        cloud.removeAllGestureEventListeners();
+        cloud.unregisterAllInputProcessors();
         
         positionAllComponents();
     }
@@ -94,19 +92,15 @@ public final class DreamerUserWorkplace extends MTRectangle {
         return closeButton;
     }
 
-    public MTRectangle getTextAreaBackground() {
-        return textAreaBackground;
+    public Cloud getCloud() {
+        return cloud;
     }
 
-    public MTTextArea getTextArea() {
-        return textArea;
-    }
-    
     private void positionAllComponents() {
         addChild(addWorkspaceButton);
         addWorkspaceButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         addWorkspaceButton.setPositionRelativeToParent(new Vector3D(this.getWidthXY(TransformSpace.LOCAL) / 2, this.getHeightXY(TransformSpace.LOCAL) / 2));
-        
+
         addChild(keyboard);
         keyboard.setPositionRelativeToParent(new Vector3D(this.getWidthXY(TransformSpace.LOCAL) / 2, this.getHeightXY(TransformSpace.LOCAL) / 2));
         keyboard.addChild(helpButton);
@@ -126,12 +120,11 @@ public final class DreamerUserWorkplace extends MTRectangle {
         readyButtonDone.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + readyButtonDone.getWidthXYRelativeToParent(), keyboard.getHeight() - readyButtonDone.getHeightXYRelativeToParent() + 30));
         readyButtonDone.setVisible(false);
         keyboard.setVisible(false);
+
+        keyboard.addChild(cloud);
+        cloud.setPositionRelativeToParent(new Vector3D(keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
+
+        keyboard.addTextInputListener(cloud.getTextArea());
         
-        keyboard.addChild(textAreaBackground);
-        textAreaBackground.setPositionRelativeToParent(new Vector3D(keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT)/2, keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT)/2));
-        textAreaBackground.addChild(textArea);
-        textArea.setPositionRelativeToParent(new Vector3D(textArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, textArea.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
-        
-        keyboard.addTextInputListener(textArea);
     }
 }
