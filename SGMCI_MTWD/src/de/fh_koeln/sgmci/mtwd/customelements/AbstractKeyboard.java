@@ -104,10 +104,6 @@ public abstract class AbstractKeyboard extends MTRoundRectangle {
      */
     static final String BACKSPACE_ID = "backspace";
     /**
-     * This value is used to have a fixed value to calculate all keyboards to scale factor.
-     */
-    public static final int INITIAL_WIDTH = 850;
-    /**
      * The PApplet this component is used in.
      */
     final PApplet pApplet;

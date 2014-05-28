@@ -1,6 +1,8 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
+import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
+import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.customelements.StartUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.exception.NoProblemTextException;
 import java.awt.event.ActionEvent;
@@ -31,7 +33,7 @@ public class StartScene extends AbstractMTWDScene {
     private final StartUserWorkplace user1Workplace;
     private MTTextArea problemLabel;
     private MTTextArea problemInputField;
-    private MTTextArea errorMessageTextArea;
+    private Popup errorMessagePopup;
 
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -60,18 +62,16 @@ public class StartScene extends AbstractMTWDScene {
         problemInputField.setEnableCaret(true);
         problemInputField.setPickable(false);
 
-        user1Workplace.scale(keyboardScaleFactor, keyboardScaleFactor, keyboardScaleFactor, Vector3D.ZERO_VECTOR);
+        user1Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         user1Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
 
-        errorMessageTextArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLACK, MTColor.WHITE));
-        errorMessageTextArea.setFillColor(MTColor.WHITE);
-        errorMessageTextArea.setStrokeColor(MTColor.BLACK);
-        errorMessageTextArea.setVisible(false);
+        errorMessagePopup = new ClosablePopup(mtApp);
+        errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         
         getCanvas().addChild(problemLabel);
         getCanvas().addChild(problemInputField);
         getCanvas().addChild(user1Workplace);
-        getCanvas().addChild(errorMessageTextArea);
+        getCanvas().addChild(errorMessagePopup);
 
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
         problemTextAreaUpdateThread.start();
@@ -117,9 +117,9 @@ public class StartScene extends AbstractMTWDScene {
                         try {
                             ((StartSceneController)controller).proceed(problemInputField.getText());
                         } catch (NoProblemTextException ex) {
-                            errorMessageTextArea.setText(ex.getMessage());
-                            errorMessageTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
-                            errorMessageTextArea.setVisible(true);
+                            errorMessagePopup.setText(ex.getMessage());
+                            errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+                            errorMessagePopup.setVisible(true);
                         }
                         break;
                     default:
