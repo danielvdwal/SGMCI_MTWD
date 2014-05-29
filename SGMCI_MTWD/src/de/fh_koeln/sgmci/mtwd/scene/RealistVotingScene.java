@@ -2,11 +2,11 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.RealistVotingSceneController;
+import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.customelements.RealistVotingUserWorkplace;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
-import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
@@ -16,8 +16,6 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
-import org.mt4j.util.font.FontManager;
-import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
@@ -28,8 +26,6 @@ import processing.core.PImage;
  */
 public class RealistVotingScene extends AbstractMTWDScene {
 
-    private MTTextArea problemTextArea;
-    private MTTextArea problemTextAreaInverted;
     private RealistVotingUserWorkplace user1Workplace;
     private RealistVotingUserWorkplace user2Workplace;
     private RealistVotingUserWorkplace user3Workplace;
@@ -49,22 +45,6 @@ public class RealistVotingScene extends AbstractMTWDScene {
 
     @Override
     public void createComponents() {
-        IFont problemFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 30);
-
-        problemTextArea = new MTTextArea(mtApp, problemFont);
-        problemTextArea.setNoFill(true);
-        problemTextArea.setNoStroke(true);
-        problemTextArea.setPickable(false);
-
-        problemTextAreaInverted = new MTTextArea(mtApp, problemFont);
-        problemTextAreaInverted.setNoFill(true);
-        problemTextAreaInverted.setNoStroke(true);
-        problemTextAreaInverted.setPickable(false);
-        problemTextAreaInverted.rotateZ(Vector3D.ZERO_VECTOR, 180);
-
-        getCanvas().addChild(problemTextArea);
-        getCanvas().addChild(problemTextAreaInverted);
-
         user1Workplace = new RealistVotingUserWorkplace(mtApp);
         user1Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         user2Workplace = new RealistVotingUserWorkplace(mtApp);
@@ -73,7 +53,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
         user3Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         user4Workplace = new RealistVotingUserWorkplace(mtApp);
         user4Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        
+
         user1Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, 0));
         getCanvas().addChild(user1Workplace);
 
@@ -95,28 +75,35 @@ public class RealistVotingScene extends AbstractMTWDScene {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
         user1Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user1Workplace));
+        user1Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user1Workplace));
         user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
         user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
 
-        
         user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user2Workplace));
+        user2Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user2Workplace));
         user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
         user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
-        
+
         user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user3Workplace));
+        user3Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user3Workplace));
         user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
         user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
-        
+
         user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user4Workplace));
+        user4Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user4Workplace));
         user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
         user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
@@ -137,14 +124,6 @@ public class RealistVotingScene extends AbstractMTWDScene {
         user2Workplace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.user2Id));
         user3Workplace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.user3Id));
         user4Workplace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.user4Id));
-
-        problemTextArea.setText(controller.getCurrentProblemDescription());
-        problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        problemTextArea.translate(new Vector3D(0, problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-
-        problemTextAreaInverted.setText(controller.getCurrentProblemDescription());
-        problemTextAreaInverted.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        problemTextAreaInverted.translate(new Vector3D(0, -problemTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
     }
 
     @Override
@@ -172,7 +151,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-         @Override
+        @Override
         public boolean processGestureEvent(MTGestureEvent ge) {
             TapEvent te = (TapEvent) ge;
             if (te.getId() == TapEvent.GESTURE_STARTED) {
@@ -182,6 +161,66 @@ public class RealistVotingScene extends AbstractMTWDScene {
         }
     }
     
+    public class HelpButtonListener implements IGestureEventListener {
+
+        private final RealistVotingUserWorkplace workplace;
+        private final Popup helpPopup;
+
+        public HelpButtonListener(RealistVotingUserWorkplace workplace) {
+            this.workplace = workplace;
+            helpPopup = new Popup(mtApp);
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            switch (te.getId()) {
+                case TapEvent.GESTURE_STARTED:
+                    workplace.addChild(helpPopup);
+                    helpPopup.setText(((RealistVotingSceneController) controller).getHelpText());
+                    helpPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
+                    helpPopup.setVisible(true);
+                    break;
+                case TapEvent.GESTURE_ENDED:
+                    helpPopup.setVisible(false);
+                    workplace.removeChild(helpPopup);
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+
+    public class ProblemButtonListener implements IGestureEventListener {
+
+        private final RealistVotingUserWorkplace workplace;
+        private final Popup problemPopup;
+
+        public ProblemButtonListener(RealistVotingUserWorkplace workplace) {
+            this.workplace = workplace;
+            problemPopup = new Popup(mtApp);
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            switch (te.getId()) {
+                case TapEvent.GESTURE_STARTED:
+                    workplace.addChild(problemPopup);
+                    problemPopup.setText(controller.getCurrentProblemDescription());
+                    problemPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
+                    problemPopup.setVisible(true);
+                    break;
+                case TapEvent.GESTURE_ENDED:
+                    problemPopup.setVisible(false);
+                    workplace.removeChild(problemPopup);
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+
     public class CloseWorkspaceButtonListener implements IGestureEventListener {
 
         private final String userId;
@@ -211,7 +250,7 @@ public class RealistVotingScene extends AbstractMTWDScene {
             this.userId = userId;
         }
 
-         @Override
+        @Override
         public boolean processGestureEvent(MTGestureEvent ge) {
             TapEvent te = (TapEvent) ge;
             if (te.getId() == TapEvent.GESTURE_STARTED) {
