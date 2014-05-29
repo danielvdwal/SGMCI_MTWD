@@ -15,7 +15,6 @@ import java.util.Map;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
-import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
@@ -27,8 +26,6 @@ import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
-import org.mt4j.util.font.FontManager;
-import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
