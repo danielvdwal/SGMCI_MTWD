@@ -6,14 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
-import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
-import org.mt4j.util.font.FontManager;
-import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
@@ -40,10 +37,10 @@ public final class RealistVotingUserWorkplace extends MTRectangle {
     private static final float arrowButtonScaleFactor = 2.0f;
     private static final float voteButtonScaleFactor = 2.0f;
 
-    private final PApplet pApplet;
     private final MTSvgButton addWorkspaceButton;
     private final MTRectangle workspace;
-    private final MTTextArea currentDisplayedIdea;
+    private final MTRectangle ideaSpace;
+    private final Cloud currentDisplayedIdea;
     private final MTSvgButton helpButton;
     private final MTSvgButton problemButton;
     private final MTSvgButton closeButton;
@@ -60,25 +57,27 @@ public final class RealistVotingUserWorkplace extends MTRectangle {
 
     public RealistVotingUserWorkplace(PApplet pApplet) {
         super(pApplet, 400, 300);
-        this.pApplet = pApplet;
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setPickable(false);
         this.removeAllGestureEventListeners();
         this.unregisterAllInputProcessors();
 
-        IFont ideaFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 18);
-
         this.addWorkspaceButton = new MTSvgButton(pApplet, addWorkspaceButtonSvgFile);
         this.workspace = new MTRectangle(pApplet, 400, 300);
         this.workspace.setNoFill(true);
         this.workspace.setNoStroke(true);
         this.workspace.setPickable(false);
-        this.removeAllGestureEventListeners();
-        this.unregisterAllInputProcessors();
-        this.currentDisplayedIdea = new MTTextArea(pApplet, ideaFont);
-        this.currentDisplayedIdea.setNoStroke(false);
-        this.currentDisplayedIdea.setPickable(false);
+        removeAllGestureEventListeners();
+        unregisterAllInputProcessors();
+
+        this.ideaSpace = new MTRectangle(pApplet, 200, 200);
+        this.ideaSpace.removeAllGestureEventListeners();
+        this.ideaSpace.unregisterAllInputProcessors();
+        this.ideaSpace.setNoFill(true);
+        this.ideaSpace.setNoStroke(true);
+        this.ideaSpace.setPickable(false);
+        this.currentDisplayedIdea = new Cloud(pApplet, false);
         this.currentDisplayedIdea.removeAllGestureEventListeners();
         this.currentDisplayedIdea.unregisterAllInputProcessors();
         this.helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
@@ -147,20 +146,21 @@ public final class RealistVotingUserWorkplace extends MTRectangle {
         addWorkspaceButton.setPositionRelativeToParent(new Vector3D(this.getWidthXY(TransformSpace.LOCAL) / 2, this.getHeightXY(TransformSpace.LOCAL) / 2));
 
         addChild(workspace);
-        workspace.addChild(currentDisplayedIdea);
-        currentDisplayedIdea.setSizeLocal(200f, 200f);
-        currentDisplayedIdea.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) / 2));
+        workspace.addChild(ideaSpace);
+        ideaSpace.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, ideaSpace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
+        ideaSpace.addChild(currentDisplayedIdea);
+        currentDisplayedIdea.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) / 2, currentDisplayedIdea.getHeightXYRelativeToParent() / 2));
         workspace.addChild(helpButton);
         workspace.addChild(problemButton);
         workspace.addChild(closeButton);
         workspace.addChild(readyButton);
         workspace.addChild(readyButtonDone);
-        currentDisplayedIdea.addChild(leftButton);
-        currentDisplayedIdea.addChild(rightButton);
-        currentDisplayedIdea.addChild(likeButton);
-        currentDisplayedIdea.addChild(likeButtonSelected);
-        currentDisplayedIdea.addChild(dislikeButton);
-        currentDisplayedIdea.addChild(dislikeButtonSelected);
+        ideaSpace.addChild(leftButton);
+        ideaSpace.addChild(rightButton);
+        ideaSpace.addChild(likeButton);
+        ideaSpace.addChild(likeButtonSelected);
+        ideaSpace.addChild(dislikeButton);
+        ideaSpace.addChild(dislikeButtonSelected);
         helpButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         problemButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         closeButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
@@ -178,13 +178,13 @@ public final class RealistVotingUserWorkplace extends MTRectangle {
         readyButton.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) + readyButton.getWidthXYRelativeToParent(), workspace.getHeightXY(TransformSpace.LOCAL) - readyButton.getHeightXYRelativeToParent() + 30));
         readyButtonDone.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) + readyButtonDone.getWidthXYRelativeToParent(), workspace.getHeightXY(TransformSpace.LOCAL) - readyButtonDone.getHeightXYRelativeToParent() + 30));
         readyButtonDone.setVisible(false);
-        leftButton.setPositionRelativeToParent(new Vector3D(-leftButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) / 2));
-        rightButton.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) + rightButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) / 2));
-        likeButton.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 - likeButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + likeButton.getHeightXYRelativeToParent()));
-        likeButtonSelected.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 - likeButtonSelected.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + likeButtonSelected.getHeightXYRelativeToParent()));
+        leftButton.setPositionRelativeToParent(new Vector3D(-leftButton.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL)/ 2));
+        rightButton.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) + rightButton.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL) / 2));
+        likeButton.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) / 2 - likeButton.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL) + likeButton.getHeightXYRelativeToParent()));
+        likeButtonSelected.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) / 2 - likeButtonSelected.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL) + likeButtonSelected.getHeightXYRelativeToParent()));
         likeButtonSelected.setVisible(false);
-        dislikeButton.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButton.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + dislikeButton.getHeightXYRelativeToParent()));
-        dislikeButtonSelected.setPositionRelativeToParent(new Vector3D(currentDisplayedIdea.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButtonSelected.getWidthXYRelativeToParent(), currentDisplayedIdea.getHeightXY(TransformSpace.LOCAL) + dislikeButtonSelected.getHeightXYRelativeToParent()));
+        dislikeButton.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButton.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL) + dislikeButton.getHeightXYRelativeToParent()));
+        dislikeButtonSelected.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButtonSelected.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL) + dislikeButtonSelected.getHeightXYRelativeToParent()));
         dislikeButtonSelected.setVisible(false);
         workspace.setVisible(false);
     }
@@ -244,8 +244,7 @@ public final class RealistVotingUserWorkplace extends MTRectangle {
 
     private void updateWorkspace() {
         VotedIdea votedIdea = votedIdeas.get(currentIndex);
-        currentDisplayedIdea.setText(votedIdea.getDescription());
-        currentDisplayedIdea.setSizeLocal(200, 200);
+        currentDisplayedIdea.setTextAreaText(votedIdea.getDescription());
 
         if (votedIdea.isLiked()) {
             likeButton.setVisible(false);
