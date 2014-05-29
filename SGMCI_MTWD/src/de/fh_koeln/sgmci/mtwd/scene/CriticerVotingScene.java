@@ -2,7 +2,6 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.CriticerVotingSceneController;
-import de.fh_koeln.sgmci.mtwd.controller.RealistVotingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.CriticerVotingUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import org.mt4j.MTApplication;
@@ -112,7 +111,6 @@ public class CriticerVotingScene extends AbstractMTWDScene {
         user4Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
     }
 
-    
     @Override
     public void startScene() {
         controller.setUserReadyToContinue(AbstractMTWDSceneController.user1Id, false);
