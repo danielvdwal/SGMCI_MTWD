@@ -179,7 +179,7 @@ public class CriticerVotingScene extends AbstractMTWDScene {
             switch (te.getId()) {
                 case TapEvent.GESTURE_STARTED:
                     workplace.addChild(helpPopup);
-                    helpPopup.setText(((RealistVotingSceneController) controller).getHelpText());
+                    helpPopup.setText(((CriticerVotingSceneController) controller).getHelpText());
                     helpPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
