@@ -1,25 +1,16 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
-import de.fh_koeln.sgmci.mtwd.model.Idea;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTList;
 import org.mt4j.components.visibleComponents.widgets.MTListCell;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.input.inputProcessors.IGestureEventListener;
-import org.mt4j.input.inputProcessors.MTGestureEvent;
-import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
-import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.util.MTColor;
 import org.mt4j.util.font.FontManager;
 import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
-
 import processing.core.PApplet;
 
 /**
@@ -39,6 +30,7 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
     private static final float buttonScaleFactor = 1.4f;
     private static final float arrowButtonScaleFactor = 2.0f;
 
+    private final PApplet pApplet;
     private final MTSvgButton addWorkspaceButton;
     private final MTRectangle workspace;
     private final MTRectangle dashboardSpace;
@@ -46,31 +38,25 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
     private final MTSvgButton helpButton;
     private final MTSvgButton problemButton;
     private final MTSvgButton closeButton;
-    private final MTSvgButton startButton;
+    private final MTSvgButton continueButton;
     private final MTSvgButton leftButton;
     private final MTSvgButton rightButton;
-    private final List<Idea> ideas;
-    private MTList commentList;
-    private MTListCell commentListCell;
-    private MTTextArea commentTextField;
-    private AbstractKeyboard keyboard;
-    private IFont problemFont;
-    private IFont ideaFont;
-    private IFont commentFont;
-    private int currentIndex;
+    private final MTList commentList;
+    private final MTTextArea commentTextArea;
+    private final AbstractKeyboard keyboard;
+    private final IFont commentFont;
 
     public RealistCommentingModeratorWorkplace(PApplet pApplet) {
         super(pApplet, 400, 300);
+        this.pApplet = pApplet;
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setPickable(false);
         this.removeAllGestureEventListeners();
         this.unregisterAllInputProcessors();
 
-        this.problemFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 30);
-        this.ideaFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 40);
         this.commentFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 18);
-        
+
         this.addWorkspaceButton = new MTSvgButton(pApplet, addWorkspaceButtonSvgFile);
         this.workspace = new MTRectangle(pApplet, 400, 300);
         this.workspace.setNoFill(true);
@@ -80,58 +66,61 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         this.workspace.unregisterAllInputProcessors();
         removeAllGestureEventListeners();
         unregisterAllInputProcessors();
-        
+
         this.keyboard = new Keyboard(pApplet);
-        
-        this.commentTextField = new MTTextArea(pApplet, 0, 0, 200, 200, commentFont);
-        this.commentTextField.setFillColor(MTColor.YELLOW);
-        this.commentTextField.setEnableCaret(true);
-        this.commentTextField.setPickable(false);
-        
-        this.commentList = new MTList(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL)/2-10, 410);
-        this.commentListCell = new MTListCell(pApplet, keyboard.getWidthXY(TransformSpace.LOCAL)/2-10, 410);
-        
+
+        this.commentTextArea = new MTTextArea(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 200, commentFont);
+        this.commentTextArea.setFillColor(MTColor.YELLOW);
+        this.commentTextArea.setEnableCaret(true);
+        this.commentTextArea.setPickable(false);
+
+        this.commentList = new MTList(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 410);
+
         this.dashboardSpace = new MTRectangle(pApplet, keyboard.getWidth(), 420);
         this.dashboardSpace.removeAllGestureEventListeners();
         this.dashboardSpace.unregisterAllInputProcessors();
         this.dashboardSpace.setNoFill(true);
         this.dashboardSpace.setNoStroke(true);
         this.dashboardSpace.setPickable(false);
-        
+
         this.keyboard.setPickable(false);
-        this.keyboard.addTextInputListener(commentTextField);
-        
+        this.keyboard.addTextInputListener(commentTextArea);
+
         this.currentDisplayedIdea = new Cloud(pApplet, false);
         this.currentDisplayedIdea.removeAllGestureEventListeners();
         this.currentDisplayedIdea.unregisterAllInputProcessors();
         this.helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
         this.problemButton = new MTSvgButton(pApplet, problemButtonSvgFile);
         this.closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
-        this.startButton = new MTSvgButton(pApplet, startButtonSvgFile);
+        this.continueButton = new MTSvgButton(pApplet, startButtonSvgFile);
         this.leftButton = new MTSvgButton(pApplet, leftButtonSvgFile);
         this.rightButton = new MTSvgButton(pApplet, rightButtonSvgFile);
 
-        this.ideas = new LinkedList<Idea>();
-        this.currentIndex = 0;
-
         positionAllComponents();
-        addEventListeners();
     }
 
-    public void fillIdeas(Collection<Idea> ideas) {
-        this.ideas.clear();
-        this.ideas.addAll(ideas);
-        this.currentIndex = 0;
-        updateWorkspace();
+    public void setIdea(String decription) {
+        currentDisplayedIdea.setTextAreaText(decription);
+    }
+
+    public void setComments(Collection<String> comments) {
+        commentList.removeAllListElements();
+        for (String comment : comments) {
+            final MTTextArea textArea = new MTTextArea(pApplet, commentFont);
+            textArea.setNoFill(true);
+            textArea.setNoStroke(true);
+            textArea.setText(comment);
+            final MTListCell listCell = new MTListCell(pApplet, textArea.getWidthXY(TransformSpace.LOCAL), textArea.getHeightXY(TransformSpace.LOCAL));
+            listCell.setNoFill(true);
+            listCell.setNoStroke(true);
+            listCell.addChild(textArea);
+            commentList.addListElement(listCell);
+        }
     }
 
     public void setIsActive(boolean active) {
         addWorkspaceButton.setVisible(!active);
         workspace.setVisible(active);
-    }
-
-    public void setIsReady(boolean ready) {
-        startButton.setVisible(!ready);
     }
 
     public MTSvgButton getAddWorkspaceButton() {
@@ -150,8 +139,20 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         return closeButton;
     }
 
-    public MTSvgButton getStartButton() {
-        return startButton;
+    public MTSvgButton getContinueButton() {
+        return continueButton;
+    }
+
+    public MTSvgButton getLeftButton() {
+        return leftButton;
+    }
+
+    public MTSvgButton getRightButton() {
+        return rightButton;
+    }
+
+    public MTTextArea getCommentTextArea() {
+        return commentTextArea;
     }
 
     private void positionAllComponents() {
@@ -164,84 +165,34 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         keyboard.addChild(helpButton);
         keyboard.addChild(problemButton);
         keyboard.addChild(closeButton);
-        keyboard.addChild(startButton);
-        
-        commentList.addListElement(commentListCell);
+        keyboard.addChild(continueButton);
+
         dashboardSpace.addChild(commentList);
-        dashboardSpace.addChild(commentTextField);
+        dashboardSpace.addChild(commentTextArea);
         dashboardSpace.addChild(currentDisplayedIdea);
         dashboardSpace.addChild(leftButton);
         dashboardSpace.addChild(rightButton);
-        
+
         workspace.addChild(dashboardSpace);
         dashboardSpace.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, -dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2));
-        
+
         helpButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         problemButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         closeButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
-        startButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
+        continueButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         leftButton.scale(arrowButtonScaleFactor, arrowButtonScaleFactor, arrowButtonScaleFactor, Vector3D.ZERO_VECTOR);
         rightButton.scale(arrowButtonScaleFactor, arrowButtonScaleFactor, arrowButtonScaleFactor, Vector3D.ZERO_VECTOR);
         keyboard.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, workspace.getHeightXY(TransformSpace.LOCAL) / 2));
         helpButton.setPositionRelativeToParent(new Vector3D(-helpButton.getWidthXYRelativeToParent(), helpButton.getHeightXYRelativeToParent() - 30));
         problemButton.setPositionRelativeToParent(new Vector3D(-problemButton.getWidthXYRelativeToParent(), keyboard.getHeight() - problemButton.getHeightXYRelativeToParent() + 30));
         closeButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + closeButton.getWidthXYRelativeToParent(), closeButton.getHeightXYRelativeToParent() - 30));
-        startButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + startButton.getWidthXYRelativeToParent(), keyboard.getHeight() - startButton.getHeightXYRelativeToParent() + 30));
-        commentList.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.75f + 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 -10));
-        commentTextField.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.75f - 10));
+        continueButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + continueButton.getWidthXYRelativeToParent(), keyboard.getHeight() - continueButton.getHeightXYRelativeToParent() + 30));
+        commentList.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.75f + 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
+        commentTextArea.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.75f - 10));
         currentDisplayedIdea.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.25f - 10));
         leftButton.setPositionRelativeToParent(new Vector3D(-leftButton.getWidthXYRelativeToParent(), dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
         rightButton.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) + rightButton.getWidthXYRelativeToParent(), dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
-      
-        
+
         workspace.setVisible(false);
-    }
-
-    private void addEventListeners() {
-        leftButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
-
-            @Override
-            public boolean processGestureEvent(MTGestureEvent mtge) {
-                if (mtge.getId() == TapEvent.GESTURE_ENDED) {
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                        updateWorkspace();
-                    }
-                }
-                return false;
-            }
-        });
-        rightButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
-
-            @Override
-            public boolean processGestureEvent(MTGestureEvent mtge) {
-                if (mtge.getId() == TapEvent.GESTURE_ENDED) {
-                    if (currentIndex < ideas.size() - 1) {
-                        currentIndex++;
-                        updateWorkspace();
-                    }
-                }
-                return false;
-            }
-        });
-    }
-
-    private void updateWorkspace() {
-        Idea idea = ideas.get(currentIndex);
-        currentDisplayedIdea.setTextAreaText(idea.getDescription());
-
-        if (currentIndex == 0 && ideas.size() == 1) {
-            leftButton.setVisible(false);
-            rightButton.setVisible(false);
-        } else if (currentIndex == 0) {
-            leftButton.setVisible(false);
-            rightButton.setVisible(true);
-        } else if (currentIndex == ideas.size() - 1) {
-            rightButton.setVisible(false);
-            leftButton.setVisible(true);
-        } else {
-            leftButton.setVisible(true);
-            rightButton.setVisible(true);
-        }
     }
 }

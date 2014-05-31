@@ -16,11 +16,27 @@ import java.util.List;
  */
 public class RealistCommentingSceneController extends AbstractMTWDSceneController {
 
+    private static final String HELP_TEXT = "Auf diesem Screen k\u00F6nnen Sie\n"
+            + "Kommentare zur Machbarkeit der Ideen eintragen.\n"
+            + "Durch die Pfeile links und rechts\n"
+            + "k\u00F6nnen Sie zwischen den Ideen wechseln.";
     private static int commentIdCounter = 0;
     private int index = 0;
             
     public RealistCommentingSceneController(IScene observer) {
         super(observer);
+    }
+    
+    public String getHelpText() {
+        return HELP_TEXT;
+    }
+    
+    public boolean isFirstIdea() {
+        return index == 0;
+    }
+    
+    public boolean isLastIdea() {
+        return index == getAllVisibleIdeasForCurrentProblem().size() - 1;
     }
     
     public void setNextIdeaAsSelectedOne() {
@@ -36,6 +52,10 @@ public class RealistCommentingSceneController extends AbstractMTWDSceneControlle
         }
     }
     
+    public void setFirstIdeaAsSelectedOne() {
+        index = 0;
+    }
+    
     public Idea getCurrentlySelectedIdeaForCurrentProblem() {
         return getAllVisibleIdeasForCurrentProblem().get(index);
     }
@@ -46,6 +66,15 @@ public class RealistCommentingSceneController extends AbstractMTWDSceneControlle
     
     public void addCommentToCurrentlySelectedIdea(String commentDescription) {
         getCurrentlySelectedIdeaForCurrentProblem().addComment(String.format("comment_%03d", commentIdCounter++), commentDescription);
+    }
+    
+    @Override
+    public void update() {
+        setFirstIdeaAsSelectedOne();
+    }
+    
+    public void proceed() {
+        observer.gotoNextScene();
     }
 }
 
