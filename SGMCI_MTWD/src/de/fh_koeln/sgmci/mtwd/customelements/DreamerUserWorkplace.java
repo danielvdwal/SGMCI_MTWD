@@ -1,13 +1,8 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
-import org.mt4j.components.visibleComponents.widgets.MTSvg;
-import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.util.font.FontManager;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
 
@@ -125,6 +120,5 @@ public final class DreamerUserWorkplace extends MTRectangle {
         cloud.setPositionRelativeToParent(new Vector3D(keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
 
         keyboard.addTextInputListener(cloud.getTextArea());
-        
     }
 }
