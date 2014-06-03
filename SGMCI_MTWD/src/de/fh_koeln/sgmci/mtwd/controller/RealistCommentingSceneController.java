@@ -24,59 +24,58 @@ public class RealistCommentingSceneController extends AbstractMTWDSceneControlle
             + "k\u00F6nnen Sie zwischen den Ideen wechseln.";
     private static int commentIdCounter = 0;
     private int index = 0;
-            
+
     public RealistCommentingSceneController(IScene observer) {
         super(observer);
     }
-    
+
     public String getHelpText() {
         return HELP_TEXT;
     }
-    
+
     public boolean isFirstIdea() {
         return index == 0;
     }
-    
+
     public boolean isLastIdea() {
         return index == getAllVisibleIdeasForCurrentProblem().size() - 1;
     }
-    
+
     public void setNextIdeaAsSelectedOne() {
         List<Idea> ideas = getAllVisibleIdeasForCurrentProblem();
-        if(index <= ideas.size()) {
+        if (index <= ideas.size()) {
             index++;
         }
     }
-    
+
     public void setPreviousIdeaAsSelectedOne() {
-        if(index > 0) {
+        if (index > 0) {
             index--;
         }
     }
-    
+
     public void setFirstIdeaAsSelectedOne() {
         index = 0;
     }
-    
+
     public Idea getCurrentlySelectedIdeaForCurrentProblem() {
         return getAllVisibleIdeasForCurrentProblem().get(index);
     }
-    
+
     public Collection<Comment> getAllCommentsForCurrentlySelectedIdea() {
         return getCurrentlySelectedIdeaForCurrentProblem().getAllComments();
     }
-    
+
     public void addCommentToCurrentlySelectedIdea(String commentDescription) {
         getCurrentlySelectedIdeaForCurrentProblem().addComment(String.format("comment_%03d", commentIdCounter++), commentDescription);
     }
-    
+
     @Override
     public void update() {
         setFirstIdeaAsSelectedOne();
     }
-    
+
     public void proceed() {
         observer.gotoNextScene();
     }
 }
-

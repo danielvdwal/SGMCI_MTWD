@@ -1,20 +1,16 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
-import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
-import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingModeratorWorkplace;
 import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingUserWorkplace;
-import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.model.Comment;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
