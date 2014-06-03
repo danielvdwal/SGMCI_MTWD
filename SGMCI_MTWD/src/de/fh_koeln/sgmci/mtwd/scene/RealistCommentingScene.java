@@ -1,9 +1,13 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
+import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
+import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkplace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingModeratorWorkplace;
+import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingUserWorkplace;
+import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.model.Comment;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -15,6 +19,8 @@ import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
@@ -32,6 +38,9 @@ import processing.core.PImage;
 public class RealistCommentingScene extends AbstractMTWDScene {
 
     private RealistCommentingModeratorWorkplace moderatorWorkplace;
+    private RealistCommentingUserWorkplace user2Workplace;
+    private RealistCommentingUserWorkplace user3Workplace;
+    private RealistCommentingUserWorkplace user4Workplace;
 
     public RealistCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -52,24 +61,23 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         moderatorWorkplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - moderatorWorkplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
         getCanvas().addChild(moderatorWorkplace);
 
-        final MTRectangle rectangle = new MTRectangle(mtApp, -100, 0, 30, 30);
-        rectangle.translate(new Vector3D(0, 15, 0));
-        rectangle.registerInputProcessor(new TapProcessor(mtApp));
-        rectangle.addGestureListener(TapProcessor.class,
-                new IGestureEventListener() {
-                    @Override
-                    public boolean processGestureEvent(MTGestureEvent ge) {
-                        TapEvent te = (TapEvent) ge;
-                        if (te.getId() == TapEvent.GESTURE_STARTED) {
-                            ((RealistCommentingSceneController) controller).addCommentToCurrentlySelectedIdea(moderatorWorkplace.getCommentTextArea().getText());
-                            moderatorWorkplace.getCommentTextArea().setText("");
-                            updateScene();
-                        }
-                        return false;
-                    }
-                });
-        moderatorWorkplace.addChild(rectangle);
+        user2Workplace = new RealistCommentingUserWorkplace(mtApp);
+        user2Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user2Workplace.rotateZ(new Vector3D(user2Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 180);
+        user2Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, 0));
+        getCanvas().addChild(user2Workplace);
 
+        user3Workplace = new RealistCommentingUserWorkplace(mtApp);
+        user3Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user3Workplace.rotateZ(new Vector3D(user3Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 90);
+        user3Workplace.setPositionGlobal(new Vector3D(user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user3Workplace);
+
+        user4Workplace = new RealistCommentingUserWorkplace(mtApp);
+        user4Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user4Workplace.rotateZ(new Vector3D(user4Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
+        user4Workplace.setPositionGlobal(new Vector3D(mtApp.width - user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user4Workplace);
     }
 
     @Override
@@ -86,6 +94,23 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         moderatorWorkplace.getContinueButton().addGestureListener(TapProcessor.class, new ContinueButtonListener());
         moderatorWorkplace.getLeftButton().addGestureListener(TapProcessor.class, new LeftButtonListener());
         moderatorWorkplace.getRightButton().addGestureListener(TapProcessor.class, new RightButtonListener());
+        moderatorWorkplace.getCommentTextArea().registerInputProcessor(new FlickProcessor());
+        moderatorWorkplace.getCommentTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener());
+
+        user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
+        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+
+        user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
+        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+
+        user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
+        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
     }
 
     @Override
@@ -96,6 +121,9 @@ public class RealistCommentingScene extends AbstractMTWDScene {
     @Override
     public void updateScene() {
         moderatorWorkplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
+        user2Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
+        user3Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
+        user4Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
 
         if (((RealistCommentingSceneController) controller).isFirstIdea()) {
             moderatorWorkplace.getLeftButton().setVisible(false);
@@ -108,10 +136,21 @@ public class RealistCommentingScene extends AbstractMTWDScene {
             moderatorWorkplace.getRightButton().setVisible(true);
         }
 
-        moderatorWorkplace.setIdea(((RealistCommentingSceneController) controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription());
+        String idea = ((RealistCommentingSceneController) controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription();
+        String problem = controller.getCurrentProblemDescription();
+
+        moderatorWorkplace.setIdea(idea);
+        user2Workplace.setIdea(idea);
+        user3Workplace.setIdea(idea);
+        user4Workplace.setIdea(idea);
+
+        user2Workplace.setProblem(problem);
+        user3Workplace.setProblem(problem);
+        user4Workplace.setProblem(problem);
+
         List<String> commentDescriptions = new LinkedList<String>();
-        Collection<Comment> comments = ((RealistCommentingSceneController)controller).getAllCommentsForCurrentlySelectedIdea();
-        for(Comment comment : comments) {
+        Collection<Comment> comments = ((RealistCommentingSceneController) controller).getAllCommentsForCurrentlySelectedIdea();
+        for (Comment comment : comments) {
             commentDescriptions.add(comment.getDescription());
         }
         moderatorWorkplace.setComments(commentDescriptions);
@@ -242,6 +281,25 @@ public class RealistCommentingScene extends AbstractMTWDScene {
             if (mtge.getId() == TapEvent.GESTURE_ENDED) {
                 ((RealistCommentingSceneController) controller).setNextIdeaAsSelectedOne();
                 updateScene();
+            }
+            return false;
+        }
+    }
+
+    public class SendButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            FlickEvent e = (FlickEvent) ge;
+            if (e.getId() == MTGestureEvent.GESTURE_ENDED && e.isFlick()) {
+                switch (e.getDirection()) {
+                    case NORTH_EAST:
+                    case EAST:
+                        ((RealistCommentingSceneController) controller).addCommentToCurrentlySelectedIdea(moderatorWorkplace.getCommentTextArea().getText());
+                        moderatorWorkplace.getCommentTextArea().setText("");
+                        updateScene();
+                        break;
+                }
             }
             return false;
         }

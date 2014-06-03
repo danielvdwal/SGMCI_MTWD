@@ -72,7 +72,8 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
         this.commentTextArea = new MTTextArea(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 200, commentFont);
         this.commentTextArea.setFillColor(MTColor.YELLOW);
         this.commentTextArea.setEnableCaret(true);
-        this.commentTextArea.setPickable(false);
+        this.commentTextArea.removeAllGestureEventListeners();
+        this.commentTextArea.unregisterAllInputProcessors();
 
         this.commentList = new MTList(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 410);
 
