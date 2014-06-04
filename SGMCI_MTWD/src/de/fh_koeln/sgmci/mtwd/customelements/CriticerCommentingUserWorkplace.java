@@ -14,10 +14,10 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class RealistCommentingUserWorkplace extends MTRectangle {
+public final class CriticerCommentingUserWorkplace extends MTRectangle {
 
-    private static final String addWorkspaceButtonSvgFile = "data/plusButton.svg";
-    private static final String closeButtonSvgFile = "data/closeButton.svg";
+    private static final String addWorkspaceButtonSvgFile = "data/plusButton_light.svg";
+    private static final String closeButtonSvgFile = "data/closeButton_light.svg";
     private static final float buttonScaleFactor = 1.4f;
 
     private final MTSvgButton addWorkspaceButton;
@@ -26,7 +26,7 @@ public final class RealistCommentingUserWorkplace extends MTRectangle {
     private final MTTextArea problemTextArea;
     private final MTSvgButton closeButton;
 
-    public RealistCommentingUserWorkplace(PApplet pApplet) {
+    public CriticerCommentingUserWorkplace(PApplet pApplet) {
         super(pApplet, 200, 200);
         this.setNoFill(true);
         this.setNoStroke(true);

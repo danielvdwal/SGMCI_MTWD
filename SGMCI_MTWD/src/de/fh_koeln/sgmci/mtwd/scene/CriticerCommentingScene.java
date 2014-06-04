@@ -1,25 +1,28 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
-import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
-import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
-import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
+import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
+import de.fh_koeln.sgmci.mtwd.controller.CriticerCommentingSceneController;
+import de.fh_koeln.sgmci.mtwd.customelements.CriticerCommentingModeratorWorkplace;
+import de.fh_koeln.sgmci.mtwd.customelements.CriticerCommentingUserWorkplace;
+import de.fh_koeln.sgmci.mtwd.customelements.Popup;
+import de.fh_koeln.sgmci.mtwd.model.Critic;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
-import org.mt4j.components.visibleComponents.widgets.MTList;
-import org.mt4j.components.visibleComponents.widgets.MTListCell;
-import org.mt4j.components.visibleComponents.widgets.MTTextArea;
-import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
+import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.flickProcessor.FlickProcessor;
+import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
 import org.mt4j.util.MT4jSettings;
-import org.mt4j.util.MTColor;
-import org.mt4j.util.font.FontManager;
-import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PImage;
 
@@ -30,23 +33,14 @@ import processing.core.PImage;
  */
 public class CriticerCommentingScene extends AbstractMTWDScene {
 
-    private MTTextArea problemTextArea;
-    private MTTextArea ideaTextArea;
-    private MTTextArea problemNorthTextArea;
-    private MTTextArea ideaNorthTextArea;
-    private MTTextArea problemWestTextArea;
-    private MTTextArea ideaWestTextArea;
-    private MTTextArea problemEastTextArea;
-    private MTTextArea ideaEastTextArea;
-    private MTList commentList;
-    private MTListCell commentListCell;
-    private MTSvgButton helpButton;
-    private MTSvgButton settingsButton;
-    private MTSvgButton startButton;
+    private CriticerCommentingModeratorWorkplace moderatorWorkplace;
+    private CriticerCommentingUserWorkplace user2Workplace;
+    private CriticerCommentingUserWorkplace user3Workplace;
+    private CriticerCommentingUserWorkplace user4Workplace;
 
     public CriticerCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
-        controller = new RealistCommentingSceneController(this);
+        controller = new CriticerCommentingSceneController(this);
     }
 
     @Override
@@ -58,124 +52,28 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
 
     @Override
     public void createComponents() {
-        final IFont problemFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 30, MTColor.WHITE);
-        final IFont ideaFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 40, MTColor.WHITE);
-        final IFont commentFont = FontManager.getInstance().createFont(mtApp, "arial.ttf", 18);
+        moderatorWorkplace = new CriticerCommentingModeratorWorkplace(mtApp);
+        moderatorWorkplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        moderatorWorkplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - moderatorWorkplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
+        getCanvas().addChild(moderatorWorkplace);
 
-        problemTextArea = new MTTextArea(mtApp, problemFont);
-        problemTextArea.setNoFill(true);
-        problemTextArea.setNoStroke(true);
-        problemTextArea.setPickable(false);
-        problemTextArea.setText("Problem");
+        user2Workplace = new CriticerCommentingUserWorkplace(mtApp);
+        user2Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user2Workplace.rotateZ(new Vector3D(user2Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 180);
+        user2Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, 0));
+        getCanvas().addChild(user2Workplace);
 
-        problemNorthTextArea = new MTTextArea(mtApp, problemFont);
-        problemNorthTextArea.setNoFill(true);
-        problemNorthTextArea.setNoStroke(true);
-        problemNorthTextArea.setPickable(false);
-        problemNorthTextArea.setText("Problem");
-        problemNorthTextArea.rotateZ(Vector3D.ZERO_VECTOR, 180);
-        problemWestTextArea = new MTTextArea(mtApp, problemFont);
-        problemWestTextArea.setNoFill(true);
-        problemWestTextArea.setNoStroke(true);
-        problemWestTextArea.setPickable(false);
-        problemWestTextArea.setText("Problem");
-        problemWestTextArea.rotateZ(Vector3D.ZERO_VECTOR, 90);
-        problemEastTextArea = new MTTextArea(mtApp, problemFont);
-        problemEastTextArea.setNoFill(true);
-        problemEastTextArea.setNoStroke(true);
-        problemEastTextArea.setPickable(false);
-        problemEastTextArea.setText("Problem");
-        problemEastTextArea.rotateZ(Vector3D.ZERO_VECTOR, 270);
+        user3Workplace = new CriticerCommentingUserWorkplace(mtApp);
+        user3Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user3Workplace.rotateZ(new Vector3D(user3Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 90);
+        user3Workplace.setPositionGlobal(new Vector3D(user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user3Workplace);
 
-        ideaTextArea = new MTTextArea(mtApp, ideaFont);
-        ideaTextArea.setNoFill(true);
-        ideaTextArea.setNoStroke(true);
-        ideaTextArea.setPickable(false);
-        ideaTextArea.setText("Idee");
-        ideaNorthTextArea = new MTTextArea(mtApp, ideaFont);
-        ideaNorthTextArea.setNoFill(true);
-        ideaNorthTextArea.setNoStroke(true);
-        ideaNorthTextArea.setPickable(false);
-        ideaNorthTextArea.setText("Idee");
-        ideaNorthTextArea.rotateZ(Vector3D.ZERO_VECTOR, 180);
-        ideaWestTextArea = new MTTextArea(mtApp, ideaFont);
-        ideaWestTextArea.setNoFill(true);
-        ideaWestTextArea.setNoStroke(true);
-        ideaWestTextArea.setPickable(false);
-        ideaWestTextArea.setText("Idee");
-        ideaWestTextArea.rotateZ(Vector3D.ZERO_VECTOR, 90);
-        ideaEastTextArea = new MTTextArea(mtApp, ideaFont);
-        ideaEastTextArea.setNoFill(true);
-        ideaEastTextArea.setNoStroke(true);
-        ideaEastTextArea.setPickable(false);
-        ideaEastTextArea.setText("Idee");
-        ideaEastTextArea.rotateZ(Vector3D.ZERO_VECTOR, 270);
-
-        getCanvas().addChild(problemTextArea);
-        getCanvas().addChild(problemNorthTextArea);
-        getCanvas().addChild(problemWestTextArea);
-        getCanvas().addChild(problemEastTextArea);
-        getCanvas().addChild(ideaTextArea);
-        getCanvas().addChild(ideaNorthTextArea);
-        getCanvas().addChild(ideaWestTextArea);
-        getCanvas().addChild(ideaEastTextArea);
-
-        final AbstractKeyboard keyboard = new Keyboard(mtApp);
-        keyboard.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        keyboard.setPositionRelativeToParent(new Vector3D(mtApp.width / 2, mtApp.height - keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
-
-        getCanvas().addChild(keyboard);
-
-        final MTTextArea commentTextArea = new MTTextArea(mtApp, commentFont);
-        commentTextArea.setFillColor(MTColor.YELLOW);
-        commentTextArea.setExpandDirection(MTTextArea.ExpandDirection.UP);
-        commentTextArea.unregisterAllInputProcessors();
-        commentTextArea.setEnableCaret(true);
-        keyboard.addChild(commentTextArea);
-        commentTextArea.setPositionRelativeToParent(new Vector3D(40, -commentTextArea.getHeightXY(TransformSpace.LOCAL) * 0.5f));
-
-        keyboard.addTextInputListener(commentTextArea);
-
-        final MTRectangle rectangle = new MTRectangle(mtApp, -100, 0, 30, 30);
-        rectangle.translate(new Vector3D(0, 15, 0));
-        rectangle.registerInputProcessor(new TapProcessor(mtApp));
-        rectangle.addGestureListener(TapProcessor.class,
-                new IGestureEventListener() {
-                    @Override
-                    public boolean processGestureEvent(MTGestureEvent ge) {
-                        TapEvent te = (TapEvent) ge;
-                        if (te.getId() == TapEvent.GESTURE_STARTED) {
-                            final MTTextArea newTextArea = new MTTextArea(mtApp, ideaFont);
-                            newTextArea.setText(commentTextArea.getText());
-                            getCanvas().addChild(newTextArea);
-
-                            commentTextArea.setText("");
-                        }
-                        return false;
-                    }
-                });
-        keyboard.addChild(rectangle);
-
-        commentList = new MTList(mtApp, 0, 0, keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 150);
-        commentListCell = new MTListCell(mtApp, keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT), 150);
-        commentList.addListElement(commentListCell);
-        commentList.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        commentList.translate(new Vector3D(0, 50));
-
-        getCanvas().addChild(commentList);
-
-        helpButton = new MTSvgButton(mtApp, "data/helpButton.svg");
-        helpButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * componentScaleFactor / 2 - 60, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * componentScaleFactor / 2));
-
-        startButton = new MTSvgButton(mtApp, "data/startButton.svg");
-        startButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 + keyboard.getWidthXY(TransformSpace.LOCAL) * componentScaleFactor / 2 + 120, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * componentScaleFactor / 2));
-
-        settingsButton = new MTSvgButton(mtApp, "data/settingsButton.svg");
-        settingsButton.setPositionRelativeToParent(new Vector3D(mtApp.getWidth() / 2 - keyboard.getWidthXY(TransformSpace.LOCAL) * componentScaleFactor / 2 - 180, mtApp.getHeight() - keyboard.getHeightXY(TransformSpace.LOCAL) * componentScaleFactor / 2));
-
-        getCanvas().addChild(helpButton);
-        getCanvas().addChild(startButton);
-        getCanvas().addChild(settingsButton);
+        user4Workplace = new CriticerCommentingUserWorkplace(mtApp);
+        user4Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user4Workplace.rotateZ(new Vector3D(user4Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
+        user4Workplace.setPositionGlobal(new Vector3D(mtApp.width - user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user4Workplace);
     }
 
     @Override
@@ -183,98 +81,223 @@ public class CriticerCommentingScene extends AbstractMTWDScene {
         // displays where the screen is touched
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        helpButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+        moderatorWorkplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        moderatorWorkplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
+        moderatorWorkplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener());
+        moderatorWorkplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        moderatorWorkplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, moderatorWorkplace.getCloseButton()));
+        moderatorWorkplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        moderatorWorkplace.getContinueButton().addGestureListener(TapProcessor.class, new ContinueButtonListener());
+        moderatorWorkplace.getLeftButton().addGestureListener(TapProcessor.class, new LeftButtonListener());
+        moderatorWorkplace.getRightButton().addGestureListener(TapProcessor.class, new RightButtonListener());
+        moderatorWorkplace.getCriticTextArea().registerInputProcessor(new FlickProcessor());
+        moderatorWorkplace.getCriticTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener());
 
-            @Override
-            public boolean processGestureEvent(MTGestureEvent mtge) {
-                switch (mtge.getId()) {
-                    case TapEvent.GESTURE_ENDED:
-                        final MTTextArea textarea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
-                        textarea.setText("Problem?");
-                        textarea.setNoStroke(true);
-                        textarea.setNoFill(true);
-                        textarea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
+        user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
+        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
 
-                        final MTTextArea helpPop = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 25, MTColor.BLUE));
-                        helpPop.setText("Such bei Google nach Hilfe -.-");
-                        helpPop.setPositionRelativeToOther(helpButton, new Vector3D(helpPop.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, -300));
-                        helpPop.setPickable(false);
-                        getCanvas().addChild(helpPop);
+        user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
+        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
 
-                        mtApp.getCurrentScene().getCanvas().addChild(textarea);
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
+        user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
+        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+    }
 
-        startButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
-
-            @Override
-            public boolean processGestureEvent(MTGestureEvent mtge) {
-                switch (mtge.getId()) {
-                    case TapEvent.GESTURE_ENDED:
-                        //controller.proceed(problemInputField.getText());
-                        gotoNextScene();
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
-
-        settingsButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
-
-            @Override
-            public boolean processGestureEvent(MTGestureEvent mtge) {
-                switch (mtge.getId()) {
-                    case TapEvent.GESTURE_ENDED:
-                        //wenn Button geklickt wurde
-                        MTTextArea textarea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE));
-                        textarea.setText("Loesung!!!");
-                        textarea.setNoStroke(true);
-                        textarea.setNoFill(true);
-                        textarea.setPositionGlobal(new Vector3D(mtApp.width / 2f, mtApp.height / 2f));
-
-                        mtApp.getCurrentScene().getCanvas().addChild(textarea);
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
+    @Override
+    public void startScene() {
+        updateScene();
     }
 
     @Override
     public void updateScene() {
-        //problemTextArea.setText(controller.getCurrentProblemDescription());
-        problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        problemTextArea.translate(new Vector3D(0, -100));
-        //problemNorthTextArea.setText(controller.getCurrentProblemDescription());
-        problemNorthTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 100, 0));
-        //problemNorthTextArea.translate(new Vector3D(0, -problemNorthTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //problemWestTextArea.setText(controller.getCurrentProblemDescription());
-        problemWestTextArea.setPositionGlobal(new Vector3D(100, mtApp.height / 2, 0));
-        //problemWestTextArea.translate(new Vector3D(0, -problemWestTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //problemEastTextArea.setText(controller.getCurrentProblemDescription());
-        problemEastTextArea.setPositionGlobal(new Vector3D(mtApp.width - 100, mtApp.height / 2, 0));
-        //problemEastTextArea.translate(new Vector3D(0, -problemEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        moderatorWorkplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
+        user2Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
+        user3Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
+        user4Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
 
-        //ideaTextArea.setText(controller.getCurrentProblemDescription());
-        ideaTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
-        ideaTextArea.translate(new Vector3D(0, ideaTextArea.getHeightXY(TransformSpace.LOCAL) - 100));
-        //ideaNorthTextArea.setText(controller.getCurrentProblemDescription());
-        ideaNorthTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 50, 0));
-        //ideaNorthTextArea.translate(new Vector3D(0, -ideaNorthTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //ideaWestTextArea.setText(controller.getCurrentProblemDescription());
-        ideaWestTextArea.setPositionGlobal(new Vector3D(50, mtApp.height / 2, 0));
-        //ideaWestTextArea.translate(new Vector3D(0, -ideaWestTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
-        //ideaEastTextArea.setText(controller.getCurrentProblemDescription());
-        ideaEastTextArea.setPositionGlobal(new Vector3D(mtApp.width - 50, mtApp.height / 2, 0));
-        //ideaEastTextArea.translate(new Vector3D(0, -ideaEastTextArea.getHeightXY(TransformSpace.LOCAL) / 2));
+        if (((CriticerCommentingSceneController) controller).isFirstIdea()) {
+            moderatorWorkplace.getLeftButton().setVisible(false);
+        } else {
+            moderatorWorkplace.getLeftButton().setVisible(true);
+        }
+        if (((CriticerCommentingSceneController) controller).isLastIdea()) {
+            moderatorWorkplace.getRightButton().setVisible(false);
+        } else {
+            moderatorWorkplace.getRightButton().setVisible(true);
+        }
+
+        String idea = ((CriticerCommentingSceneController) controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription();
+        String problem = controller.getCurrentProblemDescription();
+
+        moderatorWorkplace.setIdea(idea);
+        user2Workplace.setIdea(idea);
+        user3Workplace.setIdea(idea);
+        user4Workplace.setIdea(idea);
+
+        user2Workplace.setProblem(problem);
+        user3Workplace.setProblem(problem);
+        user4Workplace.setProblem(problem);
+
+        List<String> criticDescriptions = new LinkedList<String>();
+        Collection<Critic> critics = ((CriticerCommentingSceneController) controller).getAllCriticsForCurrentlySelectedIdea();
+        for (Critic critic : critics) {
+            criticDescriptions.add(critic.getDescription());
+        }
+        moderatorWorkplace.setCritics(criticDescriptions);
+    }
+
+    public class AddWorkspaceButtonListener implements IGestureEventListener {
+
+        private final String userId;
+
+        public AddWorkspaceButtonListener(String userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
+                controller.setUserActive(userId, true);
+            }
+            return false;
+        }
+    }
+
+    public class HelpButtonListener implements IGestureEventListener {
+
+        private final Popup helpPopup;
+
+        public HelpButtonListener() {
+            helpPopup = new Popup(mtApp);
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            switch (te.getId()) {
+                case TapEvent.GESTURE_STARTED:
+                    moderatorWorkplace.addChild(helpPopup);
+                    helpPopup.setText(((CriticerCommentingSceneController) controller).getHelpText());
+                    helpPopup.setPositionRelativeToParent(new Vector3D(moderatorWorkplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
+                    helpPopup.setVisible(true);
+                    break;
+                case TapEvent.GESTURE_ENDED:
+                    helpPopup.setVisible(false);
+                    moderatorWorkplace.removeChild(helpPopup);
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+
+    public class ProblemButtonListener implements IGestureEventListener {
+
+        private final Popup problemPopup;
+
+        public ProblemButtonListener() {
+            problemPopup = new Popup(mtApp);
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            switch (te.getId()) {
+                case TapEvent.GESTURE_STARTED:
+                    moderatorWorkplace.addChild(problemPopup);
+                    problemPopup.setText(controller.getCurrentProblemDescription());
+                    problemPopup.setPositionRelativeToParent(new Vector3D(moderatorWorkplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
+                    problemPopup.setVisible(true);
+                    break;
+                case TapEvent.GESTURE_ENDED:
+                    problemPopup.setVisible(false);
+                    moderatorWorkplace.removeChild(problemPopup);
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+
+    public class CloseWorkspaceButtonListener implements IGestureEventListener {
+
+        private final String userId;
+
+        public CloseWorkspaceButtonListener(String userId) {
+            this.userId = userId;
+        }
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapAndHoldEvent te = (TapAndHoldEvent) ge;
+            if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
+                if (te.isHoldComplete()) {
+                    controller.setUserActive(userId, false);
+                }
+            }
+            return false;
+        }
+    }
+
+    public class ContinueButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
+                ((CriticerCommentingSceneController) controller).proceed();
+            }
+            return false;
+        }
+    }
+
+    public class LeftButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                ((CriticerCommentingSceneController) controller).setPreviousIdeaAsSelectedOne();
+                updateScene();
+            }
+            return false;
+        }
+    }
+
+    public class RightButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                ((CriticerCommentingSceneController) controller).setNextIdeaAsSelectedOne();
+                updateScene();
+            }
+            return false;
+        }
+    }
+
+    public class SendButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            FlickEvent e = (FlickEvent) ge;
+            if (e.getId() == MTGestureEvent.GESTURE_ENDED && e.isFlick()) {
+                switch (e.getDirection()) {
+                    case NORTH_EAST:
+                    case EAST:
+                        ((CriticerCommentingSceneController) controller).addCriticToCurrentlySelectedIdea(moderatorWorkplace.getCriticTextArea().getText());
+                        moderatorWorkplace.getCriticTextArea().setText("");
+                        updateScene();
+                        break;
+                }
+            }
+            return false;
+        }
     }
 }
