@@ -3,7 +3,7 @@ package de.fh_koeln.sgmci.mtwd.scene;
 import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
-import de.fh_koeln.sgmci.mtwd.customelements.StartUserWorkplace;
+import de.fh_koeln.sgmci.mtwd.customelements.StartUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.exception.NoProblemTextException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +31,7 @@ import processing.core.PImage;
  */
 public class StartScene extends AbstractMTWDScene {
 
-    private final StartUserWorkplace user1Workplace;
+    private final StartUserWorkspace user1Workspace;
     private MTTextArea problemLabel;
     private MTTextArea problemInputField;
     private Popup errorMessagePopup;
@@ -39,7 +39,7 @@ public class StartScene extends AbstractMTWDScene {
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
         this.controller = new StartSceneController(this);
-        this.user1Workplace = new StartUserWorkplace(mtApp);
+        this.user1Workspace = new StartUserWorkspace(mtApp);
     }
 
     @Override
@@ -63,15 +63,15 @@ public class StartScene extends AbstractMTWDScene {
         problemInputField.setEnableCaret(true);
         problemInputField.setPickable(false);
 
-        user1Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        user1Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
+        user1Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user1Workspace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
 
         errorMessagePopup = new ClosablePopup(mtApp);
         errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
         
         getCanvas().addChild(problemLabel);
         getCanvas().addChild(problemInputField);
-        getCanvas().addChild(user1Workplace);
+        getCanvas().addChild(user1Workspace);
         getCanvas().addChild(errorMessagePopup);
 
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
@@ -83,10 +83,10 @@ public class StartScene extends AbstractMTWDScene {
         // displays where the screen is touched
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        user1Workplace.getKeyboard().addTextInputListener(problemInputField);
-        user1Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
+        user1Workspace.getKeyboard().addTextInputListener(problemInputField);
+        user1Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
 
-        user1Workplace.getStartButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
+        user1Workspace.getStartButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
             @Override
             public boolean processGestureEvent(MTGestureEvent mtge) {
                 switch (mtge.getId()) {
@@ -106,7 +106,7 @@ public class StartScene extends AbstractMTWDScene {
             }
         });
 
-        user1Workplace.getSettingsButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
+        user1Workspace.getSettingsButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
             @Override
             public boolean processGestureEvent(MTGestureEvent mtge) {
                 switch (mtge.getId()) {
@@ -163,14 +163,14 @@ public class StartScene extends AbstractMTWDScene {
         public boolean processGestureEvent(MTGestureEvent mtge) {
             switch (mtge.getId()) {
                 case TapEvent.GESTURE_STARTED:
-                    user1Workplace.addChild(helpPopup);
+                    user1Workspace.addChild(helpPopup);
                     helpPopup.setText(((StartSceneController) controller).getHelpText());
-                    helpPopup.setPositionRelativeToParent(new Vector3D(user1Workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
+                    helpPopup.setPositionRelativeToParent(new Vector3D(user1Workspace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
                 case TapEvent.GESTURE_ENDED:
                     helpPopup.setVisible(false);
-                    user1Workplace.removeChild(helpPopup);
+                    user1Workspace.removeChild(helpPopup);
                 default:
                     break;
             }

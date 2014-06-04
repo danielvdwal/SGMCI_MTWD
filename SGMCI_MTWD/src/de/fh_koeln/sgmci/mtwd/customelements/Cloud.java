@@ -100,7 +100,7 @@ public class Cloud extends MTSvg {
                 try {
                     sleep(50);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(DreamerUserWorkplace.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DreamerUserWorkspace.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

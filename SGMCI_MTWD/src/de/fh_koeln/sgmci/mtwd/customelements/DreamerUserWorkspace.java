@@ -11,7 +11,7 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class DreamerUserWorkplace extends MTRectangle {
+public final class DreamerUserWorkspace extends MTRectangle {
 
     private static final String addWorkspaceButtonSvgFile = "data/plusButton.svg";
     private static final String helpButtonSvgFile = "data/helpButton.svg";
@@ -30,7 +30,7 @@ public final class DreamerUserWorkplace extends MTRectangle {
     private final MTSvgButton readyButtonDone;
     private final Cloud cloud;
 
-    public DreamerUserWorkplace(PApplet pApplet) {
+    public DreamerUserWorkspace(PApplet pApplet) {
         super(916, AbstractKeyboard.KEYBOARD_HEIGHT, pApplet);
         this.setNoFill(true);
         this.setNoStroke(true);

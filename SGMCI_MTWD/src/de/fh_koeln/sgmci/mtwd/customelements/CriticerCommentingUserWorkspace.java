@@ -14,7 +14,7 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class CriticerCommentingUserWorkplace extends MTRectangle {
+public final class CriticerCommentingUserWorkspace extends MTRectangle {
 
     private static final String addWorkspaceButtonSvgFile = "data/plusButton_light.svg";
     private static final String closeButtonSvgFile = "data/closeButton_light.svg";
@@ -26,7 +26,7 @@ public final class CriticerCommentingUserWorkplace extends MTRectangle {
     private final MTTextArea problemTextArea;
     private final MTSvgButton closeButton;
 
-    public CriticerCommentingUserWorkplace(PApplet pApplet) {
+    public CriticerCommentingUserWorkspace(PApplet pApplet) {
         super(pApplet, 200, 200);
         this.setNoFill(true);
         this.setNoStroke(true);

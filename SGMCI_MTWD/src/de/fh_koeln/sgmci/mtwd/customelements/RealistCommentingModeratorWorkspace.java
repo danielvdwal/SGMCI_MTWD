@@ -18,7 +18,7 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class RealistCommentingModeratorWorkplace extends MTRectangle {
+public final class RealistCommentingModeratorWorkspace extends MTRectangle {
 
     private static final String addWorkspaceButtonSvgFile = "data/plusButton.svg";
     private static final String helpButtonSvgFile = "data/helpButton.svg";
@@ -46,7 +46,7 @@ public final class RealistCommentingModeratorWorkplace extends MTRectangle {
     private final AbstractKeyboard keyboard;
     private final IFont commentFont;
 
-    public RealistCommentingModeratorWorkplace(PApplet pApplet) {
+    public RealistCommentingModeratorWorkspace(PApplet pApplet) {
         super(pApplet, 400, 300);
         this.pApplet = pApplet;
         this.setNoFill(true);

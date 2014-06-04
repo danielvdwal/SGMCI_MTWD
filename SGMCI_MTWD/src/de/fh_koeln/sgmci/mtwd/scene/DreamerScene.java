@@ -4,7 +4,7 @@ import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
 import de.fh_koeln.sgmci.mtwd.customelements.Cloud;
-import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkplace;
+import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeasException;
@@ -38,10 +38,10 @@ public class DreamerScene extends AbstractMTWDScene {
 
     private final Map<String, Cloud> displayedIdeas;
     private Popup errorMessagePopup;
-    private DreamerUserWorkplace user1Workplace;
-    private DreamerUserWorkplace user2Workplace;
-    private DreamerUserWorkplace user3Workplace;
-    private DreamerUserWorkplace user4Workplace;
+    private DreamerUserWorkspace user1Workspace;
+    private DreamerUserWorkspace user2Workspace;
+    private DreamerUserWorkspace user3Workspace;
+    private DreamerUserWorkspace user4Workspace;
 
     public DreamerScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -59,29 +59,29 @@ public class DreamerScene extends AbstractMTWDScene {
 
     @Override
     public void createComponents() {
-        user1Workplace = new DreamerUserWorkplace(mtApp);
-        user1Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        user2Workplace = new DreamerUserWorkplace(mtApp);
-        user2Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        user3Workplace = new DreamerUserWorkplace(mtApp);
-        user3Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        user4Workplace = new DreamerUserWorkplace(mtApp);
-        user4Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user1Workspace = new DreamerUserWorkspace(mtApp);
+        user1Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user2Workspace = new DreamerUserWorkspace(mtApp);
+        user2Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user3Workspace = new DreamerUserWorkspace(mtApp);
+        user3Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user4Workspace = new DreamerUserWorkspace(mtApp);
+        user4Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
 
-        user1Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, 0));
-        getCanvas().addChild(user1Workplace);
+        user1Workspace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - user1Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, 0));
+        getCanvas().addChild(user1Workspace);
 
-        user2Workplace.rotateZ(new Vector3D(user2Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 180);
-        user2Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, 0));
-        getCanvas().addChild(user2Workplace);
+        user2Workspace.rotateZ(new Vector3D(user2Workspace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user2Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 180);
+        user2Workspace.setPositionGlobal(new Vector3D(mtApp.width / 2, user2Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, 0));
+        getCanvas().addChild(user2Workspace);
 
-        user3Workplace.rotateZ(new Vector3D(user3Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 90);
-        user3Workplace.setPositionGlobal(new Vector3D(user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2, 0));
-        getCanvas().addChild(user3Workplace);
+        user3Workspace.rotateZ(new Vector3D(user3Workspace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user3Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 90);
+        user3Workspace.setPositionGlobal(new Vector3D(user3Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user3Workspace);
 
-        user4Workplace.rotateZ(new Vector3D(user4Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
-        user4Workplace.setPositionGlobal(new Vector3D(mtApp.width - user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
-        getCanvas().addChild(user4Workplace);
+        user4Workspace.rotateZ(new Vector3D(user4Workspace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
+        user4Workspace.setPositionGlobal(new Vector3D(mtApp.width - user4Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user4Workspace);
 
         errorMessagePopup = new ClosablePopup(mtApp);
         errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
@@ -93,49 +93,49 @@ public class DreamerScene extends AbstractMTWDScene {
     public void createEventListeners() {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        user1Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user1Workplace));
-        user1Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user1Workplace));
-        user1Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workplace.getCloseButton()));
-        user1Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
-        user1Workplace.getCloud().registerInputProcessor(new FlickProcessor());
-        user1Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user1Workplace, FlickEvent.FlickDirection.NORTH));
+        user1Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user1Workspace));
+        user1Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user1Workspace));
+        user1Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workspace.getCloseButton()));
+        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
+        user1Workspace.getCloud().registerInputProcessor(new FlickProcessor());
+        user1Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user1Workspace, FlickEvent.FlickDirection.NORTH));
 
-        user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user2Workplace));
-        user2Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user2Workplace));
-        user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
-        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getCloud().registerInputProcessor(new FlickProcessor());
-        user2Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user2Workplace, FlickEvent.FlickDirection.SOUTH));
+        user2Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user2Workspace));
+        user2Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user2Workspace));
+        user2Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workspace.getCloseButton()));
+        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getCloud().registerInputProcessor(new FlickProcessor());
+        user2Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user2Workspace, FlickEvent.FlickDirection.SOUTH));
 
-        user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user3Workplace));
-        user3Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user3Workplace));
-        user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
-        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getCloud().registerInputProcessor(new FlickProcessor());
-        user3Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user3Workplace, FlickEvent.FlickDirection.EAST));
+        user3Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user3Workspace));
+        user3Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user3Workspace));
+        user3Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workspace.getCloseButton()));
+        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getCloud().registerInputProcessor(new FlickProcessor());
+        user3Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user3Workspace, FlickEvent.FlickDirection.EAST));
 
-        user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user4Workplace));
-        user4Workplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user4Workplace));
-        user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
-        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getCloud().registerInputProcessor(new FlickProcessor());
-        user4Workplace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user4Workplace, FlickEvent.FlickDirection.WEST));
+        user4Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user4Workspace));
+        user4Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user4Workspace));
+        user4Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workspace.getCloseButton()));
+        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getCloud().registerInputProcessor(new FlickProcessor());
+        user4Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user4Workspace, FlickEvent.FlickDirection.WEST));
     }
 
     @Override
@@ -161,15 +161,15 @@ public class DreamerScene extends AbstractMTWDScene {
             }
         }
 
-        user1Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
-        user2Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
-        user3Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
-        user4Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
+        user1Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
+        user2Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
+        user3Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
+        user4Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
 
-        user1Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user1Id));
-        user2Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user2Id));
-        user3Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user3Id));
-        user4Workplace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user4Id));
+        user1Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user1Id));
+        user2Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user2Id));
+        user3Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user3Id));
+        user4Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user4Id));
     }
 
     @Override
@@ -200,11 +200,11 @@ public class DreamerScene extends AbstractMTWDScene {
 
     public class HelpButtonListener implements IGestureEventListener {
 
-        private final DreamerUserWorkplace workplace;
+        private final DreamerUserWorkspace workspace;
         private final Popup helpPopup;
 
-        public HelpButtonListener(DreamerUserWorkplace workplace) {
-            this.workplace = workplace;
+        public HelpButtonListener(DreamerUserWorkspace workspace) {
+            this.workspace = workspace;
             helpPopup = new Popup(mtApp);
         }
 
@@ -213,14 +213,14 @@ public class DreamerScene extends AbstractMTWDScene {
             TapEvent te = (TapEvent) ge;
             switch (te.getId()) {
                 case TapEvent.GESTURE_STARTED:
-                    workplace.addChild(helpPopup);
+                    workspace.addChild(helpPopup);
                     helpPopup.setText(((DreamerSceneController) controller).getHelpText());
-                    helpPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
+                    helpPopup.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
                 case TapEvent.GESTURE_ENDED:
                     helpPopup.setVisible(false);
-                    workplace.removeChild(helpPopup);
+                    workspace.removeChild(helpPopup);
                 default:
                     break;
             }
@@ -230,11 +230,11 @@ public class DreamerScene extends AbstractMTWDScene {
 
     public class ProblemButtonListener implements IGestureEventListener {
 
-        private final DreamerUserWorkplace workplace;
+        private final DreamerUserWorkspace workspace;
         private final Popup problemPopup;
 
-        public ProblemButtonListener(DreamerUserWorkplace workplace) {
-            this.workplace = workplace;
+        public ProblemButtonListener(DreamerUserWorkspace workspace) {
+            this.workspace = workspace;
             problemPopup = new Popup(mtApp);
         }
 
@@ -243,14 +243,14 @@ public class DreamerScene extends AbstractMTWDScene {
             TapEvent te = (TapEvent) ge;
             switch (te.getId()) {
                 case TapEvent.GESTURE_STARTED:
-                    workplace.addChild(problemPopup);
+                    workspace.addChild(problemPopup);
                     problemPopup.setText(controller.getCurrentProblemDescription());
-                    problemPopup.setPositionRelativeToParent(new Vector3D(workplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
+                    problemPopup.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
                     problemPopup.setVisible(true);
                     break;
                 case TapEvent.GESTURE_ENDED:
                     problemPopup.setVisible(false);
-                    workplace.removeChild(problemPopup);
+                    workspace.removeChild(problemPopup);
                 default:
                     break;
             }
@@ -332,11 +332,11 @@ public class DreamerScene extends AbstractMTWDScene {
 
     public class SendButtonListener implements IGestureEventListener {
 
-        private final DreamerUserWorkplace workplace;
+        private final DreamerUserWorkspace workspace;
         private final FlickEvent.FlickDirection flickDirection;
 
-        public SendButtonListener(DreamerUserWorkplace workplace, FlickEvent.FlickDirection flickDirection) {
-            this.workplace = workplace;
+        public SendButtonListener(DreamerUserWorkspace workspace, FlickEvent.FlickDirection flickDirection) {
+            this.workspace = workspace;
             this.flickDirection = flickDirection;
         }
 
@@ -346,8 +346,8 @@ public class DreamerScene extends AbstractMTWDScene {
             if (e.getId() == MTGestureEvent.GESTURE_ENDED && e.isFlick()) {
                 if (e.getDirection() == flickDirection) {
                     try {
-                        ((DreamerSceneController) controller).createIdea(workplace.getCloud().getTextArea().getText());
-                        workplace.getCloud().getTextArea().setText("");
+                        ((DreamerSceneController) controller).createIdea(workspace.getCloud().getTextArea().getText());
+                        workspace.getCloud().getTextArea().setText("");
                     } catch (NoIdeaTextException ex) {
                         // do nothing
                     }

@@ -11,7 +11,7 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class StartUserWorkplace extends MTRectangle {
+public final class StartUserWorkspace extends MTRectangle {
 
     private static final String helpButtonSvgFile = "data/helpButton.svg";
     private static final String settingsButtonSvgFile = "data/settingsButton.svg";
@@ -23,7 +23,7 @@ public final class StartUserWorkplace extends MTRectangle {
     private final MTSvgButton settingsButton;
     private final MTSvgButton startButton;
 
-    public StartUserWorkplace(PApplet pApplet) {
+    public StartUserWorkspace(PApplet pApplet) {
         super(pApplet, 916, AbstractKeyboard.KEYBOARD_HEIGHT);
         this.setNoFill(true);
         this.setNoStroke(true);

@@ -14,7 +14,7 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class RealistCommentingUserWorkplace extends MTRectangle {
+public final class RealistCommentingUserWorkspace extends MTRectangle {
 
     private static final String addWorkspaceButtonSvgFile = "data/plusButton.svg";
     private static final String closeButtonSvgFile = "data/closeButton.svg";
@@ -26,7 +26,7 @@ public final class RealistCommentingUserWorkplace extends MTRectangle {
     private final MTTextArea problemTextArea;
     private final MTSvgButton closeButton;
 
-    public RealistCommentingUserWorkplace(PApplet pApplet) {
+    public RealistCommentingUserWorkspace(PApplet pApplet) {
         super(pApplet, 200, 200);
         this.setNoFill(true);
         this.setNoStroke(true);

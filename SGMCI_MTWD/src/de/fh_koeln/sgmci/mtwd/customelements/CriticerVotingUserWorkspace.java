@@ -19,7 +19,7 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class CriticerVotingUserWorkplace extends MTRectangle {
+public final class CriticerVotingUserWorkspace extends MTRectangle {
 
     private static final String addWorkspaceButtonSvgFile = "data/plusButton_light.svg";
     private static final String helpButtonSvgFile = "data/helpButton_light.svg";
@@ -55,7 +55,7 @@ public final class CriticerVotingUserWorkplace extends MTRectangle {
     private final List<VotedIdea> votedIdeas;
     private int currentIndex;
 
-    public CriticerVotingUserWorkplace(PApplet pApplet) {
+    public CriticerVotingUserWorkspace(PApplet pApplet) {
         super(pApplet, 400, 300);
         this.setNoFill(true);
         this.setNoStroke(true);

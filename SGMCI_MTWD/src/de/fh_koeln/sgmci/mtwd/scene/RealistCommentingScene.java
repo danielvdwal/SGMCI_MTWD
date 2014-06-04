@@ -3,8 +3,8 @@ package de.fh_koeln.sgmci.mtwd.scene;
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.RealistCommentingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
-import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingModeratorWorkplace;
-import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingUserWorkplace;
+import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingModeratorWorkspace;
+import de.fh_koeln.sgmci.mtwd.customelements.RealistCommentingUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.model.Comment;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -33,10 +33,10 @@ import processing.core.PImage;
  */
 public class RealistCommentingScene extends AbstractMTWDScene {
 
-    private RealistCommentingModeratorWorkplace moderatorWorkplace;
-    private RealistCommentingUserWorkplace user2Workplace;
-    private RealistCommentingUserWorkplace user3Workplace;
-    private RealistCommentingUserWorkplace user4Workplace;
+    private RealistCommentingModeratorWorkspace moderatorWorkspace;
+    private RealistCommentingUserWorkspace user2Workspace;
+    private RealistCommentingUserWorkspace user3Workspace;
+    private RealistCommentingUserWorkspace user4Workspace;
 
     public RealistCommentingScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -52,28 +52,28 @@ public class RealistCommentingScene extends AbstractMTWDScene {
 
     @Override
     public void createComponents() {
-        moderatorWorkplace = new RealistCommentingModeratorWorkplace(mtApp);
-        moderatorWorkplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        moderatorWorkplace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - moderatorWorkplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
-        getCanvas().addChild(moderatorWorkplace);
+        moderatorWorkspace = new RealistCommentingModeratorWorkspace(mtApp);
+        moderatorWorkspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        moderatorWorkspace.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - moderatorWorkspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20));
+        getCanvas().addChild(moderatorWorkspace);
 
-        user2Workplace = new RealistCommentingUserWorkplace(mtApp);
-        user2Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        user2Workplace.rotateZ(new Vector3D(user2Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 180);
-        user2Workplace.setPositionGlobal(new Vector3D(mtApp.width / 2, user2Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, 0));
-        getCanvas().addChild(user2Workplace);
+        user2Workspace = new RealistCommentingUserWorkspace(mtApp);
+        user2Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user2Workspace.rotateZ(new Vector3D(user2Workspace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user2Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 180);
+        user2Workspace.setPositionGlobal(new Vector3D(mtApp.width / 2, user2Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, 0));
+        getCanvas().addChild(user2Workspace);
 
-        user3Workplace = new RealistCommentingUserWorkplace(mtApp);
-        user3Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        user3Workplace.rotateZ(new Vector3D(user3Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 90);
-        user3Workplace.setPositionGlobal(new Vector3D(user3Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2, 0));
-        getCanvas().addChild(user3Workplace);
+        user3Workspace = new RealistCommentingUserWorkspace(mtApp);
+        user3Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user3Workspace.rotateZ(new Vector3D(user3Workspace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user3Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), 90);
+        user3Workspace.setPositionGlobal(new Vector3D(user3Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user3Workspace);
 
-        user4Workplace = new RealistCommentingUserWorkplace(mtApp);
-        user4Workplace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        user4Workplace.rotateZ(new Vector3D(user4Workplace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
-        user4Workplace.setPositionGlobal(new Vector3D(mtApp.width - user4Workplace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
-        getCanvas().addChild(user4Workplace);
+        user4Workspace = new RealistCommentingUserWorkspace(mtApp);
+        user4Workspace.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+        user4Workspace.rotateZ(new Vector3D(user4Workspace.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, user4Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2), -90);
+        user4Workspace.setPositionGlobal(new Vector3D(mtApp.width - user4Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height / 2, 0));
+        getCanvas().addChild(user4Workspace);
     }
 
     @Override
@@ -81,32 +81,32 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         // displays where the screen is touched
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        moderatorWorkplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        moderatorWorkplace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
-        moderatorWorkplace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener());
-        moderatorWorkplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        moderatorWorkplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, moderatorWorkplace.getCloseButton()));
-        moderatorWorkplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        moderatorWorkplace.getContinueButton().addGestureListener(TapProcessor.class, new ContinueButtonListener());
-        moderatorWorkplace.getLeftButton().addGestureListener(TapProcessor.class, new LeftButtonListener());
-        moderatorWorkplace.getRightButton().addGestureListener(TapProcessor.class, new RightButtonListener());
-        moderatorWorkplace.getCommentTextArea().registerInputProcessor(new FlickProcessor());
-        moderatorWorkplace.getCommentTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener());
+        moderatorWorkspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        moderatorWorkspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
+        moderatorWorkspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener());
+        moderatorWorkspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        moderatorWorkspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, moderatorWorkspace.getCloseButton()));
+        moderatorWorkspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        moderatorWorkspace.getContinueButton().addGestureListener(TapProcessor.class, new ContinueButtonListener());
+        moderatorWorkspace.getLeftButton().addGestureListener(TapProcessor.class, new LeftButtonListener());
+        moderatorWorkspace.getRightButton().addGestureListener(TapProcessor.class, new RightButtonListener());
+        moderatorWorkspace.getCommentTextArea().registerInputProcessor(new FlickProcessor());
+        moderatorWorkspace.getCommentTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener());
 
-        user2Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workplace.getCloseButton()));
-        user2Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workspace.getCloseButton()));
+        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
 
-        user3Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workplace.getCloseButton()));
-        user3Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workspace.getCloseButton()));
+        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
 
-        user4Workplace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workplace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
-        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workplace.getCloseButton()));
-        user4Workplace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workspace.getCloseButton()));
+        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
     }
 
     @Override
@@ -116,40 +116,40 @@ public class RealistCommentingScene extends AbstractMTWDScene {
 
     @Override
     public void updateScene() {
-        moderatorWorkplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
-        user2Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
-        user3Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
-        user4Workplace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
+        moderatorWorkspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
+        user2Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
+        user3Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
+        user4Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
 
         if (((RealistCommentingSceneController) controller).isFirstIdea()) {
-            moderatorWorkplace.getLeftButton().setVisible(false);
+            moderatorWorkspace.getLeftButton().setVisible(false);
         } else {
-            moderatorWorkplace.getLeftButton().setVisible(true);
+            moderatorWorkspace.getLeftButton().setVisible(true);
         }
         if (((RealistCommentingSceneController) controller).isLastIdea()) {
-            moderatorWorkplace.getRightButton().setVisible(false);
+            moderatorWorkspace.getRightButton().setVisible(false);
         } else {
-            moderatorWorkplace.getRightButton().setVisible(true);
+            moderatorWorkspace.getRightButton().setVisible(true);
         }
 
         String idea = ((RealistCommentingSceneController) controller).getCurrentlySelectedIdeaForCurrentProblem().getDescription();
         String problem = controller.getCurrentProblemDescription();
 
-        moderatorWorkplace.setIdea(idea);
-        user2Workplace.setIdea(idea);
-        user3Workplace.setIdea(idea);
-        user4Workplace.setIdea(idea);
+        moderatorWorkspace.setIdea(idea);
+        user2Workspace.setIdea(idea);
+        user3Workspace.setIdea(idea);
+        user4Workspace.setIdea(idea);
 
-        user2Workplace.setProblem(problem);
-        user3Workplace.setProblem(problem);
-        user4Workplace.setProblem(problem);
+        user2Workspace.setProblem(problem);
+        user3Workspace.setProblem(problem);
+        user4Workspace.setProblem(problem);
 
         List<String> commentDescriptions = new LinkedList<String>();
         Collection<Comment> comments = ((RealistCommentingSceneController) controller).getAllCommentsForCurrentlySelectedIdea();
         for (Comment comment : comments) {
             commentDescriptions.add(comment.getDescription());
         }
-        moderatorWorkplace.setComments(commentDescriptions);
+        moderatorWorkspace.setComments(commentDescriptions);
     }
 
     public class AddWorkspaceButtonListener implements IGestureEventListener {
@@ -183,14 +183,14 @@ public class RealistCommentingScene extends AbstractMTWDScene {
             TapEvent te = (TapEvent) ge;
             switch (te.getId()) {
                 case TapEvent.GESTURE_STARTED:
-                    moderatorWorkplace.addChild(helpPopup);
+                    moderatorWorkspace.addChild(helpPopup);
                     helpPopup.setText(((RealistCommentingSceneController) controller).getHelpText());
-                    helpPopup.setPositionRelativeToParent(new Vector3D(moderatorWorkplace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
+                    helpPopup.setPositionRelativeToParent(new Vector3D(moderatorWorkspace.getWidthXY(TransformSpace.LOCAL) / 2, -helpPopup.getHeight() / 2 - 10));
                     helpPopup.setVisible(true);
                     break;
                 case TapEvent.GESTURE_ENDED:
                     helpPopup.setVisible(false);
-                    moderatorWorkplace.removeChild(helpPopup);
+                    moderatorWorkspace.removeChild(helpPopup);
                 default:
                     break;
             }
@@ -211,14 +211,14 @@ public class RealistCommentingScene extends AbstractMTWDScene {
             TapEvent te = (TapEvent) ge;
             switch (te.getId()) {
                 case TapEvent.GESTURE_STARTED:
-                    moderatorWorkplace.addChild(problemPopup);
+                    moderatorWorkspace.addChild(problemPopup);
                     problemPopup.setText(controller.getCurrentProblemDescription());
-                    problemPopup.setPositionRelativeToParent(new Vector3D(moderatorWorkplace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
+                    problemPopup.setPositionRelativeToParent(new Vector3D(moderatorWorkspace.getWidthXY(TransformSpace.LOCAL) / 2, -problemPopup.getHeight() / 2 - 10));
                     problemPopup.setVisible(true);
                     break;
                 case TapEvent.GESTURE_ENDED:
                     problemPopup.setVisible(false);
-                    moderatorWorkplace.removeChild(problemPopup);
+                    moderatorWorkspace.removeChild(problemPopup);
                 default:
                     break;
             }
@@ -291,8 +291,8 @@ public class RealistCommentingScene extends AbstractMTWDScene {
                 switch (e.getDirection()) {
                     case NORTH_EAST:
                     case EAST:
-                        ((RealistCommentingSceneController) controller).addCommentToCurrentlySelectedIdea(moderatorWorkplace.getCommentTextArea().getText());
-                        moderatorWorkplace.getCommentTextArea().setText("");
+                        ((RealistCommentingSceneController) controller).addCommentToCurrentlySelectedIdea(moderatorWorkspace.getCommentTextArea().getText());
+                        moderatorWorkspace.getCommentTextArea().setText("");
                         updateScene();
                         break;
                 }
