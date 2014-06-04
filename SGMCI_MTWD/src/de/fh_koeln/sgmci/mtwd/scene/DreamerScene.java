@@ -56,7 +56,7 @@ public class DreamerScene extends AbstractMTWDScene {
         // 2400 x 1600
         PImage backgroundImage = mtApp.loadImage("data/background_sky.jpg");
         backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
-        getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
+        getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, false));
     }
 
     @Override

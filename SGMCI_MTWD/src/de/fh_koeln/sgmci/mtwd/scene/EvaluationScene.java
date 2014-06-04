@@ -41,7 +41,7 @@ public class EvaluationScene extends AbstractMTWDScene {
     public void createBackground() {
         PImage backgroundImage = mtApp.loadImage("data/background_black.jpg");
         backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
-        getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
+        getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, false));
     }
 
     @Override

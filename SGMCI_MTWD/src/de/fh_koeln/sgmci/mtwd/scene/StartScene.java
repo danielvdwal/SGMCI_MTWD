@@ -46,7 +46,7 @@ public class StartScene extends AbstractMTWDScene {
     public void createBackground() {
         PImage backgroundImage = mtApp.loadImage("data/startBackground.png");
         backgroundImage.resize(MT4jSettings.getInstance().windowWidth, MT4jSettings.getInstance().windowHeight);
-        this.getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, true));
+        this.getCanvas().addChild(new MTBackgroundImage(mtApp, backgroundImage, false));
     }
 
     @Override
