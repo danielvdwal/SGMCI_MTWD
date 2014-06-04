@@ -51,7 +51,7 @@ public class StartScene extends AbstractMTWDScene {
 
     @Override
     public void createComponents() {
-        problemLabel = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, new MTColor(0, 0, 0, 255), new MTColor(255, 255, 255, 255)));
+        problemLabel = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, new MTColor(0, 0, 0, 255)));
         problemLabel.setNoFill(true);
         problemLabel.setNoStroke(true);
         problemLabel.setText("Bitte geben Sie Ihr Problem ein:");
