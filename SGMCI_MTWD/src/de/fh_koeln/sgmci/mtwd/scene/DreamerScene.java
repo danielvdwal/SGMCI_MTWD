@@ -12,6 +12,7 @@ import de.fh_koeln.sgmci.mtwd.model.Idea;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
@@ -37,6 +38,7 @@ import processing.core.PImage;
 public class DreamerScene extends AbstractMTWDScene {
 
     private final Map<String, Cloud> displayedIdeas;
+    private final Random random = new Random();
     private Popup errorMessagePopup;
     private DreamerUserWorkspace user1Workspace;
     private DreamerUserWorkspace user2Workspace;
@@ -158,6 +160,18 @@ public class DreamerScene extends AbstractMTWDScene {
                 displayedIdeas.put(idea.getId(), newIdea);
                 getCanvas().addChild(newIdea);
                 newIdea.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+                float ideaWidth = newIdea.getWidthXYRelativeToParent();
+                float ideaHeight = newIdea.getHeightXYRelativeToParent();
+                float padding = user1Workspace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) + 50;
+                float minXVal = padding + ideaWidth / 2;
+                float minYVal = padding + ideaHeight / 2;
+                float maxXVal = mtApp.getWidth() - 2 * padding - ideaWidth / 2;
+                float maxYVal = mtApp.getHeight() - 2 * padding - ideaHeight / 2;
+                float widthRange = maxXVal - minXVal;
+                float heightRange = maxYVal - minYVal;
+                float xPos = random.nextInt((int) widthRange) + minXVal;
+                float yPos = random.nextInt((int) heightRange) + minYVal;
+                newIdea.setPositionGlobal(new Vector3D(xPos, yPos));
             }
         }
 
