@@ -10,6 +10,9 @@ import org.mt4j.sceneManagement.Iscene;
  */
 public interface IScene extends Iscene {
 
+	final static int FLICK_TIME = 300;
+	final static int FLICK_THRESHOLD = 2;
+	
     void setNextScene(IScene nextScene);
 
     IScene getNextScene();

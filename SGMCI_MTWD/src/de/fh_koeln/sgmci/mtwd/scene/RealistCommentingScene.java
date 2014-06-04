@@ -90,7 +90,7 @@ public class RealistCommentingScene extends AbstractMTWDScene {
         moderatorWorkspace.getContinueButton().addGestureListener(TapProcessor.class, new ContinueButtonListener());
         moderatorWorkspace.getLeftButton().addGestureListener(TapProcessor.class, new LeftButtonListener());
         moderatorWorkspace.getRightButton().addGestureListener(TapProcessor.class, new RightButtonListener());
-        moderatorWorkspace.getCommentTextArea().registerInputProcessor(new FlickProcessor());
+        moderatorWorkspace.getCommentTextArea().registerInputProcessor(new FlickProcessor(FLICK_TIME,FLICK_THRESHOLD));
         moderatorWorkspace.getCommentTextArea().addGestureListener(FlickProcessor.class, new SendButtonListener());
 
         user2Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
