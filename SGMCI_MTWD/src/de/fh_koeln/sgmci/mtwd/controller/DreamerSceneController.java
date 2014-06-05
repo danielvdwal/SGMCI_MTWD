@@ -43,7 +43,7 @@ public class DreamerSceneController extends AbstractMTWDSceneController {
     public void proceed() throws NoIdeasException {
         if (userContinueStrategy.canContinue() && !getAllVisibleIdeasForCurrentProblem().isEmpty()) {
             observer.gotoNextScene();
-        } else if (getAllVisibleIdeasForCurrentProblem().isEmpty()) {
+        } else if (userContinueStrategy.canContinue() && getAllVisibleIdeasForCurrentProblem().isEmpty()) {
             throw new NoIdeasException(NO_IDEAS_TEXT);
         }
     }

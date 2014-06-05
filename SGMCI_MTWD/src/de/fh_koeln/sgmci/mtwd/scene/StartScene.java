@@ -1,9 +1,10 @@
 package de.fh_koeln.sgmci.mtwd.scene;
 
+import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
-import de.fh_koeln.sgmci.mtwd.customelements.StartUserWorkspace;
+import de.fh_koeln.sgmci.mtwd.customelements.workspace.StartUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.exception.NoProblemTextException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,8 +13,11 @@ import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
+import org.mt4j.input.gestureAction.TapAndHoldVisualizer;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
 import org.mt4j.input.inputProcessors.MTGestureEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldEvent;
+import org.mt4j.input.inputProcessors.componentProcessors.tapAndHoldProcessor.TapAndHoldProcessor;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapEvent;
 import org.mt4j.input.inputProcessors.componentProcessors.tapProcessor.TapProcessor;
 import org.mt4j.input.inputProcessors.globalProcessors.CursorTracer;
@@ -68,7 +72,7 @@ public class StartScene extends AbstractMTWDScene {
 
         errorMessagePopup = new ClosablePopup(mtApp);
         errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
-        
+
         getCanvas().addChild(problemLabel);
         getCanvas().addChild(problemInputField);
         getCanvas().addChild(user1Workspace);
@@ -83,6 +87,10 @@ public class StartScene extends AbstractMTWDScene {
         // displays where the screen is touched
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
+        user1Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener());
+        user1Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
+        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workspace.getCloseButton()));
+        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseButtonListener());
         user1Workspace.getKeyboard().addTextInputListener(problemInputField);
         user1Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
 
@@ -128,6 +136,16 @@ public class StartScene extends AbstractMTWDScene {
         });
     }
 
+    @Override
+    public void startScene() {
+        updateScene();
+    }
+
+    @Override
+    public void updateScene() {
+        user1Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
+    }
+
     static class TextAreaPositionUpdateThread extends Thread {
 
         private final MTTextArea textArea;
@@ -148,6 +166,32 @@ public class StartScene extends AbstractMTWDScene {
                     Logger.getLogger(StartScene.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        }
+    }
+
+    public class AddWorkspaceButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapEvent te = (TapEvent) ge;
+            if (te.getId() == TapEvent.GESTURE_STARTED) {
+                controller.setUserActive(AbstractMTWDSceneController.user1Id, true);
+            }
+            return false;
+        }
+    }
+
+    public class CloseButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent ge) {
+            TapAndHoldEvent te = (TapAndHoldEvent) ge;
+            if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
+                if (te.isHoldComplete()) {
+                    controller.setUserActive(AbstractMTWDSceneController.user1Id, false);
+                }
+            }
+            return false;
         }
     }
 

@@ -1,5 +1,6 @@
-package de.fh_koeln.sgmci.mtwd.customelements;
+package de.fh_koeln.sgmci.mtwd.customelements.workspace;
 
+import de.fh_koeln.sgmci.mtwd.customelements.Cloud;
 import de.fh_koeln.sgmci.mtwd.model.VotedIdea;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -19,31 +20,12 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class CriticerVotingUserWorkspace extends MTRectangle {
+public final class CriticerVotingUserWorkspace extends AbstractWorkspace {
 
-    private static final String addWorkspaceButtonSvgFile = "data/plusButton_light.svg";
-    private static final String helpButtonSvgFile = "data/helpButton_light.svg";
-    private static final String problemButtonSvgFile = "data/problemButton_light.svg";
-    private static final String closeButtonSvgFile = "data/closeButton_light.svg";
-    private static final String readyButtonSvgFile = "data/readyButton_light.svg";
-    private static final String readyButtonDoneSvgFile = "data/readyButtonDone.svg";
-    private static final String leftButtonSvgFile = "data/arrowLeft_light.svg";
-    private static final String rightButtonSvgFile = "data/arrowRight_light.svg";
-    private static final String likeButtonSvgFile = "data/likeButton.svg";
-    private static final String likeButtonSelectedSvgFile = "data/likeButton_selected.svg";
-    private static final String dislikeButtonSvgFile = "data/dislikeButton.svg";
-    private static final String dislikeButtonSelectedSvgFile = "data/dislikeButton_selected.svg";
-    private static final float buttonScaleFactor = 1.4f;
-    private static final float arrowButtonScaleFactor = 2.0f;
-    private static final float voteButtonScaleFactor = 2.0f;
-
-    private final MTSvgButton addWorkspaceButton;
-    private final MTRectangle workspace;
     private final MTRectangle ideaSpace;
     private final Cloud currentDisplayedIdea;
     private final MTSvgButton helpButton;
     private final MTSvgButton problemButton;
-    private final MTSvgButton closeButton;
     private final MTSvgButton readyButton;
     private final MTSvgButton readyButtonDone;
     private final MTSvgButton leftButton;
@@ -56,20 +38,12 @@ public final class CriticerVotingUserWorkspace extends MTRectangle {
     private int currentIndex;
 
     public CriticerVotingUserWorkspace(PApplet pApplet) {
-        super(pApplet, 400, 300);
+        super(pApplet, 400, 300, true);
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setPickable(false);
         this.removeAllGestureEventListeners();
         this.unregisterAllInputProcessors();
-
-        this.addWorkspaceButton = new MTSvgButton(pApplet, addWorkspaceButtonSvgFile);
-        this.workspace = new MTRectangle(pApplet, 400, 300);
-        this.workspace.setNoFill(true);
-        this.workspace.setNoStroke(true);
-        this.workspace.setPickable(false);
-        removeAllGestureEventListeners();
-        unregisterAllInputProcessors();
 
         this.ideaSpace = new MTRectangle(pApplet, 200, 200);
         this.ideaSpace.removeAllGestureEventListeners();
@@ -80,13 +54,12 @@ public final class CriticerVotingUserWorkspace extends MTRectangle {
         this.currentDisplayedIdea = new Cloud(pApplet, false);
         this.currentDisplayedIdea.removeAllGestureEventListeners();
         this.currentDisplayedIdea.unregisterAllInputProcessors();
-        this.helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
-        this.problemButton = new MTSvgButton(pApplet, problemButtonSvgFile);
-        this.closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
-        this.readyButton = new MTSvgButton(pApplet, readyButtonSvgFile);
+        this.helpButton = new MTSvgButton(pApplet, helpButtonLightSvgFile);
+        this.problemButton = new MTSvgButton(pApplet, problemButtonLightSvgFile);
+        this.readyButton = new MTSvgButton(pApplet, readyButtonLightSvgFile);
         this.readyButtonDone = new MTSvgButton(pApplet, readyButtonDoneSvgFile);
-        this.leftButton = new MTSvgButton(pApplet, leftButtonSvgFile);
-        this.rightButton = new MTSvgButton(pApplet, rightButtonSvgFile);
+        this.leftButton = new MTSvgButton(pApplet, leftButtonLightSvgFile);
+        this.rightButton = new MTSvgButton(pApplet, rightButtonLightSvgFile);
         this.likeButton = new MTSvgButton(pApplet, likeButtonSvgFile);
         this.likeButtonSelected = new MTSvgButton(pApplet, likeButtonSelectedSvgFile);
         this.dislikeButton = new MTSvgButton(pApplet, dislikeButtonSvgFile);
@@ -106,18 +79,9 @@ public final class CriticerVotingUserWorkspace extends MTRectangle {
         updateWorkspace();
     }
 
-    public void setIsActive(boolean active) {
-        addWorkspaceButton.setVisible(!active);
-        workspace.setVisible(active);
-    }
-
     public void setIsReady(boolean ready) {
         readyButton.setVisible(!ready);
         readyButtonDone.setVisible(ready);
-    }
-
-    public MTSvgButton getAddWorkspaceButton() {
-        return addWorkspaceButton;
     }
 
     public MTSvgButton getHelpButton() {
@@ -126,10 +90,6 @@ public final class CriticerVotingUserWorkspace extends MTRectangle {
 
     public MTSvgButton getProblemButton() {
         return problemButton;
-    }
-
-    public MTSvgButton getCloseButton() {
-        return closeButton;
     }
 
     public MTSvgButton getReadyButton() {
@@ -141,11 +101,9 @@ public final class CriticerVotingUserWorkspace extends MTRectangle {
     }
 
     private void positionAllComponents() {
-        addChild(addWorkspaceButton);
         addWorkspaceButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         addWorkspaceButton.setPositionRelativeToParent(new Vector3D(this.getWidthXY(TransformSpace.LOCAL) / 2, this.getHeightXY(TransformSpace.LOCAL) / 2));
 
-        addChild(workspace);
         workspace.addChild(ideaSpace);
         ideaSpace.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, ideaSpace.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
         ideaSpace.addChild(currentDisplayedIdea);
@@ -186,7 +144,6 @@ public final class CriticerVotingUserWorkspace extends MTRectangle {
         dislikeButton.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButton.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL) + dislikeButton.getHeightXYRelativeToParent()));
         dislikeButtonSelected.setPositionRelativeToParent(new Vector3D(ideaSpace.getWidthXY(TransformSpace.LOCAL) / 2 + dislikeButtonSelected.getWidthXYRelativeToParent(), ideaSpace.getHeightXY(TransformSpace.LOCAL) + dislikeButtonSelected.getHeightXYRelativeToParent()));
         dislikeButtonSelected.setVisible(false);
-        workspace.setVisible(false);
     }
 
     private void addEventListeners() {

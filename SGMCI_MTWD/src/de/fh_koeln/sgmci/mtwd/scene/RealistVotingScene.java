@@ -3,7 +3,7 @@ package de.fh_koeln.sgmci.mtwd.scene;
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.RealistVotingSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
-import de.fh_koeln.sgmci.mtwd.customelements.RealistVotingUserWorkspace;
+import de.fh_koeln.sgmci.mtwd.customelements.workspace.RealistVotingUserWorkspace;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.widgets.MTBackgroundImage;

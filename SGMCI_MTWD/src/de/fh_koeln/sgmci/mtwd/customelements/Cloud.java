@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
+import de.fh_koeln.sgmci.mtwd.customelements.workspace.DreamerUserWorkspace;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
 import java.util.logging.Logger;

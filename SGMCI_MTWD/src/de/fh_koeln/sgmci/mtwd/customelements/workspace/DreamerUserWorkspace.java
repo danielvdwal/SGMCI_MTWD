@@ -1,7 +1,9 @@
-package de.fh_koeln.sgmci.mtwd.customelements;
+package de.fh_koeln.sgmci.mtwd.customelements.workspace;
 
+import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
+import de.fh_koeln.sgmci.mtwd.customelements.Cloud;
+import de.fh_koeln.sgmci.mtwd.customelements.SplitKeyboard;
 import org.mt4j.components.TransformSpace;
-import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
 import org.mt4j.util.math.Vector3D;
 import processing.core.PApplet;
@@ -11,60 +13,39 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class DreamerUserWorkspace extends MTRectangle {
+public final class DreamerUserWorkspace extends AbstractWorkspace {
 
-    private static final String addWorkspaceButtonSvgFile = "data/plusButton.svg";
-    private static final String helpButtonSvgFile = "data/helpButton.svg";
-    private static final String problemButtonSvgFile = "data/problemButton.svg";
-    private static final String closeButtonSvgFile = "data/closeButton.svg";
-    private static final String readyButtonSvgFile = "data/readyButton.svg";
-    private static final String readyButtonDoneSvgFile = "data/readyButtonDone.svg";
-    private static final float buttonScaleFactor = 1.4f;
-
-    private final MTSvgButton addWorkspaceButton;
     private final AbstractKeyboard keyboard;
     private final MTSvgButton helpButton;
     private final MTSvgButton problemButton;
-    private final MTSvgButton closeButton;
     private final MTSvgButton readyButton;
     private final MTSvgButton readyButtonDone;
     private final Cloud cloud;
 
     public DreamerUserWorkspace(PApplet pApplet) {
-        super(916, AbstractKeyboard.KEYBOARD_HEIGHT, pApplet);
+        super(pApplet, 916, 200, false);
         this.setNoFill(true);
         this.setNoStroke(true);
         this.setPickable(false);
         this.removeAllGestureEventListeners();
         this.unregisterAllInputProcessors();
 
-        addWorkspaceButton = new MTSvgButton(pApplet, addWorkspaceButtonSvgFile);
         keyboard = new SplitKeyboard(pApplet);
         helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
         problemButton = new MTSvgButton(pApplet, problemButtonSvgFile);
-        closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
         readyButton = new MTSvgButton(pApplet, readyButtonSvgFile);
         readyButtonDone = new MTSvgButton(pApplet, readyButtonDoneSvgFile);
         cloud = new Cloud(pApplet, true);
         cloud.getTextArea().setEnableCaret(true);
         cloud.removeAllGestureEventListeners();
         cloud.unregisterAllInputProcessors();
-        
-        positionAllComponents();
-    }
 
-    public void setIsActive(boolean active) {
-        addWorkspaceButton.setVisible(!active);
-        keyboard.setVisible(active);
+        positionAllComponents();
     }
 
     public void setIsReady(boolean ready) {
         readyButton.setVisible(!ready);
         readyButtonDone.setVisible(ready);
-    }
-
-    public MTSvgButton getAddWorkspaceButton() {
-        return addWorkspaceButton;
     }
 
     public MTSvgButton getHelpButton() {
@@ -83,21 +64,16 @@ public final class DreamerUserWorkspace extends MTRectangle {
         return readyButtonDone;
     }
 
-    public MTSvgButton getCloseButton() {
-        return closeButton;
-    }
-
     public Cloud getCloud() {
         return cloud;
     }
 
     private void positionAllComponents() {
-        addChild(addWorkspaceButton);
         addWorkspaceButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         addWorkspaceButton.setPositionRelativeToParent(new Vector3D(this.getWidthXY(TransformSpace.LOCAL) / 2, this.getHeightXY(TransformSpace.LOCAL) / 2));
 
-        addChild(keyboard);
-        keyboard.setPositionRelativeToParent(new Vector3D(this.getWidthXY(TransformSpace.LOCAL) / 2, this.getHeightXY(TransformSpace.LOCAL) / 2));
+        workspace.addChild(keyboard);
+        keyboard.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, workspace.getHeightXY(TransformSpace.LOCAL) / 2));
         keyboard.addChild(helpButton);
         keyboard.addChild(problemButton);
         keyboard.addChild(closeButton);
@@ -114,8 +90,7 @@ public final class DreamerUserWorkspace extends MTRectangle {
         readyButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + readyButton.getWidthXYRelativeToParent(), keyboard.getHeight() - readyButton.getHeightXYRelativeToParent() + 30));
         readyButtonDone.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + readyButtonDone.getWidthXYRelativeToParent(), keyboard.getHeight() - readyButtonDone.getHeightXYRelativeToParent() + 30));
         readyButtonDone.setVisible(false);
-        keyboard.setVisible(false);
-
+        
         keyboard.addChild(cloud);
         cloud.setPositionRelativeToParent(new Vector3D(keyboard.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2, keyboard.getHeightXY(TransformSpace.RELATIVE_TO_PARENT) / 2));
 

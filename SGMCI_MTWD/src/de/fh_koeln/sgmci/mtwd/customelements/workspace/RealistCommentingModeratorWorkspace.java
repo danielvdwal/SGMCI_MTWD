@@ -1,5 +1,8 @@
-package de.fh_koeln.sgmci.mtwd.customelements;
+package de.fh_koeln.sgmci.mtwd.customelements.workspace;
 
+import de.fh_koeln.sgmci.mtwd.customelements.AbstractKeyboard;
+import de.fh_koeln.sgmci.mtwd.customelements.Cloud;
+import de.fh_koeln.sgmci.mtwd.customelements.Keyboard;
 import java.util.Collection;
 import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
@@ -18,36 +21,23 @@ import processing.core.PApplet;
  * @author Daniel van der Wal
  * @version 0.3.0
  */
-public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
-
-    private static final String addWorkspaceButtonSvgFile = "data/plusButton_light.svg";
-    private static final String helpButtonSvgFile = "data/helpButton_light.svg";
-    private static final String problemButtonSvgFile = "data/problemButton_light.svg";
-    private static final String closeButtonSvgFile = "data/closeButton_light.svg";
-    private static final String startButtonSvgFile = "data/startButton_light.svg";
-    private static final String leftButtonSvgFile = "data/arrowLeft_light.svg";
-    private static final String rightButtonSvgFile = "data/arrowRight_light.svg";
-    private static final float buttonScaleFactor = 1.4f;
-    private static final float arrowButtonScaleFactor = 2.0f;
+public final class RealistCommentingModeratorWorkspace extends AbstractWorkspace {
 
     private final PApplet pApplet;
-    private final MTSvgButton addWorkspaceButton;
-    private final MTRectangle workspace;
     private final MTRectangle dashboardSpace;
     private final Cloud currentDisplayedIdea;
     private final MTSvgButton helpButton;
     private final MTSvgButton problemButton;
-    private final MTSvgButton closeButton;
     private final MTSvgButton continueButton;
     private final MTSvgButton leftButton;
     private final MTSvgButton rightButton;
-    private final MTList criticList;
-    private final MTTextArea criticTextArea;
+    private final MTList commentList;
+    private final MTTextArea commentTextArea;
     private final AbstractKeyboard keyboard;
-    private final IFont criticFont;
+    private final IFont commentFont;
 
-    public CriticerCommentingModeratorWorkspace(PApplet pApplet) {
-        super(pApplet, 400, 300);
+    public RealistCommentingModeratorWorkspace(PApplet pApplet) {
+        super(pApplet, 400, 200, false);
         this.pApplet = pApplet;
         this.setNoFill(true);
         this.setNoStroke(true);
@@ -55,27 +45,17 @@ public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
         this.removeAllGestureEventListeners();
         this.unregisterAllInputProcessors();
 
-        this.criticFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 18);
-
-        this.addWorkspaceButton = new MTSvgButton(pApplet, addWorkspaceButtonSvgFile);
-        this.workspace = new MTRectangle(pApplet, 400, 300);
-        this.workspace.setNoFill(true);
-        this.workspace.setNoStroke(true);
-        this.workspace.setPickable(false);
-        this.workspace.removeAllGestureEventListeners();
-        this.workspace.unregisterAllInputProcessors();
-        removeAllGestureEventListeners();
-        unregisterAllInputProcessors();
+        this.commentFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 18);
 
         this.keyboard = new Keyboard(pApplet);
 
-        this.criticTextArea = new MTTextArea(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 200, criticFont);
-        this.criticTextArea.setFillColor(MTColor.YELLOW);
-        this.criticTextArea.setEnableCaret(true);
-        this.criticTextArea.removeAllGestureEventListeners();
-        this.criticTextArea.unregisterAllInputProcessors();
+        this.commentTextArea = new MTTextArea(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 200, commentFont);
+        this.commentTextArea.setFillColor(MTColor.YELLOW);
+        this.commentTextArea.setEnableCaret(true);
+        this.commentTextArea.removeAllGestureEventListeners();
+        this.commentTextArea.unregisterAllInputProcessors();
 
-        this.criticList = new MTList(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 410);
+        this.commentList = new MTList(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 410);
 
         this.dashboardSpace = new MTRectangle(pApplet, keyboard.getWidth(), 420);
         this.dashboardSpace.removeAllGestureEventListeners();
@@ -85,14 +65,13 @@ public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
         this.dashboardSpace.setPickable(false);
 
         this.keyboard.setPickable(false);
-        this.keyboard.addTextInputListener(criticTextArea);
+        this.keyboard.addTextInputListener(commentTextArea);
 
         this.currentDisplayedIdea = new Cloud(pApplet, false);
         this.currentDisplayedIdea.removeAllGestureEventListeners();
         this.currentDisplayedIdea.unregisterAllInputProcessors();
         this.helpButton = new MTSvgButton(pApplet, helpButtonSvgFile);
         this.problemButton = new MTSvgButton(pApplet, problemButtonSvgFile);
-        this.closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
         this.continueButton = new MTSvgButton(pApplet, startButtonSvgFile);
         this.leftButton = new MTSvgButton(pApplet, leftButtonSvgFile);
         this.rightButton = new MTSvgButton(pApplet, rightButtonSvgFile);
@@ -104,28 +83,19 @@ public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
         currentDisplayedIdea.setTextAreaText(decription);
     }
 
-    public void setCritics(Collection<String> critics) {
-        criticList.removeAllListElements();
-        for (String critic : critics) {
-            final MTTextArea textArea = new MTTextArea(pApplet, criticFont);
+    public void setComments(Collection<String> comments) {
+        commentList.removeAllListElements();
+        for (String comment : comments) {
+            final MTTextArea textArea = new MTTextArea(pApplet, commentFont);
             textArea.setNoFill(true);
             textArea.setNoStroke(true);
-            textArea.setText(critic);
+            textArea.setText(comment);
             final MTListCell listCell = new MTListCell(pApplet, textArea.getWidthXY(TransformSpace.LOCAL), textArea.getHeightXY(TransformSpace.LOCAL));
             listCell.setNoFill(true);
             listCell.setNoStroke(true);
             listCell.addChild(textArea);
-            criticList.addListElement(listCell);
+            commentList.addListElement(listCell);
         }
-    }
-
-    public void setIsActive(boolean active) {
-        addWorkspaceButton.setVisible(!active);
-        workspace.setVisible(active);
-    }
-
-    public MTSvgButton getAddWorkspaceButton() {
-        return addWorkspaceButton;
     }
 
     public MTSvgButton getHelpButton() {
@@ -134,10 +104,6 @@ public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
 
     public MTSvgButton getProblemButton() {
         return problemButton;
-    }
-
-    public MTSvgButton getCloseButton() {
-        return closeButton;
     }
 
     public MTSvgButton getContinueButton() {
@@ -152,8 +118,8 @@ public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
         return rightButton;
     }
 
-    public MTTextArea getCriticTextArea() {
-        return criticTextArea;
+    public MTTextArea getCommentTextArea() {
+        return commentTextArea;
     }
 
     private void positionAllComponents() {
@@ -168,14 +134,14 @@ public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
         keyboard.addChild(closeButton);
         keyboard.addChild(continueButton);
 
-        dashboardSpace.addChild(criticList);
-        dashboardSpace.addChild(criticTextArea);
+        dashboardSpace.addChild(commentList);
+        dashboardSpace.addChild(commentTextArea);
         dashboardSpace.addChild(currentDisplayedIdea);
         dashboardSpace.addChild(leftButton);
         dashboardSpace.addChild(rightButton);
 
         workspace.addChild(dashboardSpace);
-        dashboardSpace.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, -dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2));
+        dashboardSpace.setPositionRelativeToParent(new Vector3D(workspace.getWidthXY(TransformSpace.LOCAL) / 2, -dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 20));
 
         helpButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
         problemButton.scale(buttonScaleFactor, buttonScaleFactor, buttonScaleFactor, Vector3D.ZERO_VECTOR);
@@ -188,16 +154,10 @@ public final class CriticerCommentingModeratorWorkspace extends MTRectangle {
         problemButton.setPositionRelativeToParent(new Vector3D(-problemButton.getWidthXYRelativeToParent(), keyboard.getHeight() - problemButton.getHeightXYRelativeToParent() + 30));
         closeButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + closeButton.getWidthXYRelativeToParent(), closeButton.getHeightXYRelativeToParent() - 30));
         continueButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + continueButton.getWidthXYRelativeToParent(), keyboard.getHeight() - continueButton.getHeightXYRelativeToParent() + 30));
-        criticList.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.75f + 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
-        criticTextArea.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.75f - 10));
+        commentList.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.75f + 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
+        commentTextArea.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.75f - 10));
         currentDisplayedIdea.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.25f - 10));
         leftButton.setPositionRelativeToParent(new Vector3D(-leftButton.getWidthXYRelativeToParent(), dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
         rightButton.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) + rightButton.getWidthXYRelativeToParent(), dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
-
-        workspace.setVisible(false);
-    }
-
-    public Object getCommentTextArea() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -2,8 +2,8 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.CriticerCommentingSceneController;
-import de.fh_koeln.sgmci.mtwd.customelements.CriticerCommentingModeratorWorkspace;
-import de.fh_koeln.sgmci.mtwd.customelements.CriticerCommentingUserWorkspace;
+import de.fh_koeln.sgmci.mtwd.customelements.workspace.CriticerCommentingModeratorWorkspace;
+import de.fh_koeln.sgmci.mtwd.customelements.workspace.CriticerCommentingUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.model.Critic;
 import java.util.Collection;

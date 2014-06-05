@@ -2,7 +2,7 @@ package de.fh_koeln.sgmci.mtwd.scene;
 
 import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.CriticerVotingSceneController;
-import de.fh_koeln.sgmci.mtwd.customelements.CriticerVotingUserWorkspace;
+import de.fh_koeln.sgmci.mtwd.customelements.workspace.CriticerVotingUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import org.mt4j.MTApplication;
 import org.mt4j.components.TransformSpace;

@@ -4,7 +4,7 @@ import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.DreamerSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
 import de.fh_koeln.sgmci.mtwd.customelements.Cloud;
-import de.fh_koeln.sgmci.mtwd.customelements.DreamerUserWorkspace;
+import de.fh_koeln.sgmci.mtwd.customelements.workspace.DreamerUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeaTextException;
 import de.fh_koeln.sgmci.mtwd.exception.NoIdeasException;
@@ -100,10 +100,10 @@ public class DreamerScene extends AbstractMTWDScene {
         user1Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user1Workspace));
         user1Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workspace.getCloseButton()));
-        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
         user1Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
-        user1Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME,FLICK_THRESHOLD));
+        user1Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME, FLICK_THRESHOLD));
         user1Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user1Workspace, FlickEvent.FlickDirection.NORTH));
 
         user2Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
@@ -111,10 +111,10 @@ public class DreamerScene extends AbstractMTWDScene {
         user2Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user2Workspace));
         user2Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workspace.getCloseButton()));
-        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
         user2Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
-        user2Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME,FLICK_THRESHOLD));
+        user2Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME, FLICK_THRESHOLD));
         user2Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user2Workspace, FlickEvent.FlickDirection.SOUTH));
 
         user3Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
@@ -122,10 +122,10 @@ public class DreamerScene extends AbstractMTWDScene {
         user3Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user3Workspace));
         user3Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workspace.getCloseButton()));
-        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
         user3Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
-        user3Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME,FLICK_THRESHOLD));
+        user3Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME, FLICK_THRESHOLD));
         user3Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user3Workspace, FlickEvent.FlickDirection.EAST));
 
         user4Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
@@ -133,10 +133,10 @@ public class DreamerScene extends AbstractMTWDScene {
         user4Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user4Workspace));
         user4Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workspace.getCloseButton()));
-        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseButtonListener(AbstractMTWDSceneController.user4Id));
         user4Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
         user4Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
-        user4Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME,FLICK_THRESHOLD));
+        user4Workspace.getCloud().registerInputProcessor(new FlickProcessor(FLICK_TIME, FLICK_THRESHOLD));
         user4Workspace.getCloud().addGestureListener(FlickProcessor.class, new SendButtonListener(user4Workspace, FlickEvent.FlickDirection.WEST));
     }
 
@@ -171,6 +171,7 @@ public class DreamerScene extends AbstractMTWDScene {
                 float heightRange = maxYVal - minYVal;
                 float xPos = random.nextInt((int) widthRange) + minXVal;
                 float yPos = random.nextInt((int) heightRange) + minYVal;
+                newIdea.rotateZ(new Vector3D(newIdea.getWidthXYRelativeToParent() / 2, newIdea.getHeightXYRelativeToParent() / 2), random.nextInt(360));
                 newIdea.setPositionGlobal(new Vector3D(xPos, yPos));
             }
         }
@@ -272,11 +273,11 @@ public class DreamerScene extends AbstractMTWDScene {
         }
     }
 
-    public class CloseWorkspaceButtonListener implements IGestureEventListener {
+    public class CloseButtonListener implements IGestureEventListener {
 
         private final String userId;
 
-        public CloseWorkspaceButtonListener(String userId) {
+        public CloseButtonListener(String userId) {
             this.userId = userId;
         }
 
