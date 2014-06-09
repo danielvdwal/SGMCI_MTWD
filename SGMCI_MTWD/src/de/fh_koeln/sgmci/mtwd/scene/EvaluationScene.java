@@ -24,13 +24,18 @@ import processing.core.PImage;
  */
 public class EvaluationScene extends AbstractMTWDScene {
 
+    private IScene startScene;
+    private IScene dreamerScene;
+    
     private MTTextArea headlineTextArea;
     private MTTextArea foundTextArea;
     private MTTextArea moduleTextArea;
     private MTTextArea profTextArea;
 
+    private MTSvgButton restartButton;
     private MTSvgButton startButton;
-    private MTSvgButton replayButton;
+    private MTSvgButton saveButton;
+    private MTSvgButton endButton;
 
     public EvaluationScene(MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -76,35 +81,100 @@ public class EvaluationScene extends AbstractMTWDScene {
         profTextArea.setPickable(false);
         profTextArea.setText("Prof. Dr. Heiner Klocke");
 
-        startButton = new MTSvgButton(mtApp, "data/startButton.svg");
-        replayButton = new MTSvgButton(mtApp, "data/replayButton.svg");
+        restartButton = new MTSvgButton(mtApp, "data/restartButton_light.svg");
+        startButton = new MTSvgButton(mtApp, "data/startButton_light.svg");
+        saveButton = new MTSvgButton(mtApp, "data/saveButton_light.svg");
+        endButton = new MTSvgButton(mtApp, "data/endButton_light.svg");
 
         getCanvas().addChild(headlineTextArea);
         getCanvas().addChild(foundTextArea);
         getCanvas().addChild(moduleTextArea);
         getCanvas().addChild(profTextArea);
+        getCanvas().addChild(restartButton);
         getCanvas().addChild(startButton);
-        getCanvas().addChild(replayButton);
+        getCanvas().addChild(saveButton);
+        getCanvas().addChild(endButton);
 
         headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 250, 0));
         foundTextArea.setPositionGlobal(new Vector3D(mtApp.width / 6, 350, 0));
         moduleTextArea.setPositionGlobal(new Vector3D(moduleTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height - 20, 0));
         profTextArea.setPositionGlobal(new Vector3D(mtApp.width - profTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height - 20, 0));
-        startButton.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height - 150, 0));
-        replayButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150, 0));
+        restartButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 50, mtApp.height - 150, 0));
+        startButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150, 0));
+        saveButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 50, mtApp.height - 150, 0));
+        endButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 150, mtApp.height - 150, 0));
+        
     }
 
+    public IScene getStartScene() {
+        return startScene;
+    }
+
+    public void setStartScene(IScene startScene) {
+        this.startScene = startScene;
+    }
+
+    public IScene getDreamerScene() {
+        return dreamerScene;
+    }
+
+    public void setDreamerScene(IScene dreamerScene) {
+        this.dreamerScene = dreamerScene;
+    }
+    
     @Override
     public void createEventListeners() {
+        restartButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
+            @Override
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
+                        setNextScene(dreamerScene);
+                        gotoNextScene();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
         startButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
 
             @Override
             public boolean processGestureEvent(MTGestureEvent mtge) {
                 switch (mtge.getId()) {
                     case TapEvent.GESTURE_ENDED:
-                        //controller.proceed(problemInputField.getText());
-                        //((EvaluationSceneController)controller).saveResultsIntoXmlFile();
+                        setNextScene(startScene);
                         gotoNextScene();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+        saveButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
+            @Override
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
+                        ((EvaluationSceneController)controller).saveResultsIntoXmlFile();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+        endButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+
+            @Override
+            public boolean processGestureEvent(MTGestureEvent mtge) {
+                switch (mtge.getId()) {
+                    case TapEvent.GESTURE_ENDED:
+                        System.exit(0);
                         break;
                     default:
                         break;

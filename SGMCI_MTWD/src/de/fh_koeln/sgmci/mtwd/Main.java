@@ -1,5 +1,6 @@
 package de.fh_koeln.sgmci.mtwd;
 
+import de.fh_koeln.sgmci.mtwd.scene.EvaluationScene;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
 import de.fh_koeln.sgmci.mtwd.scene.factory.AbstractMTWDSceneFactory;
 import de.fh_koeln.sgmci.mtwd.scene.factory.CriticerCommentingSceneFactory;
@@ -73,7 +74,8 @@ public class Main extends MTApplication implements IMain {
         realistCommentingScene.setNextScene(criticerCommentingScene);
         criticerCommentingScene.setNextScene(criticerVotingScene);
         criticerVotingScene.setNextScene(evaluationScene);
-        evaluationScene.setNextScene(startScene);
+        ((EvaluationScene)evaluationScene).setStartScene(startScene);
+        ((EvaluationScene)evaluationScene).setDreamerScene(dreamerScene);
 
         addScene(startScene);
         addScene(dreamerScene);
