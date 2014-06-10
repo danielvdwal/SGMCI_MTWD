@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<mtwd_results>
+    <problem id='problem_000' description='Mesh Generierung'>
+        <idea id='idea_008' description='code eingabe' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+            <comment id='comment_001' description='funktional' />
+            <comment id='comment_000' description='programmiersicht' />
+            <comment id='comment_003' description='geom. operationen' />
+            <comment id='comment_002' description='dot notation' />
+        </idea>
+        <idea id='idea_009' description='GUI Vorschau' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=2 criticer_dislikes=2>
+            <comment id='comment_005' description='debugging' />
+            <comment id='comment_004' description='live' />
+            <comment id='comment_006' description='zusatz information, schnittpunkte' />
+        </idea>
+        <idea id='idea_013' description='geoObjeke mŸssen auf 
+verschiedene material
+positionierungen reagieren' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=3 criticer_dislikes=1>
+            <comment id='comment_007' description='n-materiallien, n-submesh' />
+            <comment id='comment_008' description='submesh nur bei unity (vorraussetzung)' />
+        </idea>
+        <idea id='idea_011' description='Generierung Ÿber ein Ui Interface' visible='true' realist_likes=0 realist_dislikes=4 criticer_likes=0 criticer_dislikes=4>
+            <comment id='comment_011' description='operatioe (geometrich)' />
+            <comment id='comment_009' description='auswŠhlbare objekte' />
+            <comment id='comment_010' description='designersicht (blender)' />
+        </idea>
+        <idea id='idea_012' description='selektierbare
+mesh-komponenten' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+            <comment id='comment_014' description='konsistent (wŸrfel linke seite, umdrehen rechte seite)' />
+            <comment id='comment_013' description='einzelne kanten, punkte, faces' />
+            <comment id='comment_012' description='codesicht' />
+        </idea>
+        <idea id='idea_010' description='schneiden von
+geo. obj. untereinand.' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=3 criticer_dislikes=1>
+            <comment id='comment_015' description='boolsche operationen' />
+        </idea>
+        <idea id='idea_003' description='eigenschaften
+von geo objekten 
+mŸssen anpassbar 
+sein' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+            <comment id='comment_020' description='gleiche referenz bei neuem objekt' />
+            <comment id='comment_018' description='rotation' />
+            <comment id='comment_017' description='breite' />
+            <comment id='comment_016' description='grš§eih' />
+            <comment id='comment_019' description='lokalles koordinaten sytem (scope)' />
+        </idea>
+        <idea id='idea_002' description='konstruktion geometr.
+objekte' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+        </idea>
+        <idea id='idea_001' description='geometrische obekte
+sollen miteinander 
+kombinierbar sein' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+            <comment id='comment_021' description='boolsche op.' />
+        </idea>
+        <idea id='idea_000' description='3D Objekte' visible='true' realist_likes=3 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+        </idea>
+        <idea id='idea_007' description='texturierung
+anpassbar' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=3 criticer_dislikes=1>
+            <comment id='comment_022' description='verschiedene projektion' />
+            <comment id='comment_023' description='scope anpassbar' />
+        </idea>
+        <idea id='idea_006' description='alle teilkomponten
+von geoObjeken
+mŸssen navigierbar/
+selektierbar sein' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+        </idea>
+        <idea id='idea_005' description='Geo-Objeke in neue 
+erweitern' visible='true' realist_likes=4 realist_dislikes=0 criticer_likes=4 criticer_dislikes=0>
+            <comment id='comment_024' description='geometrische op.' />
+            <comment id='comment_025' description='rect -> cube' />
+        </idea>
+        <idea id='idea_004' description='Generierung von n-
+Objekten' visible='true' realist_likes=2 realist_dislikes=2 criticer_likes=2 criticer_dislikes=2>
+            <comment id='comment_031' description='random' />
+            <comment id='comment_030' description='linie' />
+            <comment id='comment_026' description='reihe von gleichen objekten' />
+            <comment id='comment_027' description='reihe von verschiednen' />
+            <comment id='comment_028' description='verteilung' />
+            <comment id='comment_029' description='flŠche' />
+        </idea>
+    </problem>
+</mtwd_results>
