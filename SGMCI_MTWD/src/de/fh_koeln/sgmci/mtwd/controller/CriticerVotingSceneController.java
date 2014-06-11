@@ -69,6 +69,12 @@ public class CriticerVotingSceneController extends AbstractMTWDSceneController {
                     }
                 }
             }
+            Collection<Idea> ideas = getAllIdeasForCurrentProblem();
+            for (Idea idea : ideas) {
+                if(((double)idea.getTotalCriticerDislikes()/ application.getAllActiveUsers().size()) > filterValue) {
+                    idea.setStillDisplayed(false);
+                }
+            }
             observer.gotoNextScene();
         }
     }

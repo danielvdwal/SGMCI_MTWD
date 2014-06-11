@@ -6,6 +6,7 @@ import de.fh_koeln.sgmci.mtwd.model.Idea;
 import de.fh_koeln.sgmci.mtwd.model.MultitouchWaltDisneyApplication;
 import de.fh_koeln.sgmci.mtwd.model.User;
 import de.fh_koeln.sgmci.mtwd.scene.IScene;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,11 +27,13 @@ public abstract class AbstractMTWDSceneController {
      */
     final static MultitouchWaltDisneyApplication application = new MultitouchWaltDisneyApplication();
 
-    public final static String user1Id = "user_1";
-    public final static String user2Id = "user_2";
-    public final static String user3Id = "user_3";
-    public final static String user4Id = "user_4";
-
+    public final static String USER1_ID = "user_1";
+    public final static String USER2_ID = "user_2";
+    public final static String USER3_ID = "user_3";
+    public final static String USER4_ID = "user_4";
+    
+    public static double filterValue = 0.5;
+    
     final static User user1;
     final static User user2;
     final static User user3;
@@ -47,14 +50,14 @@ public abstract class AbstractMTWDSceneController {
     IUserContinueStrategy userContinueStrategy;
 
     static {
-        application.addUser(user1Id);
-        application.addUser(user2Id);
-        application.addUser(user3Id);
-        application.addUser(user4Id);
-        user1 = application.getUser(user1Id);
-        user2 = application.getUser(user2Id);
-        user3 = application.getUser(user3Id);
-        user4 = application.getUser(user4Id);
+        application.addUser(USER1_ID);
+        application.addUser(USER2_ID);
+        application.addUser(USER3_ID);
+        application.addUser(USER4_ID);
+        user1 = application.getUser(USER1_ID);
+        user2 = application.getUser(USER2_ID);
+        user3 = application.getUser(USER3_ID);
+        user4 = application.getUser(USER4_ID);
     }
 
     public AbstractMTWDSceneController(IScene observer) {
@@ -103,6 +106,15 @@ public abstract class AbstractMTWDSceneController {
      */
     public List<Idea> getAllVisibleIdeasForCurrentProblem() {
         return application.getProblem(currentProblemId).getAllVisibleIdeas();
+    }
+    
+    /**
+     * Get all ideas for the current problem.
+     *
+     * @return a list of all ideas for the current problem
+     */
+    public Collection<Idea> getAllIdeasForCurrentProblem() {
+        return application.getProblem(currentProblemId).getAllIdeas();
     }
 
     public static boolean isUserActive(String id) {

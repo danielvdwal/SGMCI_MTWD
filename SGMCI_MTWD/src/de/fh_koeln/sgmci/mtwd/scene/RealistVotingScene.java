@@ -74,69 +74,69 @@ public class RealistVotingScene extends AbstractMTWDScene {
     public void createEventListeners() {
         this.registerGlobalInputProcessor(new CursorTracer(mtApp, this));
 
-        user1Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
+        user1Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.USER1_ID));
         user1Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user1Workspace));
         user1Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user1Workspace));
         user1Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user1Workspace.getCloseButton()));
-        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user1Id));
-        user1Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user1Id));
+        user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.USER1_ID));
+        user1Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.USER1_ID));
+        user1Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.USER1_ID));
 
-        user2Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.USER2_ID));
         user2Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user2Workspace));
         user2Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user2Workspace));
         user2Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user2Workspace.getCloseButton()));
-        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user2Id));
-        user2Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user2Id));
+        user2Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.USER2_ID));
+        user2Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.USER2_ID));
+        user2Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.USER2_ID));
 
-        user3Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.USER3_ID));
         user3Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user3Workspace));
         user3Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user3Workspace));
         user3Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user3Workspace.getCloseButton()));
-        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user3Id));
-        user3Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user3Id));
+        user3Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.USER3_ID));
+        user3Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.USER3_ID));
+        user3Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.USER3_ID));
 
-        user4Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getAddWorkspaceButton().addGestureListener(TapProcessor.class, new AddWorkspaceButtonListener(AbstractMTWDSceneController.USER4_ID));
         user4Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener(user4Workspace));
         user4Workspace.getProblemButton().addGestureListener(TapProcessor.class, new ProblemButtonListener(user4Workspace));
         user4Workspace.getCloseButton().registerInputProcessor(new TapAndHoldProcessor(mtApp, 1000));
         user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new TapAndHoldVisualizer(mtApp, user4Workspace.getCloseButton()));
-        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.user4Id));
-        user4Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.user4Id));
+        user4Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseWorkspaceButtonListener(AbstractMTWDSceneController.USER4_ID));
+        user4Workspace.getReadyButton().addGestureListener(TapProcessor.class, new ReadyButtonListener(AbstractMTWDSceneController.USER4_ID));
+        user4Workspace.getReadyButtonDone().addGestureListener(TapProcessor.class, new ReadyButtonDoneListener(AbstractMTWDSceneController.USER4_ID));
     }
 
     @Override
     public void startScene() {
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user1Id, false);
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user2Id, false);
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user3Id, false);
-        controller.setUserReadyToContinue(AbstractMTWDSceneController.user4Id, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.USER1_ID, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.USER2_ID, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.USER3_ID, false);
+        controller.setUserReadyToContinue(AbstractMTWDSceneController.USER4_ID, false);
 
         updateScene();
 
-        user1Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.user1Id));
-        user2Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.user2Id));
-        user3Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.user3Id));
-        user4Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.user4Id));
+        user1Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.USER1_ID));
+        user2Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.USER2_ID));
+        user3Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.USER3_ID));
+        user4Workspace.fillVotedIdeas(((RealistVotingSceneController) controller).getAllVotedIdeasForUser(AbstractMTWDSceneController.USER4_ID));
     }
 
     @Override
     public void updateScene() {
-        user1Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
-        user2Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user2Id));
-        user3Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user3Id));
-        user4Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user4Id));
+        user1Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.USER1_ID));
+        user2Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.USER2_ID));
+        user3Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.USER3_ID));
+        user4Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.USER4_ID));
 
-        user1Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user1Id));
-        user2Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user2Id));
-        user3Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user3Id));
-        user4Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.user4Id));
+        user1Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.USER1_ID));
+        user2Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.USER2_ID));
+        user3Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.USER3_ID));
+        user4Workspace.setIsReady(controller.isUserReadyToContinue(AbstractMTWDSceneController.USER4_ID));
     }
 
     @Override

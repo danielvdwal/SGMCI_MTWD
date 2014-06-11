@@ -78,7 +78,9 @@ public class Problem extends AbstractModel {
     public List<Idea> getAllVisibleIdeas() {
         List<Idea> visibleIdeas = new LinkedList<Idea>();
         for (Idea idea : ideas.values()) {
-            visibleIdeas.add(idea);
+            if (idea.isStillDisplayed()) {
+                visibleIdeas.add(idea);
+            }
         }
         return visibleIdeas;
     }

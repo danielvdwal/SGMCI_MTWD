@@ -143,7 +143,7 @@ public class StartScene extends AbstractMTWDScene {
 
     @Override
     public void updateScene() {
-        user1Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.user1Id));
+        user1Workspace.setIsActive(AbstractMTWDSceneController.isUserActive(AbstractMTWDSceneController.USER1_ID));
     }
 
     static class TextAreaPositionUpdateThread extends Thread {
@@ -175,7 +175,7 @@ public class StartScene extends AbstractMTWDScene {
         public boolean processGestureEvent(MTGestureEvent ge) {
             TapEvent te = (TapEvent) ge;
             if (te.getId() == TapEvent.GESTURE_STARTED) {
-                controller.setUserActive(AbstractMTWDSceneController.user1Id, true);
+                controller.setUserActive(AbstractMTWDSceneController.USER1_ID, true);
             }
             return false;
         }
@@ -188,7 +188,7 @@ public class StartScene extends AbstractMTWDScene {
             TapAndHoldEvent te = (TapAndHoldEvent) ge;
             if (te.getId() == TapAndHoldEvent.GESTURE_ENDED) {
                 if (te.isHoldComplete()) {
-                    controller.setUserActive(AbstractMTWDSceneController.user1Id, false);
+                    controller.setUserActive(AbstractMTWDSceneController.USER1_ID, false);
                 }
             }
             return false;

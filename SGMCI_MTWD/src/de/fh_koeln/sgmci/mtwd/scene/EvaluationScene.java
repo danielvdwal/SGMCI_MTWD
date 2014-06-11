@@ -24,11 +24,16 @@ import processing.core.PImage;
  */
 public class EvaluationScene extends AbstractMTWDScene {
 
+    private static final String FOUND_IDEAS_TEXT = "Ideen gefunden: %d";
+    private static final String ALL_IDEAS_TEXT = "Alle Ideen: %d";
+    
     private IScene startScene;
     private IScene dreamerScene;
-    
+
     private MTTextArea headlineTextArea;
-    private MTTextArea foundTextArea;
+    private MTTextArea problemTextArea;
+    private MTTextArea foundIdeasTextArea;
+    private MTTextArea allIdeasTextArea;
     private MTTextArea moduleTextArea;
     private MTTextArea profTextArea;
 
@@ -61,12 +66,23 @@ public class EvaluationScene extends AbstractMTWDScene {
         headlineTextArea.setPickable(false);
         headlineTextArea.setText("Ende");
 
+        problemTextArea = new MTTextArea(mtApp, generalFond);
+        problemTextArea.setNoFill(true);
+        problemTextArea.setNoStroke(true);
+        problemTextArea.setPickable(false);
+
         //The description of the technique
-        foundTextArea = new MTTextArea(mtApp, generalFond);
-        foundTextArea.setNoFill(true);
-        foundTextArea.setNoStroke(true);
-        foundTextArea.setPickable(false);
-        foundTextArea.setText("Ideen gefunden: 12");
+        foundIdeasTextArea = new MTTextArea(mtApp, generalFond);
+        foundIdeasTextArea.setNoFill(true);
+        foundIdeasTextArea.setNoStroke(true);
+        foundIdeasTextArea.setPickable(false);
+        foundIdeasTextArea.setText(FOUND_IDEAS_TEXT);
+
+        allIdeasTextArea = new MTTextArea(mtApp, generalFond);
+        allIdeasTextArea.setNoFill(true);
+        allIdeasTextArea.setNoStroke(true);
+        allIdeasTextArea.setPickable(false);
+        allIdeasTextArea.setText(ALL_IDEAS_TEXT);
 
         moduleTextArea = new MTTextArea(mtApp, generalFond);
         moduleTextArea.setNoFill(true);
@@ -87,7 +103,9 @@ public class EvaluationScene extends AbstractMTWDScene {
         endButton = new MTSvgButton(mtApp, "data/endButton_light.svg");
 
         getCanvas().addChild(headlineTextArea);
-        getCanvas().addChild(foundTextArea);
+        getCanvas().addChild(problemTextArea);
+        getCanvas().addChild(foundIdeasTextArea);
+        getCanvas().addChild(allIdeasTextArea);
         getCanvas().addChild(moduleTextArea);
         getCanvas().addChild(profTextArea);
         getCanvas().addChild(restartButton);
@@ -95,17 +113,30 @@ public class EvaluationScene extends AbstractMTWDScene {
         getCanvas().addChild(saveButton);
         getCanvas().addChild(endButton);
 
-        headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 250, 0));
-        foundTextArea.setPositionGlobal(new Vector3D(mtApp.width / 6, 350, 0));
+        headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 200, 0));
+        problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+        foundIdeasTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 + 100, 0));
+        allIdeasTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 + 130, 0));
         moduleTextArea.setPositionGlobal(new Vector3D(moduleTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height - 20, 0));
         profTextArea.setPositionGlobal(new Vector3D(mtApp.width - profTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height - 20, 0));
         restartButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 50, mtApp.height - 150, 0));
         startButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150, 0));
         saveButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 50, mtApp.height - 150, 0));
         endButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 150, mtApp.height - 150, 0));
-        
+
     }
 
+    @Override
+    public void startScene() {
+        problemTextArea.setText(controller.getCurrentProblemDescription());
+        foundIdeasTextArea.setText(String.format(FOUND_IDEAS_TEXT, controller.getAllVisibleIdeasForCurrentProblem().size()));
+        allIdeasTextArea.setText(String.format(ALL_IDEAS_TEXT, controller.getAllIdeasForCurrentProblem().size()));
+        
+        problemTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2, 0));
+        foundIdeasTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 + 100, 0));
+        allIdeasTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 + 130, 0));
+    }
+    
     public IScene getStartScene() {
         return startScene;
     }
@@ -121,7 +152,7 @@ public class EvaluationScene extends AbstractMTWDScene {
     public void setDreamerScene(IScene dreamerScene) {
         this.dreamerScene = dreamerScene;
     }
-    
+
     @Override
     public void createEventListeners() {
         restartButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
@@ -160,7 +191,7 @@ public class EvaluationScene extends AbstractMTWDScene {
             public boolean processGestureEvent(MTGestureEvent mtge) {
                 switch (mtge.getId()) {
                     case TapEvent.GESTURE_ENDED:
-                        ((EvaluationSceneController)controller).saveResultsIntoXmlFile();
+                        ((EvaluationSceneController) controller).saveResultsIntoXmlFile();
                         break;
                     default:
                         break;

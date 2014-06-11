@@ -69,6 +69,12 @@ public class RealistVotingSceneController extends AbstractMTWDSceneController {
                     }
                 }
             }
+            Collection<Idea> ideas = getAllIdeasForCurrentProblem();
+            for (Idea idea : ideas) {
+                if(((double)idea.getTotalRealistDislikes() / application.getAllActiveUsers().size()) > filterValue) {
+                    idea.setStillDisplayed(false);
+                }
+            }
             observer.gotoNextScene();
         }
     }
