@@ -8,9 +8,9 @@ import org.mt4j.components.TransformSpace;
 import org.mt4j.components.visibleComponents.shapes.MTRectangle;
 import org.mt4j.components.visibleComponents.widgets.MTList;
 import org.mt4j.components.visibleComponents.widgets.MTListCell;
+import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.components.visibleComponents.widgets.buttons.MTSvgButton;
-import org.mt4j.util.MTColor;
 import org.mt4j.util.font.FontManager;
 import org.mt4j.util.font.IFont;
 import org.mt4j.util.math.Vector3D;
@@ -23,6 +23,9 @@ import processing.core.PApplet;
  */
 public final class RealistCommentingModeratorWorkspace extends AbstractWorkspace {
 
+    private static final String noteSvgFile = "data/note.svg";
+    private static final String pinBoardSvgFile = "data/pinBoard.svg";
+
     private final PApplet pApplet;
     private final MTRectangle dashboardSpace;
     private final Cloud currentDisplayedIdea;
@@ -31,10 +34,13 @@ public final class RealistCommentingModeratorWorkspace extends AbstractWorkspace
     private final MTSvgButton continueButton;
     private final MTSvgButton leftButton;
     private final MTSvgButton rightButton;
-    private final MTList commentList;
+    private final MTSvg note;
     private final MTTextArea commentTextArea;
+    private final MTSvg pinBoard;
+    private final MTList commentList;
     private final AbstractKeyboard keyboard;
     private final IFont commentFont;
+    private final float noteWidthScaleRate;
 
     public RealistCommentingModeratorWorkspace(PApplet pApplet) {
         super(pApplet, 400, 200, false);
@@ -45,17 +51,24 @@ public final class RealistCommentingModeratorWorkspace extends AbstractWorkspace
         this.removeAllGestureEventListeners();
         this.unregisterAllInputProcessors();
 
-        this.commentFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 18);
+        this.commentFont = FontManager.getInstance().createFont(pApplet, "arial.ttf", 20);
 
         this.keyboard = new Keyboard(pApplet);
 
-        this.commentTextArea = new MTTextArea(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 200, commentFont);
-        this.commentTextArea.setFillColor(MTColor.YELLOW);
+        this.note = new MTSvg(pApplet, noteSvgFile);
+        noteWidthScaleRate = (keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10) / 200;
+        this.note.scale(noteWidthScaleRate, 1, 1, Vector3D.ZERO_VECTOR);
+        this.commentTextArea = new MTTextArea(pApplet, 10, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 20, 200, commentFont);
+        this.commentTextArea.setNoFill(true);
+        this.commentTextArea.setNoStroke(true);
         this.commentTextArea.setEnableCaret(true);
         this.commentTextArea.removeAllGestureEventListeners();
         this.commentTextArea.unregisterAllInputProcessors();
 
+        this.pinBoard = new MTSvg(pApplet, pinBoardSvgFile);
         this.commentList = new MTList(pApplet, 0, 0, keyboard.getWidthXY(TransformSpace.LOCAL) / 2 - 10, 410);
+        this.commentList.setNoFill(true);
+        this.commentList.setNoStroke(true);
 
         this.dashboardSpace = new MTRectangle(pApplet, keyboard.getWidth(), 420);
         this.dashboardSpace.removeAllGestureEventListeners();
@@ -134,7 +147,9 @@ public final class RealistCommentingModeratorWorkspace extends AbstractWorkspace
         keyboard.addChild(closeButton);
         keyboard.addChild(continueButton);
 
+        dashboardSpace.addChild(pinBoard);
         dashboardSpace.addChild(commentList);
+        dashboardSpace.addChild(note);
         dashboardSpace.addChild(commentTextArea);
         dashboardSpace.addChild(currentDisplayedIdea);
         dashboardSpace.addChild(leftButton);
@@ -154,7 +169,9 @@ public final class RealistCommentingModeratorWorkspace extends AbstractWorkspace
         problemButton.setPositionRelativeToParent(new Vector3D(-problemButton.getWidthXYRelativeToParent(), keyboard.getHeight() - problemButton.getHeightXYRelativeToParent() + 30));
         closeButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + closeButton.getWidthXYRelativeToParent(), closeButton.getHeightXYRelativeToParent() - 30));
         continueButton.setPositionRelativeToParent(new Vector3D(keyboard.getWidth() + continueButton.getWidthXYRelativeToParent(), keyboard.getHeight() - continueButton.getHeightXYRelativeToParent() + 30));
+        pinBoard.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.75f + 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
         commentList.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.75f + 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));
+        note.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.75f - 10));
         commentTextArea.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.75f - 10));
         currentDisplayedIdea.setPositionRelativeToParent(new Vector3D(dashboardSpace.getWidthXY(TransformSpace.LOCAL) * 0.25f - 10, dashboardSpace.getHeightXY(TransformSpace.LOCAL) * 0.25f - 10));
         leftButton.setPositionRelativeToParent(new Vector3D(-leftButton.getWidthXYRelativeToParent(), dashboardSpace.getHeightXY(TransformSpace.LOCAL) / 2 - 10));

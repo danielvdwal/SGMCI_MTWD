@@ -1,9 +1,5 @@
 package de.fh_koeln.sgmci.mtwd.customelements;
 
-import de.fh_koeln.sgmci.mtwd.customelements.workspace.DreamerUserWorkspace;
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.mt4j.components.visibleComponents.widgets.MTSvg;
 import org.mt4j.components.visibleComponents.widgets.MTTextArea;
 import org.mt4j.input.inputProcessors.IGestureEventListener;
@@ -23,16 +19,12 @@ public class Cloud extends MTSvg {
     private static final String cloudSvgFile = "data/cloud.svg";
 
     private final MTTextArea textArea;
-    private final boolean textInput;
-
-    private TextAreaPositionUpdateThread thread;
 
     public Cloud(PApplet pApplet, boolean textInput) {
         super(pApplet, cloudSvgFile);
-        textArea = new MTTextArea(pApplet, FontManager.getInstance().createFont(pApplet, "arial.ttf", 18));
+        textArea = new MTTextArea(pApplet, 0, 0, 120, 120, FontManager.getInstance().createFont(pApplet, "arial.ttf", 18));
         textArea.setNoFill(true);
         textArea.setNoStroke(true);
-        this.textInput = textInput;
 
         positionAllComponents();
     }
@@ -43,7 +35,6 @@ public class Cloud extends MTSvg {
 
     public void setTextAreaText(String text) {
         textArea.setText(text);
-        textArea.setPositionRelativeToParent(new Vector3D(getWidthXYRelativeToParent() / 2, getHeightXYRelativeToParent() / 2));
     }
 
     @Override
@@ -76,34 +67,6 @@ public class Cloud extends MTSvg {
 
     private void positionAllComponents() {
         addChild(textArea);
-        textArea.setPositionRelativeToParent(new Vector3D(getWidthXYRelativeToParent() / 2, getHeightXYRelativeToParent() / 2));
-
-        if (textInput) {
-            thread = new TextAreaPositionUpdateThread(textArea, this);
-            thread.start();
-        }
-    }
-
-    static class TextAreaPositionUpdateThread extends Thread {
-
-        private final MTTextArea textArea;
-        private final MTSvg component;
-
-        public TextAreaPositionUpdateThread(MTTextArea textArea, MTSvg component) {
-            this.textArea = textArea;
-            this.component = component;
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                textArea.setPositionRelativeToParent(new Vector3D(component.getWidthXYRelativeToParent() / 2, component.getHeightXYRelativeToParent() / 2));
-                try {
-                    sleep(50);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(DreamerUserWorkspace.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        textArea.setPositionRelativeToParent(new Vector3D(getWidthXYGlobal() / 2, getHeightXYGlobal() / 2));
     }
 }
