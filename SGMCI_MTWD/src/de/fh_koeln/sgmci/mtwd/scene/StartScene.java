@@ -4,6 +4,7 @@ import de.fh_koeln.sgmci.mtwd.controller.AbstractMTWDSceneController;
 import de.fh_koeln.sgmci.mtwd.controller.StartSceneController;
 import de.fh_koeln.sgmci.mtwd.customelements.ClosablePopup;
 import de.fh_koeln.sgmci.mtwd.customelements.Popup;
+import de.fh_koeln.sgmci.mtwd.customelements.Settings;
 import de.fh_koeln.sgmci.mtwd.customelements.workspace.StartUserWorkspace;
 import de.fh_koeln.sgmci.mtwd.exception.NoProblemTextException;
 import java.util.logging.Level;
@@ -39,6 +40,7 @@ public class StartScene extends AbstractMTWDScene {
     private MTTextArea problemLabel;
     private MTTextArea problemInputField;
     private Popup errorMessagePopup;
+    private Settings settingsWindow;
 
     public StartScene(final MTApplication mtApp, String name) {
         super(mtApp, name);
@@ -73,10 +75,14 @@ public class StartScene extends AbstractMTWDScene {
         errorMessagePopup = new ClosablePopup(mtApp);
         errorMessagePopup.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
 
+        settingsWindow = new Settings(mtApp);
+        settingsWindow.scale(componentScaleFactor, componentScaleFactor, componentScaleFactor, Vector3D.ZERO_VECTOR);
+
         getCanvas().addChild(problemLabel);
         getCanvas().addChild(problemInputField);
         getCanvas().addChild(user1Workspace);
         getCanvas().addChild(errorMessagePopup);
+        getCanvas().addChild(settingsWindow);
 
         TextAreaPositionUpdateThread problemTextAreaUpdateThread = new TextAreaPositionUpdateThread(problemInputField, problemLabel);
         problemTextAreaUpdateThread.start();
@@ -93,47 +99,10 @@ public class StartScene extends AbstractMTWDScene {
         user1Workspace.getCloseButton().addGestureListener(TapAndHoldProcessor.class, new CloseButtonListener());
         user1Workspace.getKeyboard().addTextInputListener(problemInputField);
         user1Workspace.getHelpButton().addGestureListener(TapProcessor.class, new HelpButtonListener());
-
-        user1Workspace.getStartButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
-            @Override
-            public boolean processGestureEvent(MTGestureEvent mtge) {
-                switch (mtge.getId()) {
-                    case TapEvent.GESTURE_STARTED:
-                        try {
-                            ((StartSceneController) controller).proceed(problemInputField.getText());
-                        } catch (NoProblemTextException ex) {
-                            errorMessagePopup.setText(ex.getMessage());
-                            errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
-                            errorMessagePopup.setVisible(true);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
-
-        user1Workspace.getSettingsButton().addGestureListener(TapProcessor.class, new IGestureEventListener() {
-            @Override
-            public boolean processGestureEvent(MTGestureEvent mtge) {
-                switch (mtge.getId()) {
-                    case TapEvent.GESTURE_ENDED:
-                        //wenn Button geklickt wurde
-                        MTTextArea textArea = new MTTextArea(mtApp, FontManager.getInstance().createFont(mtApp, "arial.ttf", 50, MTColor.BLUE, MTColor.BLUE));
-                        textArea.setText("Loesung!!!");
-                        textArea.setNoStroke(true);
-                        textArea.setNoFill(true);
-                        textArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
-
-                        mtApp.getCurrentScene().getCanvas().addChild(textArea);
-                        break;
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });
+        user1Workspace.getStartButton().addGestureListener(TapProcessor.class, new StartButtonListener());
+        user1Workspace.getSettingsButton().addGestureListener(TapProcessor.class, new SettingsButtonListener());
+        
+        settingsWindow.getCloseButton().addGestureListener(TapProcessor.class, new SettingsCloseButtonListener());
     }
 
     @Override
@@ -217,6 +186,51 @@ public class StartScene extends AbstractMTWDScene {
                     user1Workspace.removeChild(helpPopup);
                 default:
                     break;
+            }
+            return false;
+        }
+    }
+
+    private class StartButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            switch (mtge.getId()) {
+                case TapEvent.GESTURE_STARTED:
+                    try {
+                        ((StartSceneController) controller).proceed(problemInputField.getText());
+                    } catch (NoProblemTextException ex) {
+                        errorMessagePopup.setText(ex.getMessage());
+                        errorMessagePopup.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
+                        errorMessagePopup.setVisible(true);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return false;
+        }
+    }
+
+    private class SettingsButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                settingsWindow.setSliderValue(AbstractMTWDSceneController.filterValue);
+                settingsWindow.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2));
+                settingsWindow.setVisible(true);
+            }
+            return false;
+        }
+    }
+
+    private class SettingsCloseButtonListener implements IGestureEventListener {
+
+        @Override
+        public boolean processGestureEvent(MTGestureEvent mtge) {
+            if (mtge.getId() == TapEvent.GESTURE_ENDED) {
+                AbstractMTWDSceneController.filterValue = settingsWindow.getSliderValue();
             }
             return false;
         }

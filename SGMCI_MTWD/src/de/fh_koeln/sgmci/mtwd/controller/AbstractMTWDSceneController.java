@@ -32,7 +32,7 @@ public abstract class AbstractMTWDSceneController {
     public final static String USER3_ID = "user_3";
     public final static String USER4_ID = "user_4";
     
-    public static double filterValue = 0.5;
+    public static float filterValue = 0.5f;
     
     final static User user1;
     final static User user2;

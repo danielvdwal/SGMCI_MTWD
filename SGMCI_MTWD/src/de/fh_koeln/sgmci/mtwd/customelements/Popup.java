@@ -14,9 +14,6 @@ import processing.core.PApplet;
  * @version 0.3.0
  */
 public class Popup extends MTRectangle {
-
-    protected static final String closeButtonSvgFile = "data/closeButton.svg";
-    protected static final float buttonScaleFactor = 1.4f;
     
     protected final MTTextArea textArea;
     

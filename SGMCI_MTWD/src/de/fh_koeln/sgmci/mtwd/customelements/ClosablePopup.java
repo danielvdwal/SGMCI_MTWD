@@ -15,13 +15,14 @@ import processing.core.PApplet;
  * @version 0.3.0
  */
 public class ClosablePopup extends Popup {
+
+    private static final String closeButtonSvgFile = "data/closeButton.svg";
+    private static final float buttonScaleFactor = 1.4f;
     
-    private final PApplet pApplet;
     private final MTSvgButton closeButton;
     
     public ClosablePopup(PApplet pApplet) {
         super(pApplet);
-        this.pApplet = pApplet;
         closeButton = new MTSvgButton(pApplet, closeButtonSvgFile);
         
         positionAllComponents();
