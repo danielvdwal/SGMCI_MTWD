@@ -37,9 +37,9 @@ public class EvaluationScene extends AbstractMTWDScene {
     private MTTextArea moduleTextArea;
     private MTTextArea profTextArea;
 
-    private MTSvgButton restartButton;
-    private MTSvgButton startButton;
+    private MTSvgButton continueButton;
     private MTSvgButton saveButton;
+    private MTSvgButton restartButton;
     private MTSvgButton endButton;
 
     public EvaluationScene(MTApplication mtApp, String name) {
@@ -97,9 +97,9 @@ public class EvaluationScene extends AbstractMTWDScene {
         profTextArea.setPickable(false);
         profTextArea.setText("Prof. Dr. Heiner Klocke");
 
-        restartButton = new MTSvgButton(mtApp, "data/restartButton_light.svg");
-        startButton = new MTSvgButton(mtApp, "data/startButton_light.svg");
+        continueButton = new MTSvgButton(mtApp, "data/replayButton.svg");
         saveButton = new MTSvgButton(mtApp, "data/saveButton_light.svg");
+        restartButton = new MTSvgButton(mtApp, "data/restartButton_light.svg");
         endButton = new MTSvgButton(mtApp, "data/endButton_light.svg");
 
         getCanvas().addChild(headlineTextArea);
@@ -108,9 +108,9 @@ public class EvaluationScene extends AbstractMTWDScene {
         getCanvas().addChild(allIdeasTextArea);
         getCanvas().addChild(moduleTextArea);
         getCanvas().addChild(profTextArea);
-        getCanvas().addChild(restartButton);
-        getCanvas().addChild(startButton);
+        getCanvas().addChild(continueButton);
         getCanvas().addChild(saveButton);
+        getCanvas().addChild(restartButton);
         getCanvas().addChild(endButton);
 
         headlineTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, 200, 0));
@@ -119,9 +119,9 @@ public class EvaluationScene extends AbstractMTWDScene {
         allIdeasTextArea.setPositionGlobal(new Vector3D(mtApp.width / 2, mtApp.height / 2 + 130, 0));
         moduleTextArea.setPositionGlobal(new Vector3D(moduleTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 + 20, mtApp.height - 20, 0));
         profTextArea.setPositionGlobal(new Vector3D(mtApp.width - profTextArea.getWidthXY(TransformSpace.RELATIVE_TO_PARENT) / 2 - 20, mtApp.height - 20, 0));
-        restartButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 50, mtApp.height - 150, 0));
-        startButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150, 0));
-        saveButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 50, mtApp.height - 150, 0));
+        continueButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 150, mtApp.height - 150, 0));
+        saveButton.setPositionGlobal(new Vector3D(mtApp.width / 2 - 50, mtApp.height - 150, 0));
+        restartButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 50, mtApp.height - 150, 0));
         endButton.setPositionGlobal(new Vector3D(mtApp.width / 2 + 150, mtApp.height - 150, 0));
 
     }
@@ -155,7 +155,7 @@ public class EvaluationScene extends AbstractMTWDScene {
 
     @Override
     public void createEventListeners() {
-        restartButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+        continueButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
 
             @Override
             public boolean processGestureEvent(MTGestureEvent mtge) {
@@ -170,7 +170,7 @@ public class EvaluationScene extends AbstractMTWDScene {
                 return false;
             }
         });
-        startButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
+        restartButton.addGestureListener(TapProcessor.class, new IGestureEventListener() {
 
             @Override
             public boolean processGestureEvent(MTGestureEvent mtge) {
