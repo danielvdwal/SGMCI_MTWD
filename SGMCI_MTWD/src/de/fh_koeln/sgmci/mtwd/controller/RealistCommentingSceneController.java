@@ -18,7 +18,7 @@ public class RealistCommentingSceneController extends AbstractMTWDSceneControlle
 
     private static final String HELP_TEXT = "Auf diesem Screen k\u00F6nnen Sie Kommentare\n"
             + "zu der Machbarkeit der Ideen eintragen.\n"
-            + "Wenn Sie ein Kommentar bes\u00E4tigen m\u00F6chten,\n"
+            + "Wenn Sie ein Kommentar best\u00E4tigen m\u00F6chten,\n"
             + "wischen Sie \u00FCber dem Kommentar mit dem Finger nach rechts.\n"
             + "Durch die Pfeile links und rechts\n"
             + "k\u00F6nnen Sie zwischen den Ideen wechseln.";

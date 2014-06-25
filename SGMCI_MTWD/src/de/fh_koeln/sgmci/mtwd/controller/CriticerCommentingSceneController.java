@@ -18,7 +18,7 @@ public class CriticerCommentingSceneController extends AbstractMTWDSceneControll
 
     private static final String HELP_TEXT = "Auf diesem Screen k\u00F6nnen Sie Ihre Kritik\n"
             + "zu den einzelnen Ideen eintragen.\n"
-            + "Wenn Sie eine Kritik bes\u00E4tigen m\u00F6chten,\n"
+            + "Wenn Sie eine Kritik best\u00E4tigen m\u00F6chten,\n"
             + "wischen Sie \u00FCber dei Kritik mit dem Finger nach rechts.\n"
             + "Durch die Pfeile links und rechts\n"
             + "k\u00F6nnen Sie zwischen den Ideen wechseln.";

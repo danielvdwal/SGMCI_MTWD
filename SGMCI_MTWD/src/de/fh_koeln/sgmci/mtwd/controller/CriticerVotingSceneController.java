@@ -21,7 +21,7 @@ public class CriticerVotingSceneController extends AbstractMTWDSceneController {
 
     private final Map<String, Collection<VotedIdea>> votedIdeasByUsers;
     private static final String HELP_TEXT = "Auf diesem Screen k\u00F6nnen Sie\n"
-            + "zum letzten mal die verbleibenden Ideen bewerten.\n"
+            + "zum letzten Mal die restlichen Ideen bewerten.\n"
             + "Durch den \"Daumen hoch\" k\u00F6nnen Sie eine Idee positiv bewerten.\n"
             + "Durch den \"Daumen runter\" stellen Sie sich gegen die Idee.";
 

@@ -19,7 +19,7 @@ public class DreamerSceneController extends AbstractMTWDSceneController {
     private static final String HELP_TEXT = "Auf diesem Screen k\u00F6nnen Sie ihre Ideen\n"
             + "um das Problem zu l\u00F6sen eingeben.\n"
             + "Benutzen Sie dazu einfach die Tastatur vor Ihnen\n"
-            + "und wischen Sie wenn Sie fertig sind mit dem Finger nach oben,\n"
+            + "und wischen Sie, wenn Sie fertig sind, mit dem Finger nach oben,\n"
             + "um diese an das System zu senden.";
     private static int ideaIdCounter = 0;
 
